@@ -1,5 +1,7 @@
-#include "Global.hpp"
-#include "Plant.hpp"
+#ifndef ATTACK_PLANT_INCLUDE
+#define ATTACK_PLANT_INCLUDE
+#include "../include/Global.hpp"
+#include "../include/Plant.hpp"
 
 class AttackPlant : public Plant {
 	private:
@@ -9,3 +11,5 @@ class AttackPlant : public Plant {
 	public:
 		
 };
+
+#endif

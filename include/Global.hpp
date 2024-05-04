@@ -1,3 +1,5 @@
+#ifndef GLOBAL_INCLUDE
+#define GLOBAL_INCLUDE
 #include <iostream>
 #include <math.h>
 #include <vector>
@@ -8,6 +10,8 @@
 
 using namespace sf;
 using namespace std;
+
+#endif
 
 
 

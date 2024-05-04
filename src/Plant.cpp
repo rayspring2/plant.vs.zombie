@@ -1,4 +1,4 @@
-#include "Plant.hpp"
+#include "../include/Plant.hpp"
 
 
 void Plant::eat(){

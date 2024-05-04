@@ -1,16 +1,64 @@
-CXX = g++ -g -std=c++20
-FILES = obj/main.o obj/plant.o obj/primary.o obj/
+# Compiler settings
+CXX = g++ 
+CXXFLAGS = -std=c++17 -Wall -Wextra
+
+# SFML paths
+SFML_INCLUDE_DIR = C:/SFML-2.6.1/include
+SFML_LIBRARY_DIR = C:/SFML-2.6.1/lib
+
+#Linker setting 
+LDFLAGS = -L$(SFML_LIBRARY_DIR)
+LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
+
+# Source files
+CXX_FILES := $(wildcard ./src/*.cpp)
+HXX_FILES := $(wildcard ./include/*.hpp) 
+
+#object files
+OBJ_FILES := build/main.o build/System.o build/PeaShooter.o build/AttackPlant.o build/Plant.o
+#$(SRC_FILES:./src/%.cpp = ./obj/%.o) 
+
+#Executable name
 EXE = PlantsVSZombie
+#cpp files
+ATTACKPLANT = src/AttackPlant.cpp include/AttackPlant.hpp
+PEASHOOTER = src/PeaShooter.cpp include/PeaShooter.hpp
+PLANT = src/Plant.cpp include/plant.hpp
+PRIMARY = src/Primary.cpp include/Primary.hpp
+SYSTEM = src/System.cpp include/System.hpp
+GLOBAL = include/Global.hpp
+
+#prerequisites
+SYSTEM_PRE = $(SYSTEM) 
+PLANT_PRE = $(PLANT) 
+ATTACKPLANT_PRE = $(ATTACKPLANT) $(PLANT)
+PEASHOOTER_PRE = $(PEASHOOTER) $(ATTACKPLANT_PRE)
+MAIN_PRE = src/main.cpp $(SYSTEM_PRE)
+
 all: $(EXE)
 
-$(EXE) : $(FILES)
-	$(CXX) $^ -o $@
+# Linking object files to create the executable
+$(EXE) : $(OBJ_FILES)
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
+# Compiling source files into object files
 
-obj/main.o : 
-	$(CXX) -c $< -o $@
+build/main.o : $(MAIN_PRE) $(GLOBAL)
+	$(CXX) $(CXXFLAGS) -I$(SFML_INCLUDE_DIR) -c $< -o $@
+
+  
+build/System.o : $(SYSTEM_PRE) $(GLOBAL) 
+	$(CXX) $(CXXFLAGS) -I$(SFML_INCLUDE_DIR) -c $< -o $@
+  
+build/PeaShooter.o : $(PEASHOOTER_PRE) $(GLOBAL)
+	$(CXX) $(CXXFLAGS) -I$(SFML_INCLUDE_DIR) -c $< -o $@
+
+build/AttackPlant.o : $(ATTACKPLANT_PRE) $(GLOBAL)
+	$(CXX) $(CXXFLAGS) -I$(SFML_INCLUDE_DIR) -c $< -o $@
+
+build/Plant.o : $(PLANT_PRE) $(GLOBAL)
+	$(CXX) $(CXXFLAGS) -I$(SFML_INCLUDE_DIR) -c $< -o $@
 
 
-.PHONY : all clean
-
+.PHONY: clean
 clean:
-	rm -f $(FILES) $(EXE)
+	rm -f $(OBJ_FILES) $(EXE)

@@ -1,4 +1,6 @@
-#include "Global.hpp"
+#ifndef PLANT_INCLUDE
+#define PLANT_INCLUDE
+#include "../include/Global.hpp"
 
 class Plant{
 	private:
@@ -12,3 +14,5 @@ class Plant{
 		void eat();
 		
 };
+
+#endif
