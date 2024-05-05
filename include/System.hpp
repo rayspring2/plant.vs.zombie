@@ -3,12 +3,16 @@
 #include "../include/Global.hpp"
 
 class System{
-	private:
-	
-	public:
-		void run();	
-		void update();
-		void render();
+private:
+	Texture bg_texture;
+	Sprite bg_sprite;
+	void update();
+	void render();
+	void handleEvent();
+public:
+	RenderWindow window;
+	void run();	
+	System();
 };
 
 #endif
