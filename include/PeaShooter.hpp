@@ -4,21 +4,16 @@
 #include "../include/Global.hpp"
 #include "../include/AttackPlant.hpp"
 
+
 class PeaShooter : public AttackPlant{
 public:
-	PeaShooter(int x, int y);
+	PeaShooter();
 	~PeaShooter();
 	void render(RenderWindow &window);
-    void update();
-    void handleMousePress(Vector2i pos);
-    void handleMouseRelease(Vector2i pos);
+    void update(Vector2i mouse_pos);
     Vector2f get_projectile_pos();
 private:
-    Clock clock;
-	Texture texture;
-    Sprite sprite;
-    Vector2f pos;
-    void fixedBasedPosition();
+    void fixBasedPosition();
     int frames_position[70];
     int cur_rect = 0;
 };

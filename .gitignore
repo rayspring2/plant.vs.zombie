@@ -1,0 +1,8 @@
+*.txt
+*.exe
+tmp.cpp
+tmp2.cpp
+.vscode
+*.o
+.gitignore
+Makefile_mahdis

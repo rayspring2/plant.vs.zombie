@@ -8,9 +8,17 @@ class Plant{
 		int column;
 		int primary_health;
 		int current_health = primary_health;
-		string base_shape; // is a picture
+	protected:
+		bool in_drag_mode = false;
+	protected:
+		Clock clock;
+		Texture texture;
+    	Sprite sprite;
 	public:
 		void eat();
+		void handleMousePress(Vector2i mouse_pos);
+		void handleMouseRelease(/*Vector2i mouse_pos*/);
+ 
 };
 
 #endif

@@ -1,7 +1,6 @@
 #include "../include/PeaShooter.hpp"
 
-PeaShooter::PeaShooter(int x, int y){
-    pos = Vector2f(x, y);
+PeaShooter::PeaShooter(){
     if (!texture.loadFromFile("files/pic/peashooter.png")) {
         cerr<<"picture not found!\n";
 		exit(-1);
@@ -21,7 +20,7 @@ void PeaShooter::render(RenderWindow &window){
     window.draw(sprite);
 }
 
-void PeaShooter::update(){
+void PeaShooter::update(Vector2i mouse_pos){
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 100){
         clock.restart();
@@ -31,5 +30,9 @@ void PeaShooter::update(){
         rect.height = 50;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
+    }
+    if(in_drag_mode){
+        Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
+        sprite.setPosition(target);
     }
 }
