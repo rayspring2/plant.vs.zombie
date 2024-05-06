@@ -1,4 +1,4 @@
-#include "../include/Primary.hpp"
+#include "Primary.hpp"
 
 #include <iostream>
 #include <filesystem>

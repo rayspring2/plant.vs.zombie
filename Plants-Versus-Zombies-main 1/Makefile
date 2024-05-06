@@ -1,6 +1,10 @@
 CXX = g++
 CXXFLAGS = -std=c++20 -Wall -Wextra -I./include #-fsanitize=address -fsanitize=undefined
-LFLAGS = -L./files -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+SFML_INCLUDE_DIR = /opt/homebrew/Cellar/sfml/2.6.1/include
+SFML_LIBRARY_DIR = /opt/homebrew/Cellar/sfml/2.6.1/lib
+LDFLAGS = -L$(SFML_LIBRARY_DIR)
+LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
+LFLAGS = -L./files $(LDFLAGS) $(LDLIBS)
 SRCDIR = src
 OBJDIR = obj
 BINDIR = .

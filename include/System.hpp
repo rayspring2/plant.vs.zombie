@@ -1,7 +1,7 @@
 #ifndef SYSTEM_INCLUDE
 #define SYSTEM_INCLUDE
-#include "../include/Global.hpp"
-#include "../include/PeaShooter.hpp"
+#include "Global.hpp"
+#include "PeaShooter.hpp"
 
 class System{
 private:

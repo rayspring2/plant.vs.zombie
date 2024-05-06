@@ -1,8 +1,8 @@
 #ifndef SUNFLOWER_INCLUDE
 #define SUNFLOWER_INCLUDE
 
-#include "../include/Global.hpp"
-#include "../include/Plant.hpp"
+#include "Global.hpp"
+#include "Plant.hpp"
 
 class SunFlower : public Plant{
 public:

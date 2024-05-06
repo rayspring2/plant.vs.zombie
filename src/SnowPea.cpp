@@ -1,4 +1,4 @@
-#include "../include/SnowPea.hpp"
+#include "SnowPea.hpp"
 
 SnowPea::SnowPea(int x, int y) : Pea(x, y) {
     pos = Vector2f(row, column);

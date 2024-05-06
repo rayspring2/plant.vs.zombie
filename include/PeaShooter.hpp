@@ -1,8 +1,8 @@
 #ifndef PEASHOOTER_INCLUDE
 #define PEASHOOTER_INCLUDE
 
-#include "../include/Global.hpp"
-#include "../include/Pea.hpp"
+#include "Global.hpp"
+#include "Pea.hpp"
 
 class PeaShooter : public Pea{
 public:

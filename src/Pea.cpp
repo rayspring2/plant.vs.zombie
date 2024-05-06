@@ -1,4 +1,4 @@
-#include "../include/Pea.hpp"
+#include "Pea.hpp"
 
 Pea::Pea(int x, int y) : AttackPlant(x, y) {
     pos = Vector2f(row, column);

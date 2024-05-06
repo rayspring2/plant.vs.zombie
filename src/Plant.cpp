@@ -1,4 +1,4 @@
-#include "../include/Plant.hpp"
+#include "Plant.hpp"
 
 Plant::Plant(int x, int y) {
     row = x;

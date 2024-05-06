@@ -1,5 +1,5 @@
-#include "../include/System.hpp"
-#include "../include/Primary.hpp"
+#include "System.hpp"
+#include "Primary.hpp"
 
 System::System(){
 	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");

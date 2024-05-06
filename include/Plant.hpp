@@ -1,6 +1,6 @@
 #ifndef PLANT_INCLUDE
 #define PLANT_INCLUDE
-#include "../include/Global.hpp"
+#include "Global.hpp"
 
 class Plant{
 	protected:

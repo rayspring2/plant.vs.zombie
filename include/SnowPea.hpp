@@ -1,8 +1,8 @@
 #ifndef SNOWPEA_INCLUDE
 #define SNOWPEA_INCLUDE
 
-#include "../include/Global.hpp"
-#include "../include/Pea.hpp"
+#include "Global.hpp"
+#include "Pea.hpp"
 
 class SnowPea : public Pea{
 public:

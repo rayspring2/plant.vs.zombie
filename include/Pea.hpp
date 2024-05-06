@@ -1,13 +1,13 @@
 #ifndef PEA_INCLUDE
 #define PEA_INCLUDE
 
-#include "../include/Global.hpp"
-#include "../include/AttackPlant.hpp"
+#include "Global.hpp"
+#include "AttackPlant.hpp"
 
 class Pea : public AttackPlant{
 public:
 	Pea(int x, int y);
-	~Pea();
+	~Pea(){};
 	void render(RenderWindow &window);
     void update();
     void handleMousePress(Vector2i pos);

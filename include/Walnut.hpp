@@ -1,8 +1,8 @@
 #ifndef WALNUT_INCLUDE
 #define WALNUT_INCLUDE
 
-#include "../include/Global.hpp"
-#include "../include/Plant.hpp"
+#include "Global.hpp"
+#include "Plant.hpp"
 
 class Walnut : public Plant{
 public:

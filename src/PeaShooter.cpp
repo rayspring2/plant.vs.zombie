@@ -1,4 +1,4 @@
-#include "../include/PeaShooter.hpp"
+#include "PeaShooter.hpp"
 
 PeaShooter::PeaShooter(int x, int y) : Pea(x, y) {
     pos = Vector2f(row, column);

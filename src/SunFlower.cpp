@@ -1,4 +1,4 @@
-#include "../include/SunFlower.hpp"
+#include "SunFlower.hpp"
 
 SunFlower::SunFlower(int x, int y) : Plant(x, y) {
     pos = Vector2f(row, column);

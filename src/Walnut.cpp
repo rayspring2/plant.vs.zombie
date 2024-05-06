@@ -1,4 +1,4 @@
-#include "../include/Walnut.hpp"
+#include "Walnut.hpp"
 
 Walnut::Walnut(int x, int y) : Plant(x, y) {
     pos = Vector2f(row, column);
