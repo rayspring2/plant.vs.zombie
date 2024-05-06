@@ -1,19 +1,19 @@
-#ifndef PEA_INCLUDE
-#define PEA_INCLUDE
+#ifndef WALNUT_INCLUDE
+#define WALNUT_INCLUDE
 
 #include "../include/Global.hpp"
-#include "../include/AttackPlant.hpp"
+#include "../include/Plant.hpp"
 
-class Pea : public AttackPlant{
+class Walnut : public Plant{
 public:
-	Pea(int x, int y);
-	~Pea();
+	Walnut(int x, int y);
+	~Walnut();
 	void render(RenderWindow &window);
     void update();
     void handleMousePress(Vector2i pos);
     void handleMouseRelease(Vector2i pos);
     Vector2f get_projectile_pos();
-protected:
+private:
     Clock clock;
 	Texture texture;
     Sprite sprite;

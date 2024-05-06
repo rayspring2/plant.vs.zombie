@@ -1,7 +1,11 @@
-#include "../include/Pea.hpp"
+#include "../include/Walnut.hpp"
 
-Pea::Pea(int x, int y) : AttackPlant(x, y) {
+Walnut::Walnut(int x, int y) : Plant(x, y) {
     pos = Vector2f(row, column);
+    if (!texture.loadFromFile("files/pic/Walnut.png")) {
+        cerr << "picture not found!\n";
+		exit(-1);
+    }
     for(int i = 0; i < 7; i++) {
         frames_position[i] = i * 50;
     }
@@ -12,11 +16,11 @@ Pea::Pea(int x, int y) : AttackPlant(x, y) {
     sprite.setTextureRect(rect);
 }
 
-void Pea::render(RenderWindow &window){
+void Walnut::render(RenderWindow &window){
     window.draw(sprite);
 }
 
-void Pea::update(){
+void Walnut::update(){
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 100){
         clock.restart();
