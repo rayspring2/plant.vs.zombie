@@ -7,7 +7,7 @@ PeaShooter::PeaShooter(int x, int y){
 		exit(-1);
     }
     sprite.setTexture(texture);
-    sprite.setScale(2, 2);
+    sprite.setScale(3, 3);
     IntRect rect;
     rect.width = 30;
     rect.height = 35;
