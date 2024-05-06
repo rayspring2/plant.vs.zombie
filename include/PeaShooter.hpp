@@ -1,21 +1,15 @@
 #ifndef PEASHOOTER_INCLUDE
 #define PEASHOOTER_INCLUDE
 
-#include "../include/Global.hpp"
-#include "../include/AttackPlant.hpp"
+#include "Global.hpp"
+#include "Pea.hpp"
 
-
-class PeaShooter : public AttackPlant{
+class PeaShooter : public Pea{
 public:
-	PeaShooter();
-	~PeaShooter();
-	void render(RenderWindow &window);
-    void update(Vector2i mouse_pos);
+	PeaShooter(int x, int y);
+	~PeaShooter(){};
     Vector2f get_projectile_pos();
 private:
-    void fixBasedPosition();
-    int frames_position[70];
-    int cur_rect = 0;
 };
 
 #endif

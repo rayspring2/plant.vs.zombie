@@ -1,24 +1,25 @@
 #ifndef PLANT_INCLUDE
 #define PLANT_INCLUDE
-#include "../include/Global.hpp"
+#include "Global.hpp"
 
 class Plant{
-	private:
-		int row;
-		int column;
-		int primary_health;
-		int current_health = primary_health;
 	protected:
 		bool in_drag_mode = false;
+		int row, column, health;
+		int frames_position[70];
+    	int cur_rect = 0;
 	protected:
 		Clock clock;
 		Texture texture;
     	Sprite sprite;
 	public:
-		void eat();
+		Plant(int x, int y);
+		~Plant(){};
 		void handleMousePress(Vector2i mouse_pos);
-		void handleMouseRelease(/*Vector2i mouse_pos*/);
- 
+		void handleMouseRelease();
+		void update(Vector2f mouse_pos);
+		void render(RenderWindow &window);
+		void eat(int destroy_value);
 };
 
 #endif

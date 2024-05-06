@@ -1,6 +1,6 @@
-#include "../include/Global.hpp"
-#include "../include/System.hpp"
-#include "../include/Primary.hpp"
+#include "Global.hpp"
+#include "System.hpp"
+#include "Primary.hpp"
 
 int main(){
 	System game;
