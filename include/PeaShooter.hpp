@@ -19,7 +19,7 @@ private:
     Sprite sprite;
     Vector2f pos;
     void fixedBasedPosition();
-    int frames_position[7] = {0, 29, 59, 90, 120, 149, 182};
+    int frames_position[70];
     int cur_rect = 0;
 };
 
