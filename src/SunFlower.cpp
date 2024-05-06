@@ -1,6 +1,6 @@
 #include "SunFlower.hpp"
 
-SunFlower::SunFlower(int x, int y) : Plant(x, y) {
+SunFlower::SunFlower(int x, int y) : Plant(x, y, "files/pic/sunflower.png") {
     pos = Vector2f(row, column);
     if (!texture.loadFromFile("files/pic/sunflower.png")) {
         cerr << "picture not found!\n";

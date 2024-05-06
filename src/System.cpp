@@ -52,6 +52,7 @@ void System::handleEvent(){
 void System::render(){
 	window.clear();
 	window.draw(bg_sprite);
+	peashooter->render(window);
 	window.display();
 }
 

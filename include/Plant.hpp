@@ -13,7 +13,7 @@ class Plant{
 		Texture texture;
     	Sprite sprite;
 	public:
-		Plant(int x, int y);
+		Plant(int x, int y, string file_name);
 		~Plant(){};
 		void handleMousePress(Vector2i mouse_pos);
 		void handleMouseRelease();

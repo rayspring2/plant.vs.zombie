@@ -6,7 +6,7 @@
 
 class Pea : public AttackPlant{
 public:
-	Pea(int x, int y);
+	Pea(int x, int y, string file_name);
 	~Pea(){};
     Vector2f get_projectile_pos();
 protected:

@@ -1,6 +1,6 @@
 #include "SnowPea.hpp"
 
-SnowPea::SnowPea(int x, int y) : Pea(x, y) {
+SnowPea::SnowPea(int x, int y) : Pea(x, y, "files/pic/snowpea.png") {
     pos = Vector2f(row, column);
     if (!texture.loadFromFile("files/pic/snowpea.png")) {
         cerr << "picture not found!\n";

@@ -7,8 +7,7 @@ class AttackPlant : public Plant {
 	private:
 		int bullet_speed;
 	public:
-		AttackPlant(int x, int y) : Plant(x, y){};
-		void render(RenderWindow &window);
+		AttackPlant(int x, int y, string file_name) : Plant(x, y, file_name){};
 };
 
 #endif
