@@ -5,7 +5,7 @@ System::System(){
 	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");
 	window.setFramerateLimit(FRAME_RATE);
 
-	peashooter = new PeaShooter(100, 100);
+	peashooter = new Walnut(100, 100);
 
 	if(!bg_texture.loadFromFile(BG_PATH)){
 		cerr << "back ground not found!\n";
@@ -63,7 +63,7 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME):
-		cerr << "mouse x: " << pos.x <<" mouse y: " << pos.y << endl; 
+		cerr << "mouse x: " << pos.x <<" mouse y: " << pos.y << endl;
 		peashooter->handleMousePress(pos);
 		break;
 	case (PAUSE_MENU):
@@ -75,7 +75,7 @@ void System::handleMousePress(Event ev){
 	case (GAMEOVER_SCREEN):
 		break;
 	case(EXIT):
-		break;	
+		break;
   }
 }
 void System::handleMouseRelease(Event ev){

@@ -3,6 +3,11 @@
 
 #include "Global.hpp"
 #include "PeaShooter.hpp"
+#include "Pea.hpp"
+#include "SnowPea.hpp"
+#include "SunFlower.hpp"
+#include "Walnut.hpp"
+#include "AttackPlant.hpp"
 
 enum State {
   IN_GAME,
@@ -16,7 +21,7 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-	PeaShooter* peashooter;
+	Walnut* peashooter;
 	Texture bg_texture;
 	Sprite bg_sprite;
 	void update();
