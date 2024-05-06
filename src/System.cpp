@@ -5,7 +5,7 @@ System::System(){
 	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");
 	window.setFramerateLimit(FRAME_RATE);
 
-	peashooter = new PeaShooter();
+	peashooter = new PeaShooter(100, 100);
 
 	if(!bg_texture.loadFromFile(BG_PATH)){
 		cerr << "back ground not found!\n";
@@ -25,11 +25,8 @@ void System::run(){
 }
 
 void System::update(){
-<<<<<<< HEAD
 	Vector2i pos = Mouse::getPosition(window);
 	peashooter->update(pos);
-=======
->>>>>>> 7316eea06b07aab33578bf69115b511353ad5a02
 }
 
 void System::handleEvent(){

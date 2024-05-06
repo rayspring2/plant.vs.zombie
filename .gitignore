@@ -6,3 +6,4 @@ tmp2.cpp
 *.o
 .gitignore
 Makefile_mahdis
+Makefile_2

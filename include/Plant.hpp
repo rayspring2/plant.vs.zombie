@@ -17,7 +17,7 @@ class Plant{
 		~Plant(){};
 		void handleMousePress(Vector2i mouse_pos);
 		void handleMouseRelease();
-		void update(Vector2f mouse_pos);
+		void update(Vector2i mouse_pos);
 		void render(RenderWindow &window);
 		void eat(int destroy_value);
 };

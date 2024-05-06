@@ -12,7 +12,7 @@ void Plant::eat(int destroy_value) {
     health -= destroy_value;
 }
 
-void Plant::update(Vector2f mouse_pos) {
+void Plant::update(Vector2i mouse_pos) {
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 100){
         clock.restart();
