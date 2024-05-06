@@ -1,8 +1,8 @@
-#include "../include/PeaShooter.hpp"
+#include "../include/SnowPea.hpp"
 
-PeaShooter::PeaShooter(int x, int y) : AttackPlant(x, y) {
+SnowPea::SnowPea(int x, int y) : AttackPlant(x, y) {
     pos = Vector2f(row, column);
-    if (!texture.loadFromFile("files/pic/peashooter.png")) {
+    if (!texture.loadFromFile("files/pic/snowpea.png")) {
         cerr << "picture not found!\n";
 		exit(-1);
     }
@@ -16,11 +16,11 @@ PeaShooter::PeaShooter(int x, int y) : AttackPlant(x, y) {
     sprite.setTextureRect(rect);
 }
 
-void PeaShooter::render(RenderWindow &window){
+void SnowPea::render(RenderWindow &window){
     window.draw(sprite);
 }
 
-void PeaShooter::update(){
+void SnowPea::update(){
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 100){
         clock.restart();

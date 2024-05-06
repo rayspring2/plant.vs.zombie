@@ -1,0 +1,26 @@
+#ifndef PEA_INCLUDE
+#define PEA_INCLUDE
+
+#include "../include/Global.hpp"
+#include "../include/Plant.hpp"
+
+class Pea : public Plant{
+public:
+	Pea(int x, int y);
+	~Pea();
+	void render(RenderWindow &window);
+    void update();
+    void handleMousePress(Vector2i pos);
+    void handleMouseRelease(Vector2i pos);
+    Vector2f get_projectile_pos();
+private:
+    Clock clock;
+	Texture texture;
+    Sprite sprite;
+    Vector2f pos;
+    void fixedBasedPosition();
+    int frames_position[70];
+    int cur_rect = 0;
+};
+
+#endif

@@ -3,14 +3,14 @@
 #include "../include/Global.hpp"
 
 class Plant{
-	private:
-		int row;
-		int column;
-		int primary_health;
-		int current_health = primary_health;
-		string base_shape; // is a picture
+	protected:
+		int row, column, health;
 	public:
-		void eat();
+		Plant(int x, int y);
+		~Plant(){};
+		void update();
+		void render(RenderWindow &window);
+		void eat(int destroy_value);
 };
 
 #endif

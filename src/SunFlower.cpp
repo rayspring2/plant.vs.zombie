@@ -1,8 +1,8 @@
-#include "../include/PeaShooter.hpp"
+#include "../include/SunFlower.hpp"
 
-PeaShooter::PeaShooter(int x, int y) : AttackPlant(x, y) {
+SunFlower::SunFlower(int x, int y) : Plant(x, y) {
     pos = Vector2f(row, column);
-    if (!texture.loadFromFile("files/pic/peashooter.png")) {
+    if (!texture.loadFromFile("files/pic/sunflower.png")) {
         cerr << "picture not found!\n";
 		exit(-1);
     }
@@ -16,11 +16,11 @@ PeaShooter::PeaShooter(int x, int y) : AttackPlant(x, y) {
     sprite.setTextureRect(rect);
 }
 
-void PeaShooter::render(RenderWindow &window){
+void SunFlower::render(RenderWindow &window){
     window.draw(sprite);
 }
 
-void PeaShooter::update(){
+void SunFlower::update(){
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 100){
         clock.restart();
