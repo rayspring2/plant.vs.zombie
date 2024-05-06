@@ -9,10 +9,8 @@ class Plant{
 		int primary_health;
 		int current_health = primary_health;
 		string base_shape; // is a picture
-	
 	public:
 		void eat();
-		
 };
 
 #endif
