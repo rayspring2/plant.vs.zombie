@@ -8,7 +8,6 @@ class PeaShooter : public Pea{
 public:
 	PeaShooter(int x, int y);
 	~PeaShooter(){};
-    Vector2f get_projectile_pos();
 private:
 };
 

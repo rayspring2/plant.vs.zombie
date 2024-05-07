@@ -5,7 +5,7 @@ System::System(){
 	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");
 	window.setFramerateLimit(FRAME_RATE);
 
-	peashooter = new Walnut(100, 100);
+	peashooter = new SnowPea(100, 100);
 
 	if(!bg_texture.loadFromFile(BG_PATH)){
 		cerr << "back ground not found!\n";
@@ -95,7 +95,7 @@ void System::handleMouseRelease(Event ev){
 	case (GAMEOVER_SCREEN):
     	break;
 	case(EXIT):
-		break;	
+		break;
 
   }
 }

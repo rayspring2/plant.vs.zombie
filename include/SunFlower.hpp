@@ -8,12 +8,9 @@ class SunFlower : public Plant{
 public:
 	SunFlower(int x, int y);
 	~SunFlower(){};
-    Vector2f get_projectile_pos(){};
+	void update(Vector2i mouse_pos);
+	void makeSun();
 private:
-    Clock clock;
-	Texture texture;
-    Sprite sprite;
-    Vector2f pos;
 };
 
 #endif

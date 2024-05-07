@@ -15,6 +15,7 @@ namespace fs = filesystem;
 
 const int FRAME_RATE = 144;
 const string BG_PATH = "files/pic/bg1.png";
+const string WALNUT
 const float WIDTH = 1400.0f;
 const float HEIGHT = 600.0f;
 #endif

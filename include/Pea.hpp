@@ -8,13 +8,7 @@ class Pea : public AttackPlant{
 public:
 	Pea(int x, int y, string file_name);
 	~Pea(){};
-    Vector2f get_projectile_pos();
 protected:
-    Clock clock;
-	Texture texture;
-    Sprite sprite;
-    Vector2f pos;
-    void fixedBasedPosition();
 
 };
 

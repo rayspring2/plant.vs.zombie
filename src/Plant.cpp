@@ -5,17 +5,16 @@ Plant::Plant(int x, int y, string file_name, int frame_number) {
     column = y;
     frames_number = frame_number;
     for(int i = 0; i < frames_number; i++) {
-        frames_position[i] = i * 30;
+        frames_position[i] = i * 50;
     }
     if (!texture.loadFromFile(file_name)) {
         cerr << "picture not found!\n";
 		exit(-1);
     }
     sprite.setTexture(texture);
-    sprite.setScale(0.4, 0.4);
     IntRect rect;
-    rect.width = 245;
-    rect.height = 227;
+    rect.width = 50;
+    rect.height = 50;
     sprite.setTextureRect(rect);
 }
 
@@ -31,12 +30,12 @@ bool Plant::isAlive() {
 
 void Plant::update(Vector2i mouse_pos) {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 100){
+    if(elapsed.asMilliseconds() >= 10){
         clock.restart();
         cur_rect = (cur_rect + 1) % frames_number;
-    IntRect rect;
-    rect.width = 130;
-    rect.height = 227;
+        IntRect rect;
+        rect.width = 50;
+        rect.height = 50;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
     }
@@ -45,8 +44,7 @@ void Plant::update(Vector2i mouse_pos) {
         Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
         sprite.setPosition(target);
     }
-    sprite.setScale(1, 1);
-    sprite.setPosition(100, 100);
+	sprite.setScale(1.2, 1.2);
 }
 
 void Plant::handleMousePress(Vector2i mouse_pos){
@@ -61,7 +59,7 @@ void Plant::handleMousePress(Vector2i mouse_pos){
 
 }
 
-void Plant::handleMouseRelease(/*Vector2i mouse_pos*/){
+void Plant::handleMouseRelease(){
     in_drag_mode = false;
 }
 

@@ -8,12 +8,10 @@ class Walnut : public Plant{
 public:
 	Walnut(int x, int y);
 	~Walnut(){};
-    Vector2f get_projectile_pos();
+    void changeStatus();
 private:
-    Clock clock;
-	Texture texture;
-    Sprite sprite;
-    Vector2f pos;
+    string path[3] = {"files/pic/normal_walnut.png", "", ""};
+    int status = 0;
 };
 
 #endif
