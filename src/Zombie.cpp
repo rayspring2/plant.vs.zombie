@@ -6,7 +6,7 @@ Zombie::Zombie(int x, int y, string file_name, int frame_number) {
     column = y;
     frames_number = frame_number;
     for(int i = 0; i < frames_number; i++) {
-        frames_position[i] = i * 50;
+        frames_position[i] = i * 100;
     }
     if (!texture.loadFromFile(file_name)) {
         cerr << "picture not found!\n";
@@ -14,8 +14,8 @@ Zombie::Zombie(int x, int y, string file_name, int frame_number) {
     }
     sprite.setTexture(texture);
     IntRect rect;
-    rect.width = 50;
-    rect.height = 50;
+    rect.width = 100;
+    rect.height = 116;
     sprite.setTextureRect(rect);
 }
 
@@ -35,14 +35,20 @@ bool Zombie::isAlive() {
 
 void Zombie::update() {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 10){
+    if(elapsed.asMilliseconds() >= 200){
         clock.restart();
         cur_rect = (cur_rect + 1) % frames_number;
         IntRect rect;
-        rect.width = 50;
-        rect.height = 50;
+        rect.width = 100;
+        rect.height = 116;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
+    }
+
+    if(elapsed.asMilliseconds() >= 10 and row > 220) {
+        row -= 5;
+        cout << row << " " << column << endl;
+        sprite.setPosition(row, column);
     }
 }
 
