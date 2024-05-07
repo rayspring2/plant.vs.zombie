@@ -5,7 +5,7 @@
 
 class Zombie{
 protected:
-	int row, column, health, damage, hit_rate, frames_number, speed, frames_position[70], cur_rect = 0;
+	int row, column, health, damage, hit_rate, frames_number, current_speed, speed, frames_position[70], cur_rect = 0;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
