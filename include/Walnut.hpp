@@ -7,10 +7,7 @@
 class Walnut : public Plant{
 public:
 	Walnut(int x, int y);
-	~Walnut(){};
-    void changeStatus();
-private:
-    string path[3] = {"files/pic/normal_walnut.png", "", ""};
+protected:
     int status = 0;
 };
 

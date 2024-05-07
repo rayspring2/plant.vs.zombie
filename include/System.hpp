@@ -21,7 +21,7 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-	SnowPea* peashooter;
+	Walnut* peashooter;
 	Texture bg_texture;
 	Sprite bg_sprite;
 	void update();

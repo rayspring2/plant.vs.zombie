@@ -15,10 +15,10 @@ namespace fs = filesystem;
 
 const int FRAME_RATE = 144;
 const string BG_PATH = "files/pic/bg1.png";
-const string WALNUT
+const string NORMAL_WALNUT_PATH = "files/pic/walnut/normal_walnut.png";
+const string CRACKED_WALNUT_PATH = "files/pic/walnut/cracked_walnut.png";
+const string VERY_CRACKED_WALNUT_PATH = "files/pic/walnut/very_cracked_walnut.png";
+
 const float WIDTH = 1400.0f;
 const float HEIGHT = 600.0f;
 #endif
-
-
-

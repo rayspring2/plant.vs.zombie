@@ -18,7 +18,7 @@ Plant::Plant(int x, int y, string file_name, int frame_number) {
     sprite.setTextureRect(rect);
 }
 
-void Plant::eat(int destroy_value) {
+void Plant::hit(int destroy_value) {
     health -= destroy_value;
     if(health < 0) health = 0;
 }
