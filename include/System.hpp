@@ -8,6 +8,10 @@
 #include "SunFlower.hpp"
 #include "Walnut.hpp"
 #include "AttackPlant.hpp"
+#include "Zombie.hpp"
+#include "NormalZombie.hpp"
+#include "KernelPult.hpp"
+#include "HairMetal.hpp"
 
 enum State {
   IN_GAME,
@@ -21,7 +25,7 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-	Walnut* peashooter;
+	NormalZombie* peashooter;
 	Texture bg_texture;
 	Sprite bg_sprite;
 	void update();
