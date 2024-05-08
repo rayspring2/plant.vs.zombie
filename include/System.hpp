@@ -12,6 +12,7 @@
 #include "NormalZombie.hpp"
 #include "KernelPult.hpp"
 #include "HairMetal.hpp"
+#include "Game.hpp"
 
 enum State {
   IN_GAME,
@@ -35,6 +36,7 @@ private:
 	void handleMouseRelease(Event ev);
 public:
 	RenderWindow window;
+	Game game;
 	void run();
 	System();
 };

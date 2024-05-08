@@ -47,7 +47,6 @@ void Zombie::update() {
 
     if(elapsed.asMilliseconds() >= 10 and row > 220) {
         row -= 5;
-        cout << row << " " << column << endl;
         sprite.setPosition(row, column);
     }
 }

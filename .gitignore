@@ -4,6 +4,9 @@ tmp.cpp
 tmp2.cpp
 .vscode
 *.o
+*.out
 .gitignore
 Makefile_mahdis
 Makefile_2
+Makefile_uglyone
+Makefile_windows

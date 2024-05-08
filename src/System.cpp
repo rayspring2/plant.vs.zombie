@@ -26,7 +26,8 @@ void System::run(){
 
 void System::update(){
 	Vector2i pos = Mouse::getPosition(window);
-	peashooter->update();
+	//peashooter->update();
+	game.update();
 }
 
 void System::handleEvent(){
@@ -52,7 +53,8 @@ void System::handleEvent(){
 void System::render(){
 	window.clear();
 	window.draw(bg_sprite);
-	peashooter->render(window);
+	peashooter->render(window); 
+	game.render(window);
 	window.display();
 }
 
@@ -63,8 +65,7 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME):
-		cerr << "mouse x: " << pos.x <<" mouse y: " << pos.y << endl;
-	//	peashooter->handleMousePress(pos);
+		//peashooter->handleMousePress(pos);
 		break;
 	case (PAUSE_MENU):
 		break;
@@ -84,7 +85,7 @@ void System::handleMouseRelease(Event ev){
   Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
   switch (game_state) {
 	case (IN_GAME):
-	//	peashooter->handleMouseRelease(/*pos*/);
+		//peashooter->handleMouseRelease(/*pos*/);
 		break;
 	case (PAUSE_MENU):
 		break;

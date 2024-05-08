@@ -1,8 +1,9 @@
 #include "Plant.hpp"
 
 Plant::Plant(int x, int y, string file_name, int frame_number) {
-    row = x;
-    column = y;
+    row = x;//should be deleted???
+    column = y;//should be deleted???
+    sprite.setPosition({x,y});
     frames_number = frame_number;
     for(int i = 0; i < frames_number; i++) {
         frames_position[i] = i * 50;
@@ -66,3 +67,12 @@ void Plant::handleMouseRelease(){
 void Plant::render(RenderWindow &window) {
     window.draw(sprite);
 }
+
+PlantType Plant::getPlantType(){
+    return plant_type;
+}
+
+Vector2f Plant::getPos(){
+	return sprite.getPosition();
+}
+
