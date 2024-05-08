@@ -12,6 +12,7 @@
 #include "NormalZombie.hpp"
 #include "KernelPult.hpp"
 #include "HairMetal.hpp"
+#include "Game.hpp"
 
 enum State {
   IN_GAME,
@@ -25,14 +26,17 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-	NormalZombie* peashooter;
+	PeaShooter* ps[6][11];
 	Texture bg_texture;
 	Sprite bg_sprite;
+	Clock clock;
+	Game* game;
 	void update();
 	void render();
 	void handleEvent();
 	void handleMousePress(Event ev);
 	void handleMouseRelease(Event ev);
+	void gen_zombie();
 public:
 	RenderWindow window;
 	void run();

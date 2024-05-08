@@ -5,7 +5,7 @@
 class Plant{
 protected:
 	bool in_drag_mode = false;
-	int row, column, health, price, hit_rate, frames_number, cooldown, frames_position[70], cur_rect = 0;
+	int row, column, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;

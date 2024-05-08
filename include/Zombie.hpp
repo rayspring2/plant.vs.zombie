@@ -5,18 +5,21 @@
 
 class Zombie{
 protected:
-	int row, column, health, damage, hit_rate, frames_number, current_speed, speed, frames_position[70], cur_rect = 0;
+	int row, column, health, damage, hit_rate, frame_number;
+	int current_speed, speed, frames_position[70], cur_rect = 0, zombie_width, zombie_height;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
 public:
-	Zombie(int x, int y, string file_name, int frames_number);
+	Zombie(int x, int y, string file_name, int frames_number, int zombie_width, int zombie_height);
 	~Zombie(){};
 	void update();
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
     void eat(Plant* eating_plant);
 	bool isAlive();
+	int get_row() {return row;}
+	int get_column() {return column;}
 };
 
 #endif
