@@ -1,18 +1,20 @@
+
 #ifndef PLANT_INCLUDE
 #define PLANT_INCLUDE
 #include "Global.hpp"
+
 enum PlantType{
-	PEASHOOTER , 
-	SNOWPEA , 
-	SUNFLOWER , 
-	WALNUT , 
-	KERNELPULT 
+	PEASHOOTER ,
+	SNOWPEA ,
+	SUNFLOWER ,
+	WALNUT ,
+	KERNELPULT
 };
 
 class Plant{
 protected:
 	bool in_drag_mode = false;
-	int row, column, health, price, hit_rate, frames_number, cooldown, frames_position[70], cur_rect = 0;
+	int row, column, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
@@ -32,5 +34,6 @@ public:
 	Vector2f getPos();
 	void virtual myvirtualfunc(){};
 };
+
 
 #endif

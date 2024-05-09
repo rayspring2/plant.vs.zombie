@@ -3,6 +3,7 @@
 #include "Primary.hpp"
 
 int main(){
-	System game;
-	game.run();
+	System* game = new System();
+	game->run();
+	delete game;
 }

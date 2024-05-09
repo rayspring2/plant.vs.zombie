@@ -26,17 +26,19 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-	NormalZombie* peashooter;
+//	PeaShooter* ps[6][11];
 	Texture bg_texture;
 	Sprite bg_sprite;
+	Clock clock;
 	void update();
 	void render();
 	void handleEvent();
 	void handleMousePress(Event ev);
 	void handleMouseRelease(Event ev);
+	void gen_zombie();
 public:
 	RenderWindow window;
-	Game game;
+	Game* game;
 	void run();
 	System();
 };

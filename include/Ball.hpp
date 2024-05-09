@@ -16,7 +16,6 @@ public:
 	bool isOut();
 	FloatRect getRect();
 	Vector2f getPos();
-	
 };
 
 #endif
