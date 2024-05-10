@@ -31,5 +31,14 @@ struct Position {
     int up, down, left, right, x, y;
 };
 
+enum PlantType{
+	PEASHOOTER,
+	SNOWPEA,
+	SUNFLOWER,
+	WALNUT,
+	KERNELPULT,
+	INVALID
+};
+
 
 #endif

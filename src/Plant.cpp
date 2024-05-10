@@ -1,6 +1,6 @@
 #include "Plant.hpp"
 
-Plant::Plant(int x, int y, string file_name, int frame_number) : frame_number(frame_number) {
+Plant::Plant(int x, int y, string file_name, int frame_number, int animation_speed) : animation_speed(animation_speed), frame_number(frame_number) {
     row = x;
     column = y;
     sprite.setPosition(x,y);
@@ -18,8 +18,6 @@ Plant::Plant(int x, int y, string file_name, int frame_number) : frame_number(fr
     sprite.setTextureRect(rect);
 }
 
-
-
 void Plant::hit(int destroy_value) {
     health -= destroy_value;
     if(health < 0) health = 0;
@@ -32,7 +30,7 @@ bool Plant::isAlive() {
 
 void Plant::update(Vector2i mouse_pos) {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 10){
+    if(elapsed.asMilliseconds() >= animation_speed){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
         IntRect rect;
@@ -42,28 +40,19 @@ void Plant::update(Vector2i mouse_pos) {
         sprite.setTextureRect(rect);
     }
 
-    if(in_drag_mode){
+    if(in_drag_mode == DARGING){
         Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
         sprite.setPosition(target);
+        show = true;
+        in_drag_mode = DRAGED;
     }
 	sprite.setScale(1.5, 1.5);
 }
 
-void Plant::handleMousePress(Vector2i mouse_pos){
-    Vector2f sprite_pos = sprite.getPosition();
-    Vector2f sprite_size = { (float)sprite.getTextureRect().width, (float)sprite.getTextureRect().height };
-
-    if (mouse_pos.x >= sprite_pos.x && mouse_pos.x <= sprite_pos.x + sprite_size.x &&
-        mouse_pos.y >= sprite_pos.y && mouse_pos.y <= sprite_pos.y + sprite_size.y)
-    {
-        in_drag_mode = true;
-    }
-
+void Plant::handleMousePress(){
+    if (in_drag_mode == NOTDRAG) in_drag_mode = DARGING;
 }
 
-void Plant::handleMouseRelease(){
-    in_drag_mode = false;
-}
 void Plant::render(RenderWindow &window) {
     window.draw(sprite);
 }
@@ -74,4 +63,8 @@ PlantType Plant::getPlantType(){
 
 Vector2f Plant::getPos(){
 	return sprite.getPosition();
+}
+
+void Plant::setPos(Vector2f position){
+	return sprite.setPosition(position);
 }

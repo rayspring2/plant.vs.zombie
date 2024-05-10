@@ -7,6 +7,7 @@
 class SunFlower : public Plant{
 public:
 	SunFlower(int x, int y);
+	~SunFlower() {};
 	void update(Vector2i mouse_pos);
 	void makeSun();
 private:

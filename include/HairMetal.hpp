@@ -6,6 +6,7 @@
 class HairMetal: public Zombie{
 public:
 	HairMetal(int x, int y);
+	~HairMetal() {};
 };
 
 #endif

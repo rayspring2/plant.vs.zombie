@@ -8,6 +8,7 @@ protected:
 
 public:
     NormalZombie(int x, int y);
+    ~NormalZombie() {};
 };
 
 #endif

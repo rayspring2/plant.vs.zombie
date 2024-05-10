@@ -7,6 +7,7 @@
 class Walnut : public Plant{
 public:
 	Walnut(int x, int y);
+    ~Walnut() {};
 protected:
     int status = 0;
 };

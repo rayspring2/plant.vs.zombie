@@ -6,6 +6,7 @@
 class BallGreen : public Ball{
 public:
 	BallGreen(Vector2f shooter_pos);
+	~BallGreen() {};
 };
 
 #endif

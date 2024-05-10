@@ -13,6 +13,7 @@
 #include "KernelPult.hpp"
 #include "HairMetal.hpp"
 #include "Game.hpp"
+#include "Menu.hpp"
 
 enum State {
   IN_GAME,
@@ -26,7 +27,6 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-//	PeaShooter* ps[6][11];
 	Texture bg_texture;
 	Sprite bg_sprite;
 	Clock clock;
@@ -39,8 +39,11 @@ private:
 public:
 	RenderWindow window;
 	Game* game;
+	Menu* menu;
+	PeaShooter* peashooter;
 	void run();
 	System();
+	~System() {};
 };
 
 #endif

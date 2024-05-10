@@ -1,6 +1,6 @@
 #include "KernelPult.hpp"
 
-KernelPult::KernelPult(int x, int y) : AttackPlant(x, y, "files/pic/KernelPult.png", 53) {
+KernelPult::KernelPult(int x, int y) : AttackPlant(x, y, "files/pic/KernelPult.png", 53, 10) {
     plant_type = KERNELPULT;
     health = 20;
     damage = 15;

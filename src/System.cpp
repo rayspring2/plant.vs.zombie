@@ -2,7 +2,6 @@
 #include "Primary.hpp"
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-
 System::System(){
 	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");
 	window.setFramerateLimit(FRAME_RATE);
@@ -11,6 +10,11 @@ System::System(){
 		exit(-1);
 	}
 	game = new Game();
+	menu = new Menu(0, 0);
+	menu->addItem(SNOWPEA);
+	menu->addItem(WALNUT);
+	menu->addItem(PEASHOOTER);
+	menu->addItem(SUNFLOWER);
 	bg_sprite.setTexture(bg_texture);
 	bg_sprite.setScale(WIDTH / bg_sprite.getLocalBounds().width,
     HEIGHT / bg_sprite.getLocalBounds().height);
@@ -45,7 +49,8 @@ void System::gen_zombie(){
 void System::update(){
 	gen_zombie();
 	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->update();
-	game->update();
+	game->update(window);
+	menu->update();
 }
 
 void System::handleEvent(){
@@ -73,6 +78,7 @@ void System::render(){
 	window.draw(bg_sprite);
 	game->render(window);
 	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->render(window);
+	menu->render(window);
 	window.display();
 }
 
@@ -82,9 +88,10 @@ void System::handleMousePress(Event ev){
 	}
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
-	case (IN_GAME):
-		//peashooter->handleMousePress(pos);
+	case (IN_GAME):{
+		game->plantRequeset(menu->checkMouse(window));
 		break;
+	}
 	case (PAUSE_MENU):
 		break;
 	case (MAIN_MENU):
@@ -104,7 +111,7 @@ void System::handleMouseRelease(Event ev){
   Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
   switch (game_state) {
 	case (IN_GAME):
-		//peashooter->handleMouseRelease(/*pos*/);
+	//	if(game->moved_plant != nullptr and game->is_drag == true) game->moved_plant->handleMouseRelease();
 		break;
 	case (PAUSE_MENU):
 		break;

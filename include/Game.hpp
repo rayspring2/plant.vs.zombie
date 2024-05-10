@@ -7,16 +7,23 @@
 #include "SnowPea.hpp"
 #include "Ball.hpp"
 #include "Zombie.hpp"
+#include "Walnut.hpp"
+#include "SunFlower.hpp"
 
 class Game{
 public:
 	Game();
 	~Game(){};
-	void update();
+	void update(RenderWindow &window);
 	void render(RenderWindow &window);
 	void handler();
 	vector<Zombie*> zombies;
+	pair<int, int> findPlayGroundBlock(Vector2f plant_position);
 	Position play_ground_position[6][10];
+	Plant* moved_plant = nullptr;
+	bool is_drag = false;
+	bool inBackGround(Vector2i position);
+	void plantRequeset(PlantType plant_type);
 protected:
 	int money;
 	Plant* play_ground[GROUNDROWS][GROUNDCOLUMNS];

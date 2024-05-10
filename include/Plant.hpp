@@ -3,18 +3,16 @@
 #define PLANT_INCLUDE
 #include "Global.hpp"
 
-enum PlantType{
-	PEASHOOTER ,
-	SNOWPEA ,
-	SUNFLOWER ,
-	WALNUT ,
-	KERNELPULT
+enum MouseStatus {
+	NOTDRAG,
+	DARGING,
+	DRAGED
 };
 
 class Plant{
 protected:
-	bool in_drag_mode = false;
-	int row, column, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0;
+	MouseStatus in_drag_mode = NOTDRAG;
+	int row, column, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0, animation_speed;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
@@ -22,17 +20,18 @@ protected:
 	int money;
 public:
 	PlantType getPlantType();
-	Plant(int x, int y, string file_name, int frames_number);
+	Plant(int x, int y, string file_name, int frames_number, int animation_speed);
 	~Plant(){};
-	void handleMousePress(Vector2i mouse_pos);
-	void handleMouseRelease();
+	void handleMousePress();
 	void update(Vector2i mouse_pos= {0 , 0});
 	void fixedBasedPosition() {};
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
 	bool isAlive();
 	Vector2f getPos();
+	void setPos(Vector2f position);
 	void virtual myvirtualfunc(){};
+	bool show = false;
 };
 
 

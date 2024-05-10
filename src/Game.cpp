@@ -26,10 +26,28 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
-    play_ground[0][0] = new PeaShooter(500, 300);  /////////////added just for examine
 }
 
-void Game::update(){
+bool Game :: inBackGround(Vector2i position) {
+    int x = position.x;
+    int y = position.y;
+    if(216 <= x and x <= 954 and 53 <= y and y <= 523) return true;
+    return false;
+}
+
+pair<int, int> Game ::findPlayGroundBlock(Vector2f plant_position) {
+    for(int i = 1; i <= 5; i++) {
+        for(int j = 1; j <= 9; j++) {
+            if(play_ground_position[i][j].up <= plant_position.y and plant_position.y <= play_ground_position[i][j].down and
+            play_ground_position[i][j].left <= plant_position.x and plant_position.x <= play_ground_position[i][j].right and play_ground[i][j] == nullptr) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1};
+}
+
+void Game::update(RenderWindow &window){
     for(int i = 0; i < GROUNDROWS; i++ ){
         for(Plant* p : play_ground[i]){
             if(cellIsEmpty(p))
@@ -43,9 +61,23 @@ void Game::update(){
             //zombie plant and zombie and shoots collisions
         }
     }
-    for(Ball* b : balls)
+    for(Ball* b : balls) {
         b->update();
+    }
     deleteOutBalls();
+
+    if(moved_plant != nullptr and is_drag) {
+        Vector2i pos = Mouse::getPosition(window);
+        moved_plant->update(pos);
+        pair<int, int> new_position = findPlayGroundBlock(moved_plant->getPos());
+        if(new_position != pair<int, int>(-1, -1)) {
+            play_ground[new_position.first][new_position.second] = moved_plant;
+            play_ground[new_position.first][new_position.second]->setPos(Vector2f((float)play_ground_position[new_position.first][new_position.second].x,
+            (float)play_ground_position[new_position.first][new_position.second].y));
+            moved_plant = nullptr;
+        }
+    }
+
 }
 
 
@@ -59,7 +91,7 @@ void Game::addAttackPlantBall(AttackPlant* attack_plant){
 }
 
 void Game::render(RenderWindow &window){
-    for( int i = 0; i < GROUNDROWS ; i++ ){
+    for( int i = 0; i < GROUNDROWS; i++ ){
         for( auto p : play_ground[i] ){
             if(cellIsEmpty(p))
                 continue;
@@ -71,6 +103,28 @@ void Game::render(RenderWindow &window){
     }
 }
 
+void Game::plantRequeset(PlantType plant_type) {
+	if(moved_plant != nullptr and is_drag == true) moved_plant->handleMousePress();
+    if(plant_type == PEASHOOTER) {
+        moved_plant = new PeaShooter(200, 200);
+	    is_drag = true;
+    }
+    else if(plant_type == SNOWPEA) {
+        moved_plant = new SnowPea(200, 200);
+	    is_drag = true;
+    }
+    else if(plant_type == SUNFLOWER) {
+        moved_plant = new SunFlower(200, 200);
+	    is_drag = true;
+    }
+    else if(plant_type == WALNUT) {
+        moved_plant = new Walnut(200, 200);
+	    is_drag = true;
+    }
+
+
+}
+
 void Game::deleteOutBalls(){
     vector <Ball*> trash;
     for(Ball* b : balls){
@@ -78,7 +132,7 @@ void Game::deleteOutBalls(){
             trash.push_back(b);
         }
     }
-    balls.erase(remove_if(balls.begin(), balls.end(), 
+    balls.erase(remove_if(balls.begin(), balls.end(),
         [](auto p){ return p->isOut(); }), balls.end());
     for (auto p : trash){
         delete p;
