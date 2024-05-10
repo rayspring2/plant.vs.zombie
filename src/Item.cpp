@@ -19,18 +19,20 @@ Item :: Item(int x, int y, PlantType plant_type, int cooldown, string path) : co
     text.setFont(font);
     text.setColor(Color :: Red);
     text.setCharacterSize(24);
-    text.setPosition(sprite.getPosition());
+    Vector2f text_pos = {sprite.getPosition().x + 50, sprite.getPosition().y + 30};
+    text.setPosition(text_pos);
 }
 
 void Item :: update(int money) {
     if(item_state == LOADING) {
         IntRect rect;
-        rect.left = 60;
+        rect.top = 60;
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);
         int elapsed = clock.getElapsedTime().asSeconds();
         if(elapsed >= cooldown) {
+            clock.restart();
             item_state = UNAVAILABLE;
         }
         else {
@@ -39,7 +41,7 @@ void Item :: update(int money) {
     }
     if(item_state == UNAVAILABLE) {
         IntRect rect;
-        rect.left = 60;
+        rect.top = 60;
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);

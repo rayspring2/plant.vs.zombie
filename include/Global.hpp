@@ -40,5 +40,10 @@ enum PlantType{
 	INVALID
 };
 
+enum ItemState {
+    LOADING ,
+	AVAILABLE ,
+	UNAVAILABLE
+};
 
 #endif

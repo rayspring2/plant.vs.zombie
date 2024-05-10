@@ -5,21 +5,43 @@ Menu :: Menu(int x, int y) {
     column = y;
 }
 
+void Menu :: isValidRequset(int is_valid) {
+
+    if(is_valid) {
+        for(int i = 0; i < items.size(); i++) {
+            if(items[i]->getPlantType() == last_changed) {
+                items[i]->setStatus(LOADING);
+                last_changed = INVALID;
+            }
+        }
+    }
+}
+
 PlantType Menu :: checkMouse(RenderWindow &window) {
     Vector2i mouse_pos = Mouse::getPosition(window);
     if(mouse_pos.x > 100) return INVALID;
     if(mouse_pos.y < 60) {
-        return PEASHOOTER;
+        last_changed = PEASHOOTER;
     }
     else if(mouse_pos.y < 120) {
-        return SNOWPEA;
+        last_changed = SNOWPEA;
     }
     else if(mouse_pos.y < 180) {
-        return SUNFLOWER;
+        last_changed = SUNFLOWER;
     }
-    else {
-        return WALNUT;
+    else if(mouse_pos.y < 240){
+        last_changed = WALNUT;
     }
+    else last_changed = INVALID;
+
+    if(last_changed != INVALID) {
+        for(int i = 0; i < items.size(); i++) {
+            if(items[i]->getPlantType() == last_changed and items[i]->getStatus() == LOADING) {
+                return INVALID;
+            }
+        }
+    }
+    return last_changed;
 }
 
 void Menu :: render(RenderWindow &window) {

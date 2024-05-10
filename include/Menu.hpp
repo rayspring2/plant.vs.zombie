@@ -14,6 +14,7 @@ public:
     void addItem(PlantType plant_type);
     void handleMousePress(Vector2i mouse_pos);
     void handleMouseRelease();
+	void isValidRequset(int is_valid);
     PlantType checkMouse(RenderWindow &window);
     vector<Item*> items;
 protected:
@@ -21,6 +22,7 @@ protected:
     int money = 100;
 	Texture texture;
 	Sprite sprite;
+    PlantType last_changed;
 private:
     int row, column;
 };

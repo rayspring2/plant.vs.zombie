@@ -74,7 +74,9 @@ void Game::update(RenderWindow &window){
             play_ground[new_position.first][new_position.second] = moved_plant;
             play_ground[new_position.first][new_position.second]->setPos(Vector2f((float)play_ground_position[new_position.first][new_position.second].x,
             (float)play_ground_position[new_position.first][new_position.second].y));
+
             moved_plant = nullptr;
+            is_valid = 1;
         }
     }
 
@@ -108,18 +110,22 @@ void Game::plantRequeset(PlantType plant_type) {
     if(plant_type == PEASHOOTER) {
         moved_plant = new PeaShooter(200, 200);
 	    is_drag = true;
+        is_valid = 0;
     }
     else if(plant_type == SNOWPEA) {
         moved_plant = new SnowPea(200, 200);
 	    is_drag = true;
+        is_valid = 0;
     }
     else if(plant_type == SUNFLOWER) {
         moved_plant = new SunFlower(200, 200);
 	    is_drag = true;
+        is_valid = 0;
     }
     else if(plant_type == WALNUT) {
         moved_plant = new Walnut(200, 200);
 	    is_drag = true;
+        is_valid = 0;
     }
 
 

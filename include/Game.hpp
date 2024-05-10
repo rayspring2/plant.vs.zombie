@@ -23,6 +23,7 @@ public:
 	Plant* moved_plant = nullptr;
 	bool is_drag = false;
 	bool inBackGround(Vector2i position);
+	int getIsValid() {return is_valid;}
 	void plantRequeset(PlantType plant_type);
 protected:
 	int money;
@@ -30,6 +31,7 @@ protected:
 private:
 	Clock ball_clock;
 	vector<Ball*> balls;
+	int is_valid = 0;
 	void deleteOutBalls();
 	void handleCollision(); //after you added zombies:))
 	bool cellIsEmpty(Plant* p);

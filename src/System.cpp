@@ -49,8 +49,9 @@ void System::gen_zombie(){
 void System::update(){
 	gen_zombie();
 	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->update();
-	game->update(window);
 	menu->update();
+	game->update(window);
+
 }
 
 void System::handleEvent(){
@@ -89,6 +90,7 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME):{
+		menu->isValidRequset(game->getIsValid());
 		game->plantRequeset(menu->checkMouse(window));
 		break;
 	}
