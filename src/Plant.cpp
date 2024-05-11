@@ -40,7 +40,7 @@ void Plant::update(Vector2i mouse_pos) {
         sprite.setTextureRect(rect);
     }
 
-    if(in_drag_mode == DARGING){
+    if(in_drag_mode == DRAGING){
         Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
         sprite.setPosition(target);
         show = true;
@@ -50,7 +50,7 @@ void Plant::update(Vector2i mouse_pos) {
 }
 
 void Plant::handleMousePress(){
-    if (in_drag_mode == NOTDRAG) in_drag_mode = DARGING;
+    if (in_drag_mode == NOTDRAG) in_drag_mode = DRAGING;
 }
 
 void Plant::render(RenderWindow &window) {

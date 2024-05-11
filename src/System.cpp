@@ -1,6 +1,6 @@
+
 #include "System.hpp"
 #include "Primary.hpp"
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 System::System(){
 	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");
@@ -18,34 +18,15 @@ System::System(){
 void System::run(){
 	while(window.isOpen()){
 		update();
-		handleEvent();
+		handleEvent();	
 		render();
 	}
 }
 
-void System::gen_zombie(){
-	Time elapsed = clock.getElapsedTime();
-	if(elapsed.asSeconds() >= 1) {
-		clock.restart();
-		int x = rng() % 5;
-		int zombie_row_position = game->play_ground_position[x + 1][1].up;
-		int type_of_zombie = rng() % 2;
-		if(type_of_zombie) {
-			HairMetal* zm = new HairMetal(1000, zombie_row_position);
-			game->zombies.push_back(zm);
-		}
-		else {
-			NormalZombie* zm = new NormalZombie(1000, zombie_row_position);
-			game->zombies.push_back(zm);
-		}
-	}
-}
+
 
 void System::update(){
-//	gen_zombie();
-	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->update();
 	game->update(window);
-
 }
 
 void System::handleEvent(){
@@ -72,7 +53,6 @@ void System::render(){
 	window.clear();
 	window.draw(bg_sprite);
 	game->render(window);
-	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->render(window);
 	window.display();
 }
 
@@ -82,8 +62,9 @@ void System::handleMousePress(Event ev){
 	}
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
-	case (IN_GAME):{
+	case (IN_GAME): {
 		game->plantRequeset(window);
+		//peashooter->handleMousePress(pos);
 		break;
 	}
 	case (PAUSE_MENU):
@@ -105,7 +86,7 @@ void System::handleMouseRelease(Event ev){
   Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
   switch (game_state) {
 	case (IN_GAME):
-	//	if(game->moved_plant != nullptr and game->is_drag == true) game->moved_plant->handleMouseRelease();
+		//peashooter->handleMouseRelease(/*pos*/);
 		break;
 	case (PAUSE_MENU):
 		break;
@@ -117,5 +98,7 @@ void System::handleMouseRelease(Event ev){
     	break;
 	case(EXIT):
 		break;
+
   }
+
 }

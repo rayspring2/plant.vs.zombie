@@ -46,11 +46,11 @@ PlantType Menu :: checkMouse(RenderWindow &window) {
     }
     else last_changed = INVALID;
 
-    for(int i = 0; i < items.size(); i++) {
-        if(items[i]->getPlantType() == last_changed) {
-            if(items[i]->getStatus() != AVAILABLE) last_changed = INVALID;
-        }
-    }
+    // for(int i = 0; i < items.size(); i++) {
+    //     if(items[i]->getPlantType() == last_changed) {
+    //         if(items[i]->getStatus() != AVAILABLE) last_changed = INVALID;
+    //     }
+    // }
 
     // if(last_changed != INVALID) {
     //     for(int i = 0; i < items.size(); i++) {
@@ -74,12 +74,12 @@ void Menu :: update() {
     }
 
     //
-    Time elapsed = clock.getElapsedTime();
-        if (elapsed.asMilliseconds() >= 100) {
-            clock.restart();
-            for(int i = 0; i < items.size(); i++) {
-            items[i]->increase_current_time();
-        }
-    }
+    // Time elapsed = clock.getElapsedTime();
+    //     if (elapsed.asMilliseconds() >= 100) {
+    //         clock.restart();
+    //         for(int i = 0; i < items.size(); i++) {
+    //         items[i]->increase_current_time();
+    //     }
+    // }
     //
 }

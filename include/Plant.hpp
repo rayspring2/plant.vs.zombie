@@ -5,7 +5,7 @@
 
 enum MouseStatus {
 	NOTDRAG,
-	DARGING,
+	DRAGING,
 	DRAGED
 };
 

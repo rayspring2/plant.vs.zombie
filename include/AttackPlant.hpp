@@ -11,9 +11,9 @@ protected:
 public:
 	AttackPlant(int x, int y, string file_name, int frames_number, int animation_speed);
 	~AttackPlant() {};
-	Time getShootTimeElapsed();
 	void resetShootTime();
-	virtual Ball* addBall() { return nullptr; };
+	Time getShootTimeElapsed();
+	virtual Ball* addBall();
 };
 
 #endif
