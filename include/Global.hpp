@@ -24,8 +24,8 @@ const string VERY_CRACKED_WALNUT_PATH = "files/pic/walnut/very_cracked_walnut.pn
 const float WIDTH = 1400.0f;
 const float HEIGHT = 600.0f;
 
-const int GROUNDROWS = 6;
-const int GROUNDCOLUMNS = 10;
+const int GROUNDROWS = 5;
+const int GROUNDCOLUMNS = 9;
 
 struct Position {
     int up, down, left, right, x, y;

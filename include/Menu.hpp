@@ -11,11 +11,11 @@ public:
     int getColumn() {return column;}
     void update();
 	void render(RenderWindow &window);
-    void addItem(PlantType plant_type);
     void handleMousePress(Vector2i mouse_pos);
     void handleMouseRelease();
 	void isValidRequset(int is_valid);
     PlantType checkMouse(RenderWindow &window);
+    void resetCooldown(PlantType plant_type);
     vector<Item*> items;
 protected:
     Clock clock;

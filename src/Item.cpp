@@ -1,6 +1,10 @@
 #include "Item.hpp"
 
-Item :: Item(int x, int y, PlantType plant_type, int cooldown, string path) : cooldown(cooldown), plant_type(plant_type) {
+Item :: Item(int x, int y, PlantType plant_type, int cool_down, string path) : cooldown(cool_down), plant_type(plant_type) {
+    //
+    cooldown = cool_down * 1000;
+    current_time = cooldown;
+    //
     sprite.setPosition(x, y);
     item_state = UNAVAILABLE;
     if(!font.loadFromFile("files/HouseofTerrorRegular/HouseofTerrorRegular.otf")) {
@@ -30,13 +34,14 @@ void Item :: update(int money) {
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);
-        int elapsed = clock.getElapsedTime().asSeconds();
-        if(elapsed >= cooldown) {
-            clock.restart();
+        //Time elapsed = clock.getElapsedTime();
+        if(current_time/*elapsed.asSeconds()*/ >= cooldown) {
+            //clock.restart();
+            current_time = 0;
             item_state = UNAVAILABLE;
         }
         else {
-            text.setString(to_string(cooldown - elapsed));
+            text.setString(to_string(((float)(cooldown)-current_time) / 1000))/*cooldown - elapsed.asSeconds())*/;
         }
     }
     if(item_state == UNAVAILABLE) {
@@ -68,3 +73,9 @@ void Item :: render(RenderWindow &window) {
 ItemState Item :: getStatus() {
     return item_state;
 }
+
+//
+void Item::increase_current_time() {
+    current_time += 100;
+}
+//

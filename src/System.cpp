@@ -10,11 +10,6 @@ System::System(){
 		exit(-1);
 	}
 	game = new Game();
-	menu = new Menu(0, 0);
-	menu->addItem(SNOWPEA);
-	menu->addItem(WALNUT);
-	menu->addItem(PEASHOOTER);
-	menu->addItem(SUNFLOWER);
 	bg_sprite.setTexture(bg_texture);
 	bg_sprite.setScale(WIDTH / bg_sprite.getLocalBounds().width,
     HEIGHT / bg_sprite.getLocalBounds().height);
@@ -47,9 +42,8 @@ void System::gen_zombie(){
 }
 
 void System::update(){
-	gen_zombie();
+//	gen_zombie();
 	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->update();
-	menu->update();
 	game->update(window);
 
 }
@@ -79,7 +73,6 @@ void System::render(){
 	window.draw(bg_sprite);
 	game->render(window);
 	for(int i = 0; i < game->zombies.size(); i++) game->zombies[i]->render(window);
-	menu->render(window);
 	window.display();
 }
 
@@ -90,8 +83,7 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME):{
-		menu->isValidRequset(game->getIsValid());
-		game->plantRequeset(menu->checkMouse(window));
+		game->plantRequeset(window);
 		break;
 	}
 	case (PAUSE_MENU):
@@ -125,6 +117,5 @@ void System::handleMouseRelease(Event ev){
     	break;
 	case(EXIT):
 		break;
-
   }
 }
