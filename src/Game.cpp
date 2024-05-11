@@ -27,6 +27,12 @@ Game::Game() {
         }
     }
     play_ground[1][1] = new PeaShooter(500, 300);  /////////////added just for examine
+    
+    play_ground[1][2] = new SnowPea(300, 700);  /////////////added just for examine
+    
+    play_ground[1][4] = new PeaShooter(400, 200);  /////////////added just for examine
+    
+    play_ground[1][6] = new SnowPea(200, 300);  /////////////added just for examine
 }
 
 void Game::genZombie(){
@@ -119,14 +125,14 @@ bool Game::cellIsEmpty(Plant* p){
 }
 
 
-void Game::checkEating() {  
+void Game::checkEating() {
     for(Zombie* z : zombies ) {
         z -> mode = "walking";
         for(int i = 1; i <= 5; i++) {
             for(int j = 1; j <= 9; j++) {
                 if(cellIsEmpty( play_ground[i][j] ) )
                     continue;
-                if(play_ground[i][j]->getRect().intersects(z->getRect()) ) {    
+                if(play_ground[i][j]->getRect().intersects(z->getRect()) ) {
                     z -> mode = "eating";
                     if( z -> isReadytoHit()){
                         play_ground[i][j]->hit(z->getDamageValue());
@@ -148,7 +154,7 @@ void Game::removeDeadZombies(){
     }
     zombies.erase(remove_if(zombies.begin(), zombies.end(), 
         [](auto p){ return !p->isAlive() ; }), zombies.end());
-    
+
     for (auto p : trash){
         delete p;
     }
