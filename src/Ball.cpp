@@ -1,15 +1,18 @@
 #include <Ball.hpp>
 
-Ball::Ball(Vector2f shooter_pos , string pic_path){
+Ball::Ball(Vector2f shooter_pos , string pic_path , int damage_value) : 
+	damage_value(damage_value){
+		
 	pos = shooter_pos;
-	////
 	if(!texture.loadFromFile(pic_path)){
 		cerr << "faild to load blue ball\n";
 	}
-	////
 	sprite.setTexture(texture);
 }
 
+int Ball::getDamageValue(){
+	return damage_value;
+}
 
 void Ball::update(){
 	pos.x += speed;
@@ -29,4 +32,11 @@ void Ball::render(RenderWindow &window){
 }
 Vector2f Ball::getPos(){
 	return sprite.getPosition();
+}
+
+bool Ball::isCollided(){
+	return is_collided;
+}
+void Ball::collide(){
+	is_collided = 1;
 }

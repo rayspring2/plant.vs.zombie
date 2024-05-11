@@ -23,16 +23,19 @@ protected:
 public:
 	PlantType getPlantType();
 	Plant(int x, int y, string file_name, int frames_number);
-	~Plant(){};
+	virtual ~Plant(){};
 	void handleMousePress(Vector2i mouse_pos);
 	void handleMouseRelease();
 	void update(Vector2i mouse_pos= {0 , 0});
 	void fixedBasedPosition() {};
+	int getCoolDownTime(){ return cooldown; };
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
 	bool isAlive();
+	bool isDead();
 	Vector2f getPos();
-	void virtual myvirtualfunc(){};
+	FloatRect getRect();
+	int getHealth(){ return health; }
 };
 
 

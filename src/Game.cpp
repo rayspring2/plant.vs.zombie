@@ -1,5 +1,5 @@
 #include "Game.hpp"
-
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 Game::Game() {
     for(int i = 1; i <= 5; i++) {
         for(int j = 1; j <= 9; j++) {
@@ -26,66 +26,90 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
-    play_ground[0][0] = new PeaShooter(500, 300);  /////////////added just for examine
+    play_ground[1][1] = new PeaShooter(500, 300);  /////////////added just for examine
 }
 
+void Game::genZombie(){
+	Time elapsed = clock.getElapsedTime();
+	if(elapsed.asSeconds() >= 1) {
+		clock.restart();
+		int x = rng() % 5;
+		int zombie_row_position = play_ground_position[x + 1][1].up;
+		int type_of_zombie = rng() % 2;
+		if(type_of_zombie) {
+			HairMetal* zm = new HairMetal(1000, zombie_row_position);
+			zombies.push_back(zm);
+		}
+		else {
+			NormalZombie* zm = new NormalZombie(1000, zombie_row_position);
+			zombies.push_back(zm);
+		}
+	}
+}
 void Game::update(){
-    for(int i = 0; i < GROUNDROWS; i++ ){
-        for(Plant* p : play_ground[i]){
-            if(cellIsEmpty(p))
-                continue;
-            p->update();
-            if(auto attack_plant = dynamic_cast<AttackPlant*>(p))
-                addAttackPlantBall(attack_plant);
-            //must add:
-            //check for zombie eating plants
-            //add sun to sunflowers
-            //zombie plant and zombie and shoots collisions
-        }
-    }
+    handleCollision();
+    removeDeadZombies();
+    deleteUnvalidBalls();
+    for(auto z: zombies)
+        z -> update();
     for(Ball* b : balls)
         b->update();
-    deleteOutBalls();
+    genZombie();
+    updatePlayGround();
+    checkEating();
+    //must add:
+    //check for zombie eating plants
+    //add sun to sunflowers
+    //zombie plant and zombie and shoots collisions
+    
 }
 
 
 void Game::addAttackPlantBall(AttackPlant* attack_plant){
     Time shooter_time_elapsed = attack_plant -> getShootTimeElapsed();
-    if(shooter_time_elapsed.asMilliseconds() >= 600){
+    if(shooter_time_elapsed.asMilliseconds() >= attack_plant-> getCoolDownTime() *100){
         Ball* new_ball = attack_plant->addBall();
         balls.push_back(new_ball);
-        attack_plant->resetShootTime();
     }
 }
 
 void Game::render(RenderWindow &window){
-    for( int i = 0; i < GROUNDROWS ; i++ ){
-        for( auto p : play_ground[i] ){
-            if(cellIsEmpty(p))
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j=1 ;j<GROUNDCOLUMNS ;j++){ //auto p : play_ground[i] 
+            if(cellIsEmpty(play_ground[i][j]))
                 continue;
-            p->render(window);
+            play_ground[i][j]->render(window);
         }
     }
     for(Ball* b : balls){
         b->render(window);
     }
+    for(int i = 0; i < zombies.size(); i++) zombies[i]->render(window);
 }
 
-void Game::deleteOutBalls(){
+void Game::deleteUnvalidBalls(){
     vector <Ball*> trash;
     for(Ball* b : balls){
-        if( b->isOut()){
+        if( b->isOut() || b->isCollided()){
             trash.push_back(b);
         }
     }
     balls.erase(remove_if(balls.begin(), balls.end(), 
-        [](auto p){ return p->isOut(); }), balls.end());
+        [](auto p){ return p->isOut() || p->isCollided(); }), balls.end());
     for (auto p : trash){
         delete p;
     }
 }
-void Game::handleCollision(){
 
+void Game::handleCollision(){
+    for(auto b : balls){
+        for(auto z : zombies){
+            if( b -> getRect().intersects(z->getRect())){
+                z->hit(b->getDamageValue());
+                b->collide();
+            }
+        }
+    }
 }
 
 bool Game::cellIsEmpty(Plant* p){
@@ -94,24 +118,66 @@ bool Game::cellIsEmpty(Plant* p){
     return 0;
 }
 
-bool in_same_block(Position a, Position b) {
-    if(a.y == b.y and a.left <= b.x and b.x < a.right) return true;
-    return false;
-}
 
-void Game::handler() {
-   for(int i = 1; i <= 5; i++) {
-        for(int j = 1; j <= 9; j++) {
-            if(play_ground[i][j] == nullptr) continue;
-            for(int k = 0; k < zombies.size(); k++) {
-                Position zombie_pos;
-                zombie_pos.x = zombies[k]->get_row();
-                zombie_pos.y = zombies[k]->get_column();
-                if(in_same_block(play_ground_position[i][j], zombie_pos)) {
-                    cout << "eating timeeeeee";
-                    exit(0);
+void Game::checkEating() {  
+    for(Zombie* z : zombies ) {
+        z -> mode = "walking";
+        for(int i = 1; i <= 5; i++) {
+            for(int j = 1; j <= 9; j++) {
+                if(cellIsEmpty( play_ground[i][j] ) )
+                    continue;
+                if(play_ground[i][j]->getRect().intersects(z->getRect()) ) {    
+                    z -> mode = "eating";
+                    if( z -> isReadytoHit()){
+                        play_ground[i][j]->hit(z->getDamageValue());
+                        cerr << play_ground[i][j]->getHealth() <<endl;
+                    }
                 }
             }
         }
-   }
+    }
 }
+
+
+void Game::removeDeadZombies(){
+    vector <Zombie*> trash;
+    for(Zombie* z : zombies){
+        if( !z->isAlive()){
+            trash.push_back(z);
+        }
+    }
+    zombies.erase(remove_if(zombies.begin(), zombies.end(), 
+        [](auto p){ return !p->isAlive() ; }), zombies.end());
+    
+    for (auto p : trash){
+        delete p;
+    }
+}
+
+void Game::updatePlayGround(){
+    deleteDeadPlants();
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j = 1 ;j<GROUNDCOLUMNS ;j++){
+            if(cellIsEmpty(play_ground[i][j]))
+                continue;
+            play_ground[i][j]->update();
+            if(auto attack_plant = dynamic_cast<AttackPlant*>(play_ground[i][j]))
+                addAttackPlantBall(attack_plant);
+        }
+    }
+}
+
+void Game::deleteDeadPlants(){
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j = 1 ; j<GROUNDCOLUMNS ;j++){
+            if(cellIsEmpty(play_ground[i][j]) )
+                continue;
+            if(!play_ground[i][j]->isAlive()){
+                delete play_ground[i][j];
+                play_ground[i][j] = nullptr; 
+            }
+        }
+    }
+}
+
+

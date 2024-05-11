@@ -1,8 +1,8 @@
 
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -I./include #-fsanitize=address -fsanitize=undefined
-SFML_INCLUDE_DIR = /opt/homebrew/Cellar/sfml/2.6.1/include
-SFML_LIBRARY_DIR = /opt/homebrew/Cellar/sfml/2.6.1/lib
+CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include #-fsanitize=address -fsanitize=undefined
+SFML_INCLUDE_DIR = /usr/include
+SFML_LIBRARY_DIR = /usr/lib
 
 #SFML_INCLUDE_DIR = C:/SFML-2.6.1/include
 #SFML_LIBRARY_DIR = C:/SFML-2.6.1/lib
