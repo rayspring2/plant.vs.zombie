@@ -11,7 +11,8 @@ PeaShooter::PeaShooter(int x, int y) : Pea(x, y, "files/pic/peashooter.png") {
 }
 
 Ball* PeaShooter::addBall(){
-    Vector2f pos_base = { getPos().x +50  , getPos().y + 10 };
+    Vector2f pos_base = { getPos().x +50  , getPos().y + 15 };
+    resetShootTime();
     BallGreen* new_ball = new BallGreen(pos_base);
     return new_ball;
 }

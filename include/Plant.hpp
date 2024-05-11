@@ -25,13 +25,17 @@ public:
 	void handleMousePress();
 	void update(Vector2i mouse_pos= {0 , 0});
 	void fixedBasedPosition() {};
+	int getCoolDownTime(){ return cooldown; };
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
 	bool isAlive();
+	bool isDead();
 	Vector2f getPos();
 	void setPos(Vector2f position);
 	void virtual myvirtualfunc(){};
 	bool show = false;
+	FloatRect getRect();
+	int getHealth(){ return health; }
 };
 
 

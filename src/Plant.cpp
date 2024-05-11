@@ -33,8 +33,7 @@ void Plant::update(Vector2i mouse_pos) {
     if(elapsed.asMilliseconds() >= animation_speed){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
-        IntRect rect;
-        rect.width = 50;
+        IntRect rect;        rect.width = 50;
         rect.height = 50;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
@@ -67,4 +66,7 @@ Vector2f Plant::getPos(){
 
 void Plant::setPos(Vector2f position){
 	return sprite.setPosition(position);
+}
+FloatRect Plant::getRect(){
+    return sprite.getGlobalBounds();
 }

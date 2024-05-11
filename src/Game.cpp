@@ -1,5 +1,5 @@
 #include "Game.hpp"
-
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 Game::Game() {
     for(int i = 1; i <= 5; i++) {
         for(int j = 1; j <= 9; j++) {
@@ -31,6 +31,24 @@ Game::Game() {
     selected_plant = INVALID;
 }
 
+void Game::genZombie(){
+	Time elapsed = clock.getElapsedTime();
+	if(elapsed.asSeconds() >= 1) {
+		clock.restart();
+		int x = rng() % 5;
+		int zombie_row_position = play_ground_position[x + 1][1].up;
+		int type_of_zombie = rng() % 2;
+		if(type_of_zombie) {
+			HairMetal* zm = new HairMetal(1000, zombie_row_position);
+			zombies.push_back(zm);
+		}
+		else {
+			NormalZombie* zm = new NormalZombie(1000, zombie_row_position);
+			zombies.push_back(zm);
+		}
+	}
+}
+
 bool Game :: inBackGround(Vector2i position) {
     int x = position.x;
     int y = position.y;
@@ -52,23 +70,17 @@ pair<int, int> Game ::findPlayGroundBlock(Vector2f plant_position) {
 
 void Game::update(RenderWindow &window){
     menu->update();
-    for(int i = 1; i <= GROUNDROWS; i++ ){
-        for(int j = 1; j <= 9; j++){
-            if(cellIsEmpty(play_ground[i][j]))
-                continue;
-            play_ground[i][j]->update();
-            if(auto attack_plant = dynamic_cast<AttackPlant*>(play_ground[i][j]))
-                addAttackPlantBall(attack_plant);
-            //must add:
-            //check for zombie eating plants
-            //add sun to sunflowers
-            //zombie plant and zombie and shoots collisions
-        }
-    }
-    for(Ball* b : balls) {
+
+    handleCollision();
+    removeDeadZombies();
+    deleteUnvalidBalls();
+    for(auto z: zombies)
+        z -> update();
+    for(Ball* b : balls)
         b->update();
-    }
-    deleteOutBalls();
+    genZombie();
+    updatePlayGround();
+    checkEating();
 
     if(moved_plant != nullptr and is_drag) {
         Vector2i pos = Mouse::getPosition(window);
@@ -86,13 +98,11 @@ void Game::update(RenderWindow &window){
 
 }
 
-
 void Game::addAttackPlantBall(AttackPlant* attack_plant){
     Time shooter_time_elapsed = attack_plant -> getShootTimeElapsed();
-    if(shooter_time_elapsed.asMilliseconds() >= 600){
+    if(shooter_time_elapsed.asMilliseconds() >= attack_plant-> getCoolDownTime() *100){
         Ball* new_ball = attack_plant->addBall();
         balls.push_back(new_ball);
-        attack_plant->resetShootTime();
     }
 }
 
@@ -111,80 +121,88 @@ void Game::render(RenderWindow &window){
 }
 
 void Game::plantRequeset(RenderWindow &window) {
-    if (selected_plant == INVALID) {
-        selected_plant = menu->checkMouse(window);
-        return;
-    }
-    PlantType new_selected_plant = menu->checkMouse(window);
-    if (new_selected_plant != INVALID) {
-        selected_plant = new_selected_plant;
-        return;
-    }
-    Vector2i mouse_position = Mouse :: getPosition(window);
-    pair <int,int>location = findPlayGroundBlock((Vector2f) mouse_position);
-    if (location == pair<int, int>(-1,-1)) {
-        selected_plant = INVALID;
-        return;
-    }
-    Plant* planting;
-    if(selected_plant == PEASHOOTER) {
-        planting = new PeaShooter(200, 200);
-    }
-    else if(selected_plant == SNOWPEA) {
-        planting = new SnowPea(200, 200);
-    }
-    else if(selected_plant == SUNFLOWER) {
-        planting = new SunFlower(200, 200);
-    }
-    else if(selected_plant == WALNUT) {
-        planting = new Walnut(200, 200);
-    }
-    menu->resetCooldown(selected_plant);
-    play_ground[location.first][location.second] = planting;
-    play_ground[location.first][location.second]->setPos(Vector2f((float)play_ground_position[location.first][location.second].x,
-        (float)play_ground_position[location.first][location.second].y));
+    // if (selected_plant == INVALID) {
+    //     selected_plant = menu->checkMouse(window);
+    //     return;
+    // }
+    // PlantType new_selected_plant = menu->checkMouse(window);
+    // if (new_selected_plant != INVALID) {
+    //     selected_plant = new_selected_plant;
+    //     return;
+    // }
+    // Vector2i mouse_position = Mouse :: getPosition(window);
+    // pair <int,int>location = findPlayGroundBlock((Vector2f) mouse_position);
+    // if (location == pair<int, int>(-1,-1)) {
+    //     selected_plant = INVALID;
+    //     return;
+    // }
+    // Plant* planting;
+    // if(selected_plant == PEASHOOTER) {
+    //     planting = new PeaShooter(200, 200);
+    // }
+    // else if(selected_plant == SNOWPEA) {
+    //     planting = new SnowPea(200, 200);
+    // }
+    // else if(selected_plant == SUNFLOWER) {
+    //     planting = new SunFlower(200, 200);
+    // }
+    // else if(selected_plant == WALNUT) {
+    //     planting = new Walnut(200, 200);
+    // }
+    // menu->resetCooldown(selected_plant);
+    // play_ground[location.first][location.second] = planting;
+    // play_ground[location.first][location.second]->setPos(Vector2f((float)play_ground_position[location.first][location.second].x,
+    //     (float)play_ground_position[location.first][location.second].y));
     // check box !
     //
-    // PlantType plant_type = menu->checkMouse(window);
-	// if(moved_plant != nullptr and is_drag == true) moved_plant->handleMousePress();
-    // if(plant_type == PEASHOOTER) {
-    //     moved_plant = new PeaShooter(200, 200);
-	//     is_drag = true;
-    //     is_valid = 0;
-    // }
-    // else if(plant_type == SNOWPEA) {
-    //     moved_plant = new SnowPea(200, 200);
-	//     is_drag = true;
-    //     is_valid = 0;
-    // }
-    // else if(plant_type == SUNFLOWER) {
-    //     moved_plant = new SunFlower(200, 200);
-	//     is_drag = true;
-    //     is_valid = 0;
-    // }
-    // else if(plant_type == WALNUT) {
-    //     moved_plant = new Walnut(200, 200);
-	//     is_drag = true;
-    //     is_valid = 0;
-    // }
-    // menu->isValidRequset(is_valid);
+    PlantType plant_type = menu->checkMouse(window);
+	if(moved_plant != nullptr and is_drag == true) moved_plant->handleMousePress();
+    if(plant_type == PEASHOOTER) {
+        moved_plant = new PeaShooter(200, 200);
+	    is_drag = true;
+        is_valid = 0;
+    }
+    else if(plant_type == SNOWPEA) {
+        moved_plant = new SnowPea(200, 200);
+	    is_drag = true;
+        is_valid = 0;
+    }
+    else if(plant_type == SUNFLOWER) {
+        moved_plant = new SunFlower(200, 200);
+	    is_drag = true;
+        is_valid = 0;
+    }
+    else if(plant_type == WALNUT) {
+        moved_plant = new Walnut(200, 200);
+	    is_drag = true;
+        is_valid = 0;
+    }
+    menu->isValidRequset(is_valid);
 }
 
-void Game::deleteOutBalls(){
+void Game::deleteUnvalidBalls(){
     vector <Ball*> trash;
     for(Ball* b : balls){
-        if( b->isOut()){
+        if( b->isOut() || b->isCollided()){
             trash.push_back(b);
         }
     }
     balls.erase(remove_if(balls.begin(), balls.end(),
-        [](auto p){ return p->isOut(); }), balls.end());
+        [](auto p){ return p->isOut() || p->isCollided(); }), balls.end());
     for (auto p : trash){
         delete p;
     }
 }
-void Game::handleCollision(){
 
+void Game::handleCollision(){
+    for(auto b : balls){
+        for(auto z : zombies){
+            if( b -> getRect().intersects(z->getRect())){
+                z->hit(b->getDamageValue());
+                b->collide();
+            }
+        }
+    }
 }
 
 bool Game::cellIsEmpty(Plant* p){
@@ -193,24 +211,66 @@ bool Game::cellIsEmpty(Plant* p){
     return 0;
 }
 
-bool in_same_block(Position a, Position b) {
-    if(a.y == b.y and a.left <= b.x and b.x < a.right) return true;
-    return false;
-}
 
-void Game::handler() {
-   for(int i = 1; i <= 5; i++) {
-        for(int j = 1; j <= 9; j++) {
-            if(play_ground[i][j] == nullptr) continue;
-            for(int k = 0; k < zombies.size(); k++) {
-                Position zombie_pos;
-                zombie_pos.x = zombies[k]->get_row();
-                zombie_pos.y = zombies[k]->get_column();
-                if(in_same_block(play_ground_position[i][j], zombie_pos)) {
-                    cout << "eating timeeeeee";
-                    exit(0);
+void Game::checkEating() {
+    for(Zombie* z : zombies ) {
+        z -> mode = "walking";
+        for(int i = 1; i <= 5; i++) {
+            for(int j = 1; j <= 9; j++) {
+                if(cellIsEmpty( play_ground[i][j] ) )
+                    continue;
+                if(play_ground[i][j]->getRect().intersects(z->getRect()) ) {
+                    z -> mode = "eating";
+                    if( z -> isReadytoHit()){
+                        play_ground[i][j]->hit(z->getDamageValue());
+                        cerr << play_ground[i][j]->getHealth() <<endl;
+                    }
                 }
             }
         }
-   }
+    }
 }
+
+
+void Game::removeDeadZombies(){
+    vector <Zombie*> trash;
+    for(Zombie* z : zombies){
+        if( !z->isAlive()){
+            trash.push_back(z);
+        }
+    }
+    zombies.erase(remove_if(zombies.begin(), zombies.end(), 
+        [](auto p){ return !p->isAlive() ; }), zombies.end());
+    
+    for (auto p : trash){
+        delete p;
+    }
+}
+
+void Game::updatePlayGround(){
+    deleteDeadPlants();
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j = 1 ;j<GROUNDCOLUMNS ;j++){
+            if(cellIsEmpty(play_ground[i][j]))
+                continue;
+            play_ground[i][j]->update();
+            if(auto attack_plant = dynamic_cast<AttackPlant*>(play_ground[i][j]))
+                addAttackPlantBall(attack_plant);
+        }
+    }
+}
+
+void Game::deleteDeadPlants(){
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j = 1 ; j<GROUNDCOLUMNS ;j++){
+            if(cellIsEmpty(play_ground[i][j]) )
+                continue;
+            if(!play_ground[i][j]->isAlive()){
+                delete play_ground[i][j];
+                play_ground[i][j] = nullptr; 
+            }
+        }
+    }
+}
+
+

@@ -39,8 +39,6 @@ private:
 public:
 	RenderWindow window;
 	Game* game;
-	Menu* menu;
-	PeaShooter* peashooter;
 	void run();
 	System();
 	~System() {};

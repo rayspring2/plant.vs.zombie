@@ -10,6 +10,9 @@
 #include "Walnut.hpp"
 #include "SunFlower.hpp"
 #include "Menu.hpp"
+#include "HairMetal.hpp"
+#include "NormalZombie.hpp"
+#include "Walnut.hpp"
 
 class Game{
 public:
@@ -17,7 +20,7 @@ public:
 	~Game(){};
 	void update(RenderWindow &window);
 	void render(RenderWindow &window);
-	void handler();
+	void checkEating();
 	vector<Zombie*> zombies;
 	pair<int, int> findPlayGroundBlock(Vector2f plant_position);
 	Position play_ground_position[6][10];
@@ -36,9 +39,15 @@ private:
 	vector<Ball*> balls;
 	int is_valid = 0;
 	void deleteOutBalls();
+	Clock clock;
+	void genZombie();
+	void deleteUnvalidBalls();
 	void handleCollision(); //after you added zombies:))
 	bool cellIsEmpty(Plant* p);
 	void addAttackPlantBall(AttackPlant* attack_plant);
+	void removeDeadZombies();
+	void updatePlayGround();
+	void deleteDeadPlants();
 };
 
 

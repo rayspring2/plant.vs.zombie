@@ -8,12 +8,12 @@ class AttackPlant : public Plant {
 protected:
 	int bullet_speed, damage, speed;
 	Clock shooter_clock;
+	void resetShootTime();
 public:
 	AttackPlant(int x, int y, string file_name, int frames_number, int animation_speed);
 	~AttackPlant() {};
 	Time getShootTimeElapsed();
-	void resetShootTime();
-	virtual Ball* addBall() { return nullptr; };
+	virtual Ball* addBall();
 };
 
 #endif

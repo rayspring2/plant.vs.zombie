@@ -22,7 +22,7 @@ void Menu :: isValidRequset(int is_valid) {
         for(int i = 0; i < items.size(); i++) {
             if(items[i]->getPlantType() == last_changed) {
                 items[i]->setStatus(LOADING);
-                cout << items[i]->getPlantType() << " " << items[i]->clock.getElapsedTime().asSeconds() << endl;
+            //    cout << items[i]->getPlantType() << " " << items[i]->clock.getElapsedTime().asSeconds() << endl;
                 last_changed = INVALID;
             }
         }
@@ -74,12 +74,12 @@ void Menu :: update() {
     }
 
     //
-    Time elapsed = clock.getElapsedTime();
-        if (elapsed.asMilliseconds() >= 100) {
-            clock.restart();
-            for(int i = 0; i < items.size(); i++) {
-            items[i]->increase_current_time();
-        }
-    }
+    // Time elapsed = clock.getElapsedTime();
+    //     if (elapsed.asMilliseconds() >= 100) {
+    //         clock.restart();
+    //         for(int i = 0; i < items.size(); i++) {
+    //         items[i]->increase_current_time();
+    //     }
+    // }
     //
 }
