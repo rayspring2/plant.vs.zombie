@@ -9,6 +9,7 @@
 #include "Zombie.hpp"
 #include "Walnut.hpp"
 #include "SunFlower.hpp"
+#include "Menu.hpp"
 
 class Game{
 public:
@@ -24,10 +25,12 @@ public:
 	bool is_drag = false;
 	bool inBackGround(Vector2i position);
 	int getIsValid() {return is_valid;}
-	void plantRequeset(PlantType plant_type);
+	void plantRequeset(RenderWindow &window);
+	PlantType selected_plant;
 protected:
 	int money;
-	Plant* play_ground[GROUNDROWS][GROUNDCOLUMNS];
+	Menu* menu;
+	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
 	vector<Ball*> balls;
