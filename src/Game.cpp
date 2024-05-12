@@ -27,6 +27,7 @@ Game::Game() {
         }
     }
     play_ground[3][1] = new SunFlower(500, 300);  /////////////added just for examine
+    play_ground[1][1] = new PeaShooter(250, 100);
 }
 
 void Game::genZombie(){
@@ -35,7 +36,7 @@ void Game::genZombie(){
 		clock.restart();
 		int x = rng() % 5;
 		int zombie_row_position = play_ground_position[x + 1][1].up;
-		int type_of_zombie = 0;//rng() % 2;
+		int type_of_zombie = rng() % 2;
 		if(type_of_zombie) {
 			HairMetal* zm = new HairMetal(1000, zombie_row_position);
 			zombies.push_back(zm);
