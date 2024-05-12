@@ -16,6 +16,7 @@ Plant::Plant(int x, int y, string file_name, int frame_number) : frame_number(fr
     rect.width = 50;
     rect.height = 50;
     sprite.setTextureRect(rect);
+    sprite.setScale(1.5, 1.5);
 }
 
 
@@ -32,10 +33,11 @@ bool Plant::isAlive() {
 
 void Plant::update(Vector2i mouse_pos) {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 10){
+    if(elapsed.asMilliseconds() >= 50){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
-        IntRect rect;        rect.width = 50;
+        IntRect rect;        
+        rect.width = 50;
         rect.height = 50;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
@@ -45,7 +47,7 @@ void Plant::update(Vector2i mouse_pos) {
         Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
         sprite.setPosition(target);
     }
-	sprite.setScale(1.5, 1.5);
+	//sprite.setScale(1.5, 1.5);
 }
 
 void Plant::handleMousePress(Vector2i mouse_pos){

@@ -10,6 +10,8 @@
 #include "HairMetal.hpp"
 #include "NormalZombie.hpp"
 #include "Walnut.hpp"
+#include "Sun.hpp"
+#include "SunFlower.hpp"
 
 class Game{
 public:
@@ -18,14 +20,15 @@ public:
 	void update();
 	void render(RenderWindow &window);
 	void checkEating();
-	vector<Zombie*> zombies;
 	Position play_ground_position[6][10];
 protected:
 	int money;
-	Plant* play_ground[GROUNDROWS][GROUNDCOLUMNS];
+	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
+	vector<Zombie*> zombies;
 	vector<Ball*> balls;
+	vector<Sun*> suns;
 	Clock clock;
 	void genZombie();
 	void deleteUnvalidBalls();
@@ -35,6 +38,8 @@ private:
 	void removeDeadZombies();
 	void updatePlayGround();
 	void deleteDeadPlants();
+	void deleteDeadSuns();
+	void addSunflowerSun(SunFlower* sun_flower);
 };
 
 

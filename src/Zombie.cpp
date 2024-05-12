@@ -2,9 +2,9 @@
 #include "Plant.hpp"
 
 Zombie::Zombie(int x, int y, string file_name, int frame_number, int zombie_width,  int zombie_height) :
-zombie_width(zombie_width), zombie_height(zombie_height), frame_number(frame_number) {
-    row = x;
-    column = y;
+x(x), y(y), zombie_width(zombie_width), 
+zombie_height(zombie_height), frame_number(frame_number) {
+    row = (y - 53) / 94 + 1 ;
     current_speed = speed;
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * zombie_width;
@@ -18,7 +18,7 @@ zombie_width(zombie_width), zombie_height(zombie_height), frame_number(frame_num
     rect.width = zombie_width;
     rect.height = zombie_height;
     sprite.setTextureRect(rect);
-    sprite.setPosition(row, column);
+    sprite.setPosition(x, y);
 }
 
 void Zombie::hit(int destroy_value) {
@@ -36,9 +36,9 @@ bool Zombie::isAlive() {
 
 void Zombie::update() {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 50 and row > 220 && mode == "walking") {
-        row -= speed;
-        sprite.setPosition(row, column);
+    if(elapsed.asMilliseconds() >= 50 and x > 220 && mode == WALKING) {
+        x -= speed;
+        sprite.setPosition(x, y);
     }
 
     if(elapsed.asMilliseconds() >= 100){
@@ -48,6 +48,9 @@ void Zombie::update() {
         rect.width = zombie_width;
         rect.height = zombie_height;
         rect.left = frames_position[cur_rect];
+        rect.top = 0;
+        if(mode == EATING)
+            rect.top = zombie_height;
         sprite.setTextureRect(rect);
 
     }
@@ -62,9 +65,6 @@ FloatRect Zombie::getRect(){
     return sprite.getGlobalBounds();
 }
 
-bool Zombie::compare(Zombie* x, Zombie* y){
-    return x->get_row() < y->get_row();
-}
 
 int Zombie::getDamageValue(){
     return damage;
