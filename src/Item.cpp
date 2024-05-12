@@ -1,25 +1,25 @@
 #include "Item.hpp"
 
-Item :: Item(int x, int y, PlantType plant_type, int cool_down, string path) : cooldown(cool_down), plant_type(plant_type) {
-    // //
-    // cooldown = cool_down * 1000;
-    // current_time = cooldown;
-    // //
-    sprite.setPosition(x, y);
-    item_state = UNAVAILABLE;
-    if(!font.loadFromFile("files/HouseofTerrorRegular/HouseofTerrorRegular.otf")) {
-        cout << "font can not load";
-        exit(0);
-    }
+void Item :: fixTexture(string path) {
     if (!texture.loadFromFile(path)) {
         cerr << "picture not found!\n";
-		exit(0);
+        exit(0);
     }
     sprite.setTexture(texture);
     IntRect rect;
     rect.width = 100;
     rect.height = 60;
     sprite.setTextureRect(rect);
+}
+
+Item :: Item(int x, int y, PlantType plant_type, int cool_down, string path) : cooldown(cool_down), plant_type(plant_type) {
+    sprite.setPosition(x, y);
+    item_state = UNAVAILABLE;
+    if(!font.loadFromFile("files/HouseofTerrorRegular/HouseofTerrorRegular.otf")) {
+        cout << "font can not load";
+        exit(0);
+    }
+    fixTexture(path);
     text.setFont(font);
     text.setColor(Color :: Red);
     text.setCharacterSize(24);
@@ -34,6 +34,7 @@ void Item :: update(int money) {
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);
+      //  cout << long(&clock) << endl;
         int elapsed = clock.getElapsedTime().asSeconds();
         if(elapsed>= cooldown) {
             clock.restart();
@@ -55,7 +56,7 @@ void Item :: update(int money) {
     }
     if(item_state == AVAILABLE) {
         IntRect rect;
-        rect.left = 0;
+        rect.top = 0;
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);

@@ -25,6 +25,8 @@ public:
 	void handleMousePress();
 	void update(Vector2i mouse_pos= {0 , 0});
 	void fixedBasedPosition() {};
+	int getWidth() {return sprite.getGlobalBounds().width;}
+	int getHeight() {return sprite.getGlobalBounds().height;}
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
 	bool isAlive();

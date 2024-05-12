@@ -9,13 +9,13 @@
 #include "Zombie.hpp"
 #include "Walnut.hpp"
 #include "SunFlower.hpp"
-#include "Menu.hpp"
+#include "Icon.hpp"
 
 class Game{
 public:
 	Game();
 	~Game(){};
-	void update(RenderWindow &window);
+	void update();
 	void render(RenderWindow &window);
 	void handler();
 	vector<Zombie*> zombies;
@@ -25,11 +25,13 @@ public:
 	bool is_drag = false;
 	bool inBackGround(Vector2i position);
 	int getIsValid() {return is_valid;}
-	void plantRequeset(RenderWindow &window);
+	void plantRequest(RenderWindow &window);
+	void createRequest(RenderWindow &window);
+	bool is_dragging;
 	PlantType selected_plant;
 protected:
 	int money;
-	Menu* menu;
+	Icon* icon;
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;

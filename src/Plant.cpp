@@ -41,9 +41,6 @@ void Plant::update(Vector2i mouse_pos) {
     }
 
     if(in_drag_mode == DRAGING){
-        Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
-        sprite.setPosition(target);
-        show = true;
         in_drag_mode = DRAGED;
     }
 	sprite.setScale(1.5, 1.5);
@@ -66,5 +63,5 @@ Vector2f Plant::getPos(){
 }
 
 void Plant::setPos(Vector2f position){
-	return sprite.setPosition(position);
+	sprite.setPosition(position);
 }

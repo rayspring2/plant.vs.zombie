@@ -18,15 +18,13 @@ System::System(){
 void System::run(){
 	while(window.isOpen()){
 		update();
-		handleEvent();	
+		handleEvent();
 		render();
 	}
 }
 
-
-
 void System::update(){
-	game->update(window);
+	game->update();
 }
 
 void System::handleEvent(){
@@ -63,8 +61,12 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME): {
-		game->plantRequeset(window);
-		//peashooter->handleMousePress(pos);
+		if(game->is_dragging) {
+			game->plantRequest(window);
+		}
+		else {
+			game->createRequest(window);
+		}
 		break;
 	}
 	case (PAUSE_MENU):

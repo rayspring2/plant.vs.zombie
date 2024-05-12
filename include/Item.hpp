@@ -15,8 +15,12 @@ public:
     void update(int money);
     void render(RenderWindow &window);
     PlantType getPlantType() {return plant_type;}
-    Clock clock;
+    
+    void fixTexture(string path);
     //
+    Clock clock;
+    Texture texture;
+    Sprite sprite;
     void increase_current_time();
     //
 protected:
@@ -26,8 +30,6 @@ private:
     int cooldown;
     float current_time;
     ItemState item_state;
-    Texture texture;
-    Sprite sprite;
     IntRect rect;
     Font font;
     Text text;

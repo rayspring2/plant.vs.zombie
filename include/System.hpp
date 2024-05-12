@@ -13,7 +13,7 @@
 #include "KernelPult.hpp"
 #include "HairMetal.hpp"
 #include "Game.hpp"
-#include "Menu.hpp"
+#include "Icon.hpp"
 
 enum State {
   IN_GAME,
@@ -39,7 +39,6 @@ private:
 public:
 	RenderWindow window;
 	Game* game;
-	Menu* menu;
 	PeaShooter* peashooter;
 	void run();
 	System();

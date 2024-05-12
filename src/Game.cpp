@@ -27,7 +27,7 @@ Game::Game() {
         }
     }
 
-    menu = new Menu(0, 0);
+    icon = new Icon(0, 0);
     selected_plant = INVALID;
 }
 
@@ -50,8 +50,8 @@ pair<int, int> Game ::findPlayGroundBlock(Vector2f plant_position) {
     return {-1, -1};
 }
 
-void Game::update(RenderWindow &window){
-    menu->update();
+void Game::update(){
+    icon->update();
     for(int i = 1; i <= GROUNDROWS; i++ ){
         for(int j = 1; j <= 9; j++){
             if(cellIsEmpty(play_ground[i][j]))
@@ -69,23 +69,7 @@ void Game::update(RenderWindow &window){
         b->update();
     }
     deleteOutBalls();
-
-    if(moved_plant != nullptr and is_drag) {
-        Vector2i pos = Mouse::getPosition(window);
-        moved_plant->update(pos);
-        pair<int, int> new_position = findPlayGroundBlock(moved_plant->getPos());
-        if(new_position != pair<int, int>(-1, -1)) {
-            play_ground[new_position.first][new_position.second] = moved_plant;
-            play_ground[new_position.first][new_position.second]->setPos(Vector2f((float)play_ground_position[new_position.first][new_position.second].x,
-            (float)play_ground_position[new_position.first][new_position.second].y));
-
-            moved_plant = nullptr;
-            is_valid = 1;
-        }
-    }
-
 }
-
 
 void Game::addAttackPlantBall(AttackPlant* attack_plant){
     Time shooter_time_elapsed = attack_plant -> getShootTimeElapsed();
@@ -107,68 +91,41 @@ void Game::render(RenderWindow &window){
     for(Ball* b : balls){
         b->render(window);
     }
-    menu->render(window);
+    icon->render(window);
 }
 
-void Game::plantRequeset(RenderWindow &window) {
-    // if (selected_plant == INVALID) {
-    //     selected_plant = menu->checkMouse(window);
-    //     return;
-    // }
-    // PlantType new_selected_plant = menu->checkMouse(window);
-    // if (new_selected_plant != INVALID) {
-    //     selected_plant = new_selected_plant;
-    //     return;
-    // }
-    // Vector2i mouse_position = Mouse :: getPosition(window);
-    // pair <int,int>location = findPlayGroundBlock((Vector2f) mouse_position);
-    // if (location == pair<int, int>(-1,-1)) {
-    //     selected_plant = INVALID;
-    //     return;
-    // }
-    // Plant* planting;
-    // if(selected_plant == PEASHOOTER) {
-    //     planting = new PeaShooter(200, 200);
-    // }
-    // else if(selected_plant == SNOWPEA) {
-    //     planting = new SnowPea(200, 200);
-    // }
-    // else if(selected_plant == SUNFLOWER) {
-    //     planting = new SunFlower(200, 200);
-    // }
-    // else if(selected_plant == WALNUT) {
-    //     planting = new Walnut(200, 200);
-    // }
-    // selected_plant = INVALID;
-    // menu->resetCooldown(selected_plant);
-    // play_ground[location.first][location.second] = planting;
-    // play_ground[location.first][location.second]->setPos(Vector2f((float)play_ground_position[location.first][location.second].x,
-    //     (float)play_ground_position[location.first][location.second].y));
-    // check box !
-    //
-    PlantType plant_type = menu->checkMouse(window);
-	if(moved_plant != nullptr and is_drag == true) moved_plant->handleMousePress();
+void Game :: plantRequest(RenderWindow &window) {
+    moved_plant->handleMousePress();
+    Vector2i mouse_pos = Mouse::getPosition(window);
+    Vector2f target(static_cast<float>(mouse_pos.x) - moved_plant->getWidth() / 2, static_cast<float>(mouse_pos.y) - moved_plant->getHeight() /2);
+    moved_plant->setPos(target);
+    pair<int, int> new_position = findPlayGroundBlock(target);
+    if(new_position != pair<int, int>(-1, -1)) {
+        play_ground[new_position.first][new_position.second] = moved_plant;
+        play_ground[new_position.first][new_position.second]->setPos(Vector2f((float)play_ground_position[new_position.first][new_position.second].x,
+        (float)play_ground_position[new_position.first][new_position.second].y));
+        moved_plant = nullptr;
+    }
+    is_dragging = false;
+    icon->isValidRequset(is_valid);
+}
+
+void Game :: createRequest(RenderWindow &window) {
+    PlantType plant_type = icon->checkMouse(window);
     if(plant_type == PEASHOOTER) {
         moved_plant = new PeaShooter(200, 200);
-	    is_drag = true;
-        is_valid = 0;
     }
     else if(plant_type == SNOWPEA) {
         moved_plant = new SnowPea(200, 200);
-	    is_drag = true;
-        is_valid = 0;
     }
     else if(plant_type == SUNFLOWER) {
         moved_plant = new SunFlower(200, 200);
-	    is_drag = true;
-        is_valid = 0;
     }
     else if(plant_type == WALNUT) {
         moved_plant = new Walnut(200, 200);
-	    is_drag = true;
-        is_valid = 0;
     }
-    menu->isValidRequset(is_valid);
+    else return;
+    is_dragging = true;
 }
 
 void Game::deleteOutBalls(){

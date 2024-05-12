@@ -10,7 +10,7 @@ void AttackPlant::resetShootTime(){
     shooter_clock.restart();
 }
 
-Ball* AttackPlant::addBall() { 
+Ball* AttackPlant::addBall() {
 		resetShootTime();
-		return nullptr; 
+		return nullptr;
 };
