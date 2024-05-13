@@ -26,6 +26,11 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
+    
+    for( int i = 1 ; i <= GROUNDROWS ; i++){
+        lawncleaners[i] = new LawnCleaner(GROUND_LEFT_OFFSET , play_ground_position[i][1].y);
+    }
+    
     play_ground[1][1] = new Walnut(216 , 53);
 }
 
@@ -37,7 +42,7 @@ void Game::genZombie(){
 		int zombie_row_position = play_ground_position[x + 1][1].up;
 		int type_of_zombie = rng() % ZMOBIETYPESCNT;
 		if(type_of_zombie) {
-			HairMetal* zm = new HairMetal(ZOMBIE_START_X , zombie_row_position);
+			HairMetal* zm = new HairMetal(ZOMBIE_START_X - 20 , zombie_row_position);
 			zombies.push_back(zm);
 		}
 		else {
@@ -57,6 +62,11 @@ void Game::update(){
         b->update();
     for(Sun* s:suns){
         s->update();
+    }
+    for(int i = 1; i <= GROUNDROWS ; i++){
+        if(lawncleaners[i] == nullptr )
+            continue;
+        lawncleaners[i]->update();
     }
     genSun();
     genZombie();
@@ -81,6 +91,12 @@ void Game::render(RenderWindow &window){
             play_ground[i][j]->render(window);
         }
     }
+    for(int i = 1; i <= GROUNDROWS ; i++){
+        if(lawncleaners[i] == nullptr )
+            continue;
+        lawncleaners[i]->render(window);
+    }
+    
     for(Ball* b : balls){
         b->render(window);
     }
@@ -116,6 +132,21 @@ void Game::handleCollision(){
                     z->reduceSpeed();
                 }
             }
+        }
+    }
+    for(int i = 1; i <= GROUNDROWS ; i++){
+        LawnCleaner* lc = lawncleaners[i];
+        if (lc == nullptr )
+            continue;
+        if( lc -> isOut() ){
+            lawncleaners[i] = nullptr;
+        }
+        for(auto z : zombies){
+            if(lc->getRect().intersects(z->getRect()) && i == z-> getRow()){
+                lc->move();
+                z->die();
+            }
+            
         }
     }
 }

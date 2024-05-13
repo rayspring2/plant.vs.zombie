@@ -35,6 +35,7 @@ public:
 	FloatRect getRect();
 	bool isReadytoHit();
 	void reduceSpeed();
+	void die();
 };
 
 #endif

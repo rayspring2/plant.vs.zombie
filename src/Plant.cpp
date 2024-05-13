@@ -1,7 +1,7 @@
 #include "Plant.hpp"
 
 Plant::Plant(int x, int y, string file_name, int frame_number) :x(x) , y(y) , frame_number(frame_number) {
-    row = (y - 53) / 94 + 1 ;
+    row = (y - GROUND_UP_OFFSET) / CELLHIGHT + 1 ;
     sprite.setPosition(x,y);
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * frame_width;

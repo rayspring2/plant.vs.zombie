@@ -14,12 +14,13 @@
 #include "NormalZombie.hpp"
 #include "Walnut.hpp"
 #include "Sun.hpp"
+#include "LawnCleaner.hpp"
 const int ZMOBIETYPESCNT = 2;
 /////
 const int ZOMBIE_START_X = 1000;
 const int ZOMBIE_GENERATE_PERIOD = 10000;
 const int SUN_FALLDOWN_SPEED = 10; 
-const int SUN_GENERATE_PERIOD = 10000;
+const int SUN_GENERATE_PERIOD = 7000;
 class Game{
 public:
 	Game();
@@ -37,6 +38,7 @@ private:
 	vector<Zombie*> zombies;
 	vector<Ball*> balls;
 	vector<Sun*> suns;
+	LawnCleaner* lawncleaners[GROUNDROWS+1];
 	Clock clock;
 	void genZombie();
 	void deleteUnvalidBalls();

@@ -86,3 +86,6 @@ void Zombie::reduceSpeed(){
     reduced_speed_clock.restart();
     sprite.setColor({100 , 100 , 200});
 }
+void Zombie::die(){
+    health = 0;
+}

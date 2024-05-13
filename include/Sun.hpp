@@ -2,7 +2,7 @@
 #define SUN_INCLUDE
 
 #include "Global.hpp"
-const int SUN_GENERATE_PERIOD = 100;
+const int SUN_UPDATE_PERIOD = 100;
 class Sun{
 private:
 	int yspeed;
