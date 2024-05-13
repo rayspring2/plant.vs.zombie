@@ -14,15 +14,27 @@
 #include "NormalZombie.hpp"
 #include "Walnut.hpp"
 #include "Sun.hpp"
+#include "Icon.hpp"
 
 class Game{
 public:
 	Game();
 	~Game(){};
+	PlantType selected_plant;
+	void deleteUnvalidBalls(){};
 	void update();
 	void render(RenderWindow &window);
+	Icon* icon;
 	void checkEating();
 	Position play_ground_position[6][10];
+	pair<int, int> findPlayGroundBlock(Vector2f plant_position);
+	bool inBackGround(Vector2i position);
+	void plantRequest(RenderWindow &window);
+	Plant* moved_plant;
+	bool is_dragging;
+	bool checkGameOver();
+	void createRequest(RenderWindow &window);
+	void deleteOutBalls();
 protected:
 	int money;
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
@@ -34,7 +46,7 @@ private:
 	vector<Sun*> suns;
 	Clock clock;
 	void genZombie();
-	void deleteUnvalidBalls();
+	
 	void handleCollision(); //after you added zombies:))
 	bool cellIsEmpty(Plant* p);
 	void addAttackPlantBall(AttackPlant* attack_plant);

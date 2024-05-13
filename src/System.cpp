@@ -31,7 +31,7 @@ void System::update(){
 	switch (game_state) {
 	case (IN_GAME): {
 		game->update();
-		if(game->checkGameOver()) game_state = GAMEOVER_SCREEN;
+		//if(game->checkGameOver()) game_state = GAMEOVER_SCREEN;
 		break;
 	}
 	case (PAUSE_MENU):

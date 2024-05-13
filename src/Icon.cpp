@@ -9,7 +9,7 @@ Icon :: Icon(int x, int y) {
     items.push_back(new Item(0, 180, WALNUT, 10, "files/pic/WalnutMenu.png"));
 }
 
-void Icon :: isValidRequset(int is_valid) {
+void Icon :: isValidRequset() {
     for(int i = 0; i < items.size(); i++) {
         if(items[i]->getPlantType() == last_changed and items[i]->getStatus() == AVAILABLE) {
             items[i]->setStatus(LOADING);

@@ -13,7 +13,7 @@ public:
 	void render(RenderWindow &window);
     void handleMousePress(Vector2i mouse_pos);
     void handleMouseRelease();
-	void isValidRequset(int is_valid);
+	void isValidRequset();
     PlantType checkMouse(RenderWindow &window);
     void changeBorder(int number);
     void resetCooldown(PlantType plant_type);

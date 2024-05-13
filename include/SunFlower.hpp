@@ -3,14 +3,19 @@
 
 #include "Global.hpp"
 #include "Plant.hpp"
+#include "Sun.hpp"
 
 class SunFlower : public Plant{
 public:
+	Clock sun_clock;
+	Time getShootTimeElapsed();
+	int getCoolDownTime();
+
 	SunFlower(int x, int y);
+	Sun* makeSun();
 	~SunFlower() {};
-	void update(Vector2i mouse_pos);
-	void makeSun();
-private:
+	void update(int money);
+
 };
 
 #endif

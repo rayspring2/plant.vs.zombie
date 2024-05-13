@@ -1,8 +1,7 @@
 #include "Plant.hpp"
 
-Plant::Plant(int x, int y, string file_name, int frame_number, int animation_speed) : animation_speed(animation_speed), frame_number(frame_number) {
-    row = x;
-    column = y;
+Plant::Plant(int x, int y, string file_name, int frame_number, int animation_speed) : x(x) , y(y) , frame_number(frame_number), animation_speed(animation_speed) {
+    row = (y - 53) / 94 + 1 ;
     sprite.setPosition(x,y);
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * 50;
@@ -12,10 +11,10 @@ Plant::Plant(int x, int y, string file_name, int frame_number, int animation_spe
 		exit(-1);
     }
     sprite.setTexture(texture);
-    IntRect rect;
-    rect.width = 50;
-    rect.height = 50;
+    rect.width = frame_width;
+    rect.height = frame_hight;
     sprite.setTextureRect(rect);
+    sprite.setScale(1.5, 1.5);
 }
 
 void Plant::hit(int destroy_value) {
@@ -28,14 +27,11 @@ bool Plant::isAlive() {
     return true;
 }
 
-void Plant::update(Vector2i mouse_pos) {
+void Plant::update(/* Vector2i mouse_pos */) {
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= animation_speed){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
-        IntRect rect;
-        rect.width = 50;
-        rect.height = 50;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
     }
@@ -51,7 +47,13 @@ void Plant::handleMousePress(){
 }
 
 void Plant::render(RenderWindow &window) {
+    sf::RectangleShape outlineShape(sf::Vector2f(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height));
+    outlineShape.setPosition(sprite.getPosition());
+    outlineShape.setOutlineThickness(2); // Set the thickness of the outline
+    outlineShape.setOutlineColor(sf::Color::Red); // Set the color of the outline
+    outlineShape.setFillColor(sf::Color::Transparent);
     window.draw(sprite);
+    window.draw(outlineShape);
 }
 
 PlantType Plant::getPlantType(){
@@ -64,4 +66,12 @@ Vector2f Plant::getPos(){
 
 void Plant::setPos(Vector2f position){
 	sprite.setPosition(position);
+}
+
+FloatRect Plant::getRect(){
+    return sprite.getGlobalBounds();
+}
+
+int Plant::getRow(){
+    return row;
 }
