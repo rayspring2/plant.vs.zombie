@@ -26,7 +26,6 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
-
     icon = new Icon(0, 0);
     selected_plant = INVALID;
 }
@@ -170,19 +169,65 @@ bool in_same_block(Position a, Position b) {
     return false;
 }
 
-void Game::handler() {
-   for(int i = 1; i <= 5; i++) {
-        for(int j = 1; j <= 9; j++) {
-            if(play_ground[i][j] == nullptr) continue;
-            for(int k = 0; k < zombies.size(); k++) {
-                Position zombie_pos;
-                zombie_pos.x = zombies[k]->get_row();
-                zombie_pos.y = zombies[k]->get_column();
-                if(in_same_block(play_ground_position[i][j], zombie_pos)) {
-                    cout << "eating timeeeeee";
-                    exit(0);
+void Game::checkEating() {
+    for(Zombie* z : zombies ) {
+        z -> mode = "walking";
+        for(int i = 1; i <= 5; i++) {
+            for(int j = 1; j <= 9; j++) {
+                if(cellIsEmpty( play_ground[i][j] ) )
+                    continue;
+                if(play_ground[i][j]->getRect().intersects(z->getRect()) ) {
+                    z -> mode = "eating";
+                    if( z -> isReadytoHit()){
+                        play_ground[i][j]->hit(z->getDamageValue());
+                        cerr << play_ground[i][j]->getHealth() <<endl;
+                    }
                 }
             }
         }
-   }
+    }
 }
+
+
+void Game::removeDeadZombies(){
+    vector <Zombie*> trash;
+    for(Zombie* z : zombies){
+        if( !z->isAlive()){
+            trash.push_back(z);
+        }
+    }
+    zombies.erase(remove_if(zombies.begin(), zombies.end(), 
+        [](auto p){ return !p->isAlive() ; }), zombies.end());
+
+    for (auto p : trash){
+        delete p;
+    }
+}
+
+void Game::updatePlayGround(){
+    deleteDeadPlants();
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j = 1 ;j<GROUNDCOLUMNS ;j++){
+            if(cellIsEmpty(play_ground[i][j]))
+                continue;
+            play_ground[i][j]->update();
+            if(auto attack_plant = dynamic_cast<AttackPlant*>(play_ground[i][j]))
+                addAttackPlantBall(attack_plant);
+        }
+    }
+}
+
+void Game::deleteDeadPlants(){
+    for( int i = 1; i < GROUNDROWS ; i++ ){
+        for( int j = 1 ; j<GROUNDCOLUMNS ;j++){
+            if(cellIsEmpty(play_ground[i][j]) )
+                continue;
+            if(!play_ground[i][j]->isAlive()){
+                delete play_ground[i][j];
+                play_ground[i][j] = nullptr; 
+            }
+        }
+    }
+}
+
+
