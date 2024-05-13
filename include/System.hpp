@@ -33,6 +33,7 @@ private:
 	void update();
 	void render();
 	void handleEvent();
+	void update_gameover();
 	void handleMousePress(Event ev);
 	void handleMouseRelease(Event ev);
 	void gen_zombie();

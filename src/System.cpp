@@ -16,15 +16,39 @@ System::System(){
 }
 
 void System::run(){
-	while(window.isOpen()){
+	while(window.isOpen() && game_state != EXIT){
 		update();
 		handleEvent();
 		render();
 	}
 }
 
+void System::update_gameover() {
+	bg_sprite.setColor(sf::Color(255, 255, 255, 128));
+}
+
 void System::update(){
-	game->update();
+	switch (game_state) {
+	case (IN_GAME): {
+		game->update();
+		if(game->checkGameOver()) game_state = GAMEOVER_SCREEN;
+		break;
+	}
+	case (PAUSE_MENU):
+		break;
+	case (MAIN_MENU): {
+		break;
+	}
+	case (VICTORY_SCREEN):
+		break;
+	case (GAMEOVER_SCREEN): {
+		update_gameover();
+		cout << "game over" << endl;
+		break;
+	}
+	case(EXIT):
+		break;
+	}
 }
 
 void System::handleEvent(){
@@ -32,7 +56,7 @@ void System::handleEvent(){
 	while (window.pollEvent(event)){
 		switch (event.type) {
 			case (Event::Closed):
-				window.close();
+				// window.close();
 				game_state = EXIT;
 				break;
 			case (Event::MouseButtonPressed):
@@ -71,8 +95,9 @@ void System::handleMousePress(Event ev){
 	}
 	case (PAUSE_MENU):
 		break;
-	case (MAIN_MENU):
+	case (MAIN_MENU): {
 		break;
+	}
 	case (VICTORY_SCREEN):
 		break;
 	case (GAMEOVER_SCREEN):

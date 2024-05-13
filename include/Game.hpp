@@ -27,6 +27,7 @@ public:
 	int getIsValid() {return is_valid;}
 	void plantRequest(RenderWindow &window);
 	void createRequest(RenderWindow &window);
+	bool checkGameOver();
 	bool is_dragging;
 	PlantType selected_plant;
 	Icon* icon;

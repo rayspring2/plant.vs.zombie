@@ -94,8 +94,6 @@ void Game::render(RenderWindow &window){
     icon->render(window);
 }
 
-
-
 void Game :: plantRequest(RenderWindow &window) {
     moved_plant->handleMousePress();
     icon->turnOffBorder();
@@ -115,6 +113,15 @@ void Game :: plantRequest(RenderWindow &window) {
         return;
     }
     icon->isValidRequset(is_valid);
+}
+
+bool Game :: checkGameOver() {
+    for(int i = 0; i < zombies.size(); i++) {
+        if(zombies[i]->getGameOverStatus()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Game :: createRequest(RenderWindow &window) {

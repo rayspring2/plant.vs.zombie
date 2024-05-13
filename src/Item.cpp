@@ -14,14 +14,7 @@ void Item :: fixTexture(string path) {
 
 void Item :: makeBorder(RenderWindow &window) {
     show_border = true;
-    sprite.setColor(sf::Color(255, 255, 255, 128)); // half transparent
-    // half transparent
-    // FloatRect border = sprite.getGlobalBounds();
-    // border_rec.setSize({90, 45});
-    // border_rec.setPosition(border.getPosition());
-    // border_rec.setOutlineThickness(10);
-    // border_rec.setOutlineColor(Color::Yellow);
-    // border_rec.setFillColor(Color::Transparent);
+    sprite.setColor(sf::Color(255, 255, 255, 128));
 }
 
 Item :: Item(int x, int y, PlantType plant_type, int cool_down, string path) : cooldown(cool_down), plant_type(plant_type) {

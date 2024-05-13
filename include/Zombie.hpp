@@ -10,6 +10,7 @@ protected:
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
+	bool gameover = false;
 public:
 	Zombie(int x, int y, string file_name, int frames_number, int zombie_width, int zombie_height);
 	~Zombie(){};
@@ -17,6 +18,7 @@ public:
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
     void eat(Plant* eating_plant);
+	bool getGameOverStatus();
 	bool isAlive();
 	int get_row() {return row;}
 	int get_column() {return column;}

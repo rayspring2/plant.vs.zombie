@@ -5,6 +5,7 @@ Zombie::Zombie(int x, int y, string file_name, int frame_number, int zombie_widt
 zombie_width(zombie_width), zombie_height(zombie_height), frame_number(frame_number) {
     row = x;
     column = y;
+    gameover = false;
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * zombie_width;
     }
@@ -34,11 +35,18 @@ bool Zombie::isAlive() {
     return true;
 }
 
+bool Zombie::getGameOverStatus() {
+    return gameover;
+}
+
 void Zombie::update() {
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 50 and row > 220) {
         row -= 2;
         sprite.setPosition(row, column);
+    }
+    if(row <= 220) {
+        gameover = true;
     }
 
     if(elapsed.asMilliseconds() >= 100){
