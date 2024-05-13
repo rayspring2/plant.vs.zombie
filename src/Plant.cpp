@@ -4,7 +4,7 @@ Plant::Plant(int x, int y, string file_name, int frame_number) :x(x) , y(y) , fr
     row = (y - 53) / 94 + 1 ;
     sprite.setPosition(x,y);
     for(int i = 0; i < frame_number; i++) {
-        frames_position[i] = i * frame_width;
+        frames_position[i] = i * 50;
     }
     if (!texture.loadFromFile(file_name)) {
         cerr << "picture not found!\n";
@@ -29,7 +29,7 @@ bool Plant::isAlive() {
     return true;
 }
 
-void Plant::update(Vector2i mouse_pos) {
+void Plant::update(/* Vector2i mouse_pos */) {
     Time elapsed = clock.getElapsedTime();
     if(elapsed.asMilliseconds() >= 50){
         clock.restart();
@@ -38,10 +38,10 @@ void Plant::update(Vector2i mouse_pos) {
         sprite.setTextureRect(rect);
     }
 
-    if(in_drag_mode){
+    /* if(in_drag_mode){
         Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
         sprite.setPosition(target);
-    }
+    } */
 	//sprite.setScale(1.5, 1.5);
 }
 

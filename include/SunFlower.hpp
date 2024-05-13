@@ -10,7 +10,6 @@ private:
 	Clock sun_clock;
 public:
 	SunFlower(int x, int y);
-	void update(Vector2i mouse_pos);
 	Sun* makeSun();
 	Time getShootTimeElapsed();
 	int getCoolDownTime();

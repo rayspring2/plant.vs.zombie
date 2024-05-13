@@ -7,11 +7,9 @@
 class Walnut : public Plant{
 public:
 	Walnut(int x, int y);
-	/* void update(Vector2i mouse_pos = {0 , 0}) override; */
-private:
-	int delfault_health;
+	void update() override;
 protected:
-    //int status = 0;
+    int default_health;
 };
 
 #endif

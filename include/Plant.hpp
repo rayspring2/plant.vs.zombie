@@ -13,15 +13,15 @@ enum PlantType{
 
 class Plant{
 protected:
-	IntRect rect;
 	bool in_drag_mode = false;
 	int x,y;
-	int row, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0;
 	int frame_width = 50 , frame_hight = 47;
+	int row, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
 	PlantType plant_type;
+	IntRect rect;
 	int money;
 public:
 	PlantType getPlantType();
@@ -29,7 +29,7 @@ public:
 	virtual ~Plant(){};
 	void handleMousePress(Vector2i mouse_pos);
 	void handleMouseRelease();
-	virtual void update(Vector2i mouse_pos = {0 , 0});
+	virtual void update(/* Vector2i mouse_pos= {0 , 0} */);
 	void fixedBasedPosition() {};
 	int getCoolDownTime(){ return cooldown; };
 	void render(RenderWindow &window);
