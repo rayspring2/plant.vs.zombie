@@ -63,7 +63,6 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME):
-		//peashooter->handleMousePress(pos);
 		break;
 	case (PAUSE_MENU):
 		break;
@@ -84,7 +83,6 @@ void System::handleMouseRelease(Event ev){
   Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
   switch (game_state) {
 	case (IN_GAME):
-		//peashooter->handleMouseRelease(/*pos*/);
 		break;
 	case (PAUSE_MENU):
 		break;

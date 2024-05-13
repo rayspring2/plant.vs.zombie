@@ -11,7 +11,7 @@ SnowPea::SnowPea(int x, int y) : Pea(x, y, "files/pic/snowpea.png") {
 }
 
 Ball* SnowPea::addBall(){
-    BallIcy* new_ball = new BallIcy({ getPos().x + 50, getPos().y + 15 }); 
+    BallIcy* new_ball = new BallIcy({ getPos().x + PEA_MOUNTH_X, getPos().y + PEA_MOUNTH_Y }); 
     resetShootTime();
     return new_ball;
 }

@@ -4,7 +4,7 @@ Plant::Plant(int x, int y, string file_name, int frame_number) :x(x) , y(y) , fr
     row = (y - 53) / 94 + 1 ;
     sprite.setPosition(x,y);
     for(int i = 0; i < frame_number; i++) {
-        frames_position[i] = i * 50;
+        frames_position[i] = i * frame_width;
     }
     if (!texture.loadFromFile(file_name)) {
         cerr << "picture not found!\n";
@@ -21,17 +21,16 @@ Plant::Plant(int x, int y, string file_name, int frame_number) :x(x) , y(y) , fr
 
 void Plant::hit(int destroy_value) {
     health -= destroy_value;
-    if(health < 0) health = 0;
 }
 
 bool Plant::isAlive() {
-    if(!health) return false;
+    if(health <= 0) return false;
     return true;
 }
 
 void Plant::update(/* Vector2i mouse_pos */) {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 50){
+    if(elapsed.asMilliseconds() >= PLANT_UPDATE_PERIOD){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
         rect.left = frames_position[cur_rect];

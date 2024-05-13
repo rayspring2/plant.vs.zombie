@@ -21,9 +21,9 @@ Sun::~Sun(){
 }
 void Sun::update(){
 	Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 100) {
+    if(elapsed.asMilliseconds() >= SUN_GENERATE_PERIOD) {
         clock.restart();
-        y -= yspeed;
+        y += yspeed;
         sprite.setPosition(x, y);
         cur_rect = (cur_rect + 1) % frame_number;
         rect.left = frames_position[cur_rect];

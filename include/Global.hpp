@@ -26,7 +26,10 @@ const float HEIGHT = 600.0f;
 
 const int GROUNDROWS = 5;
 const int GROUNDCOLUMNS = 9;
-
+const int GROUND_LEFT_OFFSET = 216;
+const int GROUND_UP_OFFSET = 53;
+const int CELLWITDH = 82;
+const int CELLHIGHT = 94;
 struct Position {
     int up, down, left, right, x, y;
 };

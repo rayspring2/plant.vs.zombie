@@ -5,6 +5,6 @@ HairMetal::HairMetal(int x, int y) : Zombie(x, y, "files/pic/hairmetal_walking_e
     health = 80;
     hit_rate = 6;
     damage = 20;
-    speed = 0.1;
+    speed = 2;
     sprite.setScale(1.7,1.7);
 }

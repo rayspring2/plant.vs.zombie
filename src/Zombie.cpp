@@ -4,7 +4,7 @@
 Zombie::Zombie(int x, int y, string file_name, int frame_number, int zombie_width,  int zombie_height) :
 x(x), y(y), zombie_width(zombie_width), 
 zombie_height(zombie_height), frame_number(frame_number) {
-    row = (y - 53) / 94 + 1 ;
+    row = (y - GROUND_UP_OFFSET) / CELLHIGHT + 1 ;
     current_speed = speed;
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * zombie_width;
@@ -26,10 +26,6 @@ void Zombie::hit(int destroy_value) {
     health -= destroy_value;
 }
 
-void Zombie::eat(Plant* eating_plant) {
-    
-}
-
 bool Zombie::isAlive() {
     if(health <= 0) return false;
     return true;
@@ -37,12 +33,13 @@ bool Zombie::isAlive() {
 
 void Zombie::update() {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 50 * speed_scale and x > 220 && mode == WALKING) {
-        x -= speed;
-        sprite.setPosition(x, y);
-    }
 
-    if(elapsed.asMilliseconds() >= 100 * speed_scale){
+    if(elapsed.asMilliseconds() >= ZOMBIE_UPDATE_TIME * speed_scale){
+        if( x > GROUND_LEFT_OFFSET && mode == WALKING){
+            x -= speed;
+            sprite.setPosition(x, y);
+        }
+        
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
         IntRect rect;
@@ -56,7 +53,7 @@ void Zombie::update() {
     }
     if(reduced_speed_clock.getElapsedTime().asMilliseconds() >= 3000 && speed_scale == 2){
         speed_scale = 1;
-        sprite.setColor({255 , 255 , 255});
+        sprite.setColor(Color::White);
     }
     
     

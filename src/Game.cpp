@@ -1,26 +1,26 @@
 #include "Game.hpp"
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 Game::Game() {
-    for(int i = 1; i <= 5; i++) {
-        for(int j = 1; j <= 9; j++) {
+    for(int i = 1; i <= GROUNDROWS; i++) {
+        for(int j = 1; j <= GROUNDCOLUMNS; j++) {
             play_ground[i][j] = nullptr;
         }
     }
 
-    for(int i = 1; i <= 5; i++) {
-        play_ground_position[i][1].left = 216;
-        play_ground_position[i][1].right = 298;
-        play_ground_position[i][1].x = 257;
+    for(int i = 1; i <= GROUNDROWS; i++) {
+        play_ground_position[i][1].left = GROUND_LEFT_OFFSET;
+        play_ground_position[i][1].right = GROUND_LEFT_OFFSET + CELLWITDH;
+        play_ground_position[i][1].x = GROUND_LEFT_OFFSET + CELLWITDH / 2;
         
-        play_ground_position[i][1].down = 147 + (i - 1) * 94;
-        play_ground_position[i][1].up = 53 + (i - 1) * 94;
-        play_ground_position[i][1].y = 100 + (i - 1) * 94;
+        play_ground_position[i][1].down = GROUND_UP_OFFSET + i  * CELLHIGHT;
+        play_ground_position[i][1].up = GROUND_UP_OFFSET + (i - 1) * CELLHIGHT;
+        play_ground_position[i][1].y = GROUND_UP_OFFSET + CELLHIGHT / 2 + (i - 1) * CELLHIGHT;
     }
-    for(int j = 2; j <= 9; j++) {
-        for(int i = 1; i <= 5; i++) {
-            play_ground_position[i][j].x = play_ground_position[i][j - 1].x + 82;
-            play_ground_position[i][j].left = play_ground_position[i][j - 1].left + 82;
-            play_ground_position[i][j].right = play_ground_position[i][j - 1].right + 82;
+    for(int j = 2; j <= GROUNDCOLUMNS; j++) {
+        for(int i = 1; i <= GROUNDROWS; i++) {
+            play_ground_position[i][j].x = play_ground_position[i][j - 1].x + CELLWITDH;
+            play_ground_position[i][j].left = play_ground_position[i][j - 1].left + CELLWITDH;
+            play_ground_position[i][j].right = play_ground_position[i][j - 1].right + CELLWITDH;
             play_ground_position[i][j].y = play_ground_position[i][j - 1].y;
             play_ground_position[i][j].up = play_ground_position[i][j - 1].up;
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
@@ -31,17 +31,17 @@ Game::Game() {
 
 void Game::genZombie(){
 	Time elapsed = clock.getElapsedTime();
-	if(elapsed.asSeconds() >= 1) {
+	if(elapsed.asMilliseconds() >= ZOMBIE_GENERATE_PERIOD) {
 		clock.restart();
-		int x = rng() % 5;
+		int x = rng() % GROUNDROWS;
 		int zombie_row_position = play_ground_position[x + 1][1].up;
-		int type_of_zombie = rng() % 2;
+		int type_of_zombie = rng() % ZMOBIETYPESCNT;
 		if(type_of_zombie) {
-			HairMetal* zm = new HairMetal(1000, zombie_row_position);
+			HairMetal* zm = new HairMetal(ZOMBIE_START_X , zombie_row_position);
 			zombies.push_back(zm);
 		}
 		else {
-			NormalZombie* zm = new NormalZombie(1000, zombie_row_position);
+			NormalZombie* zm = new NormalZombie(ZOMBIE_START_X , zombie_row_position);
 			zombies.push_back(zm);
 		}
 	}
@@ -130,8 +130,8 @@ bool Game::cellIsEmpty(Plant* p){
 void Game::checkEating() {
     for(Zombie* z : zombies ) {
         z -> mode = WALKING;
-        for(int i = 1; i <= 5; i++) {
-            for(int j = 1; j <= 9; j++) {
+        for(int i = 1; i <= GROUNDROWS; i++) {
+            for(int j = 1; j <= GROUNDCOLUMNS; j++) {
                 if(cellIsEmpty( play_ground[i][j] ) )
                     continue;
                 if(play_ground[i][j]->getRect().intersects(z->getRect()) && (i == z->getRow()) ) {
@@ -215,9 +215,9 @@ void Game::addSunflowerSun(SunFlower* sun_flower){
 
 void Game::genSun(){
     Time shooter_time_elapsed = sun_clock.getElapsedTime();
-    if(shooter_time_elapsed.asSeconds() >= 10 ){
+    if(shooter_time_elapsed.asMilliseconds() >= SUN_GENERATE_PERIOD ){
         sun_clock.restart();
-        Sun* new_sun = new Sun(100 + rng() % 1000 , 0 , -10 );
+        Sun* new_sun = new Sun(GROUND_LEFT_OFFSET + rng() % CELLWITDH * GROUNDCOLUMNS , 0 , SUN_FALLDOWN_SPEED );
         suns.push_back(new_sun);
     }
 }

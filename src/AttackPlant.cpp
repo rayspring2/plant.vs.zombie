@@ -12,5 +12,5 @@ void AttackPlant::resetShootTime(){
 
 Ball* AttackPlant::addBall() { 
 		resetShootTime();
-		return nullptr; 
+		return nullptr;
 };

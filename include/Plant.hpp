@@ -2,7 +2,7 @@
 #ifndef PLANT_INCLUDE
 #define PLANT_INCLUDE
 #include "Global.hpp"
-
+const int PLANT_UPDATE_PERIOD = 50;
 enum PlantType{
 	PEASHOOTER ,
 	SNOWPEA ,

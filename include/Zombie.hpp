@@ -1,7 +1,9 @@
 #ifndef ZOMBIE_INCLUDE
 #define ZOMBIE_INCLUDE
 #include "Global.hpp"
-#include "Plant.hpp"
+
+const int ZOMBIE_UPDATE_TIME = 100;
+
 enum ZombieState{
 	WALKING, EATING	
 };
@@ -24,7 +26,6 @@ public:
 	void update();
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
-    void eat(Plant* eating_plant);
 	bool isAlive();
 	int getX() {return x;}
 	int getY() {return y;}
