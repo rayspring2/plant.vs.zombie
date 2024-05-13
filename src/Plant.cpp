@@ -4,16 +4,15 @@ Plant::Plant(int x, int y, string file_name, int frame_number) :x(x) , y(y) , fr
     row = (y - 53) / 94 + 1 ;
     sprite.setPosition(x,y);
     for(int i = 0; i < frame_number; i++) {
-        frames_position[i] = i * 50;
+        frames_position[i] = i * frame_width;
     }
     if (!texture.loadFromFile(file_name)) {
         cerr << "picture not found!\n";
 		exit(-1);
     }
     sprite.setTexture(texture);
-    IntRect rect;
-    rect.width = 50;
-    rect.height = 50;
+    rect.width = frame_width;
+    rect.height = frame_hight;
     sprite.setTextureRect(rect);
     sprite.setScale(1.5, 1.5);
 }
@@ -35,9 +34,6 @@ void Plant::update(Vector2i mouse_pos) {
     if(elapsed.asMilliseconds() >= 50){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
-        IntRect rect;        
-        rect.width = 50;
-        rect.height = 50;
         rect.left = frames_position[cur_rect];
         sprite.setTextureRect(rect);
     }

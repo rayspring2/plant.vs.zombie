@@ -13,9 +13,11 @@ enum PlantType{
 
 class Plant{
 protected:
+	IntRect rect;
 	bool in_drag_mode = false;
 	int x,y;
 	int row, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0;
+	int frame_width = 50 , frame_hight = 47;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
@@ -27,13 +29,12 @@ public:
 	virtual ~Plant(){};
 	void handleMousePress(Vector2i mouse_pos);
 	void handleMouseRelease();
-	void update(Vector2i mouse_pos= {0 , 0});
+	virtual void update(Vector2i mouse_pos = {0 , 0});
 	void fixedBasedPosition() {};
 	int getCoolDownTime(){ return cooldown; };
 	void render(RenderWindow &window);
 	void hit(int destroy_value);
 	bool isAlive();
-	bool isDead();
 	Vector2f getPos();
 	FloatRect getRect();
 	int getHealth(){ return health; }

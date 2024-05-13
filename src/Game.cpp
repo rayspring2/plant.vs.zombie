@@ -26,6 +26,7 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
+    //play_ground[1][1] = new Walnut(250 , 53);
 }
 
 void Game::genZombie(){
