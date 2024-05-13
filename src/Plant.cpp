@@ -65,7 +65,13 @@ void Plant::handleMouseRelease(){
     in_drag_mode = false;
 }
 void Plant::render(RenderWindow &window) {
+    sf::RectangleShape outlineShape(sf::Vector2f(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height));
+    outlineShape.setPosition(sprite.getPosition());
+    outlineShape.setOutlineThickness(2); // Set the thickness of the outline
+    outlineShape.setOutlineColor(sf::Color::Red); // Set the color of the outline
+    outlineShape.setFillColor(sf::Color::Transparent);
     window.draw(sprite);
+    window.draw(outlineShape);
 }
 
 PlantType Plant::getPlantType(){

@@ -26,8 +26,6 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
-    play_ground[1][1] = new SnowPea(298, 53);  /////////////added just for examine
-    //play_ground[1][1] = new PeaShooter(250, 100);
 }
 
 void Game::genZombie(){
@@ -63,11 +61,6 @@ void Game::update(){
     genZombie();
     updatePlayGround();
     checkEating();
-    //must add:
-    //check for zombie eating plants
-    //add sun to sunflowers
-    //zombie plant and zombie and shoots collisions
-    
 }
 
 
@@ -81,7 +74,7 @@ void Game::addAttackPlantBall(AttackPlant* attack_plant){
 
 void Game::render(RenderWindow &window){
     for( int i = 1; i <= GROUNDROWS ; i++ ){
-        for( int j=1 ;j<= GROUNDCOLUMNS ;j++){ //auto p : play_ground[i] 
+        for( int j=1 ;j<= GROUNDCOLUMNS ;j++){
             if(cellIsEmpty(play_ground[i][j]))
                 continue;
             play_ground[i][j]->render(window);
@@ -90,11 +83,12 @@ void Game::render(RenderWindow &window){
     for(Ball* b : balls){
         b->render(window);
     }
+    for(Zombie* z : zombies) 
+        z->render(window);
+    
     for(Sun* s : suns){
         s->render(window);
     }
-    for(Zombie* z : zombies) 
-        z->render(window);
 }
 
 void Game::deleteUnvalidBalls(){
@@ -114,7 +108,7 @@ void Game::deleteUnvalidBalls(){
 void Game::handleCollision(){
     for(auto b : balls){
         for(auto z : zombies){
-            if( b -> getRect().intersects(z->getRect()) && z->getRow() ==1 /* b->getRow() */){
+            if( b -> getRect().intersects(z->getRect()) && z->getRow() == b->getRow()){
                 z->hit(b->getDamageValue());
                 b->collide();
                 if(auto icy_ball = dynamic_cast<BallIcy*> (b)){
@@ -132,7 +126,7 @@ bool Game::cellIsEmpty(Plant* p){
 }
 
 
-void Game::checkEating() {  
+void Game::checkEating() {
     for(Zombie* z : zombies ) {
         z -> mode = WALKING;
         for(int i = 1; i <= 5; i++) {
@@ -213,10 +207,7 @@ void Game::deleteDeadPlants(){
 void Game::addSunflowerSun(SunFlower* sun_flower){
     Time shooter_time_elapsed = sun_flower -> getShootTimeElapsed();
     if(shooter_time_elapsed.asMilliseconds() >= sun_flower-> getCoolDownTime() *100){
-        
-        //cerr << shooter_time_elapsed.asMilliseconds() << "has entered" << sun_flower-> getCoolDownTime() *100 <<"\n";
         Sun* new_sun = sun_flower->makeSun();
-        //cerr << "+++" << new_sun->clock.getElapsedTime().asMilliseconds()<<"\t";
         suns.push_back(new_sun);
     }
 }

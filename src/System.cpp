@@ -18,7 +18,7 @@ System::System(){
 void System::run(){
 	while(window.isOpen()){
 		update();
-		handleEvent();	
+		handleEvent();
 		render();
 	}
 }

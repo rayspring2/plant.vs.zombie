@@ -8,11 +8,6 @@ SunFlower::SunFlower(int x, int y) : Plant(x, y, "files/pic/sunflower2.png", 25)
     price = 2;
 }
 
-// void SunFlower::update(Vector2i mouse_pos) {
-//     // MAKE SUN FLOWER
-//     // Plant :: update(mouse_pos);
-// }
-
 Sun* SunFlower::makeSun() {
     sun_clock.restart();
     return new Sun(x, y , 0);
