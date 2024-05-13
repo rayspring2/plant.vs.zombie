@@ -6,10 +6,14 @@
 #include "PeaShooter.hpp"
 #include "SnowPea.hpp"
 #include "Ball.hpp"
-#include "Zombie.hpp"
-#include "Walnut.hpp"
+#include "BallIcy.hpp"
+#include "BallGreen.hpp"
 #include "SunFlower.hpp"
-#include "Icon.hpp"
+#include "Zombie.hpp"
+#include "HairMetal.hpp"
+#include "NormalZombie.hpp"
+#include "Walnut.hpp"
+#include "Sun.hpp"
 
 class Game{
 public:
@@ -17,31 +21,29 @@ public:
 	~Game(){};
 	void update();
 	void render(RenderWindow &window);
-	void handler();
-	vector<Zombie*> zombies;
-	pair<int, int> findPlayGroundBlock(Vector2f plant_position);
+	void checkEating();
 	Position play_ground_position[6][10];
-	Plant* moved_plant = nullptr;
-	bool is_drag = false;
-	bool inBackGround(Vector2i position);
-	int getIsValid() {return is_valid;}
-	void plantRequest(RenderWindow &window);
-	void createRequest(RenderWindow &window);
-	bool checkGameOver();
-	bool is_dragging;
-	PlantType selected_plant;
-	Icon* icon;
 protected:
 	int money;
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
+	Clock sun_clock;
+	vector<Zombie*> zombies;
 	vector<Ball*> balls;
-	int is_valid = 0;
-	void deleteOutBalls();
+	vector<Sun*> suns;
+	Clock clock;
+	void genZombie();
+	void deleteUnvalidBalls();
 	void handleCollision(); //after you added zombies:))
 	bool cellIsEmpty(Plant* p);
 	void addAttackPlantBall(AttackPlant* attack_plant);
+	void removeDeadZombies();
+	void updatePlayGround();
+	void deleteDeadPlants();
+	void deleteDeadSuns();
+	void addSunflowerSun(SunFlower* sun_flower);
+	void genSun();
 };
 
 
