@@ -9,18 +9,15 @@
 #include "Zombie.hpp"
 #include "Walnut.hpp"
 #include "SunFlower.hpp"
-#include "Menu.hpp"
-#include "HairMetal.hpp"
-#include "NormalZombie.hpp"
-#include "Walnut.hpp"
+#include "Icon.hpp"
 
 class Game{
 public:
 	Game();
 	~Game(){};
-	void update(RenderWindow &window);
+	void update();
 	void render(RenderWindow &window);
-	void checkEating();
+	void handler();
 	vector<Zombie*> zombies;
 	pair<int, int> findPlayGroundBlock(Vector2f plant_position);
 	Position play_ground_position[6][10];
@@ -28,26 +25,23 @@ public:
 	bool is_drag = false;
 	bool inBackGround(Vector2i position);
 	int getIsValid() {return is_valid;}
-	void plantRequeset(RenderWindow &window);
+	void plantRequest(RenderWindow &window);
+	void createRequest(RenderWindow &window);
+	bool checkGameOver();
+	bool is_dragging;
 	PlantType selected_plant;
+	Icon* icon;
 protected:
 	int money;
-	Menu* menu;
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
 	vector<Ball*> balls;
 	int is_valid = 0;
 	void deleteOutBalls();
-	Clock clock;
-	void genZombie();
-	void deleteUnvalidBalls();
 	void handleCollision(); //after you added zombies:))
 	bool cellIsEmpty(Plant* p);
 	void addAttackPlantBall(AttackPlant* attack_plant);
-	void removeDeadZombies();
-	void updatePlayGround();
-	void deleteDeadPlants();
 };
 
 

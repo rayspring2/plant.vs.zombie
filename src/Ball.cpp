@@ -1,8 +1,7 @@
 #include <Ball.hpp>
 
-Ball::Ball(Vector2f shooter_pos , string pic_path , int damage_value) : 
+Ball::Ball(Vector2f shooter_pos , string pic_path , int damage_value) :
 	damage_value(damage_value){
-		
 	pos = shooter_pos;
 	if(!texture.loadFromFile(pic_path)){
 		cerr << "faild to load blue ball\n";

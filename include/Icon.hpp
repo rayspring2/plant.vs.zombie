@@ -1,12 +1,12 @@
-#ifndef MENU_INCLUDE
-#define MENU_INCLUDE
+#ifndef Icon_INCLUDE
+#define Icon_INCLUDE
 #include "Global.hpp"
 #include "Item.hpp"
 
-class Menu{
+class Icon{
 public:
-	Menu(int x, int y);
-	~Menu(){};
+	Icon(int x, int y);
+	~Icon(){};
     int getRow() {return row;}
     int getColumn() {return column;}
     void update();
@@ -15,10 +15,13 @@ public:
     void handleMouseRelease();
 	void isValidRequset(int is_valid);
     PlantType checkMouse(RenderWindow &window);
+    void changeBorder(int number);
     void resetCooldown(PlantType plant_type);
+    void backToNormalMode(PlantType plnat_type);
+    bool checkAvailable(int index);
+	void turnOffBorder();
     vector<Item*> items;
 protected:
-    Clock clock;
     int money = 100;
 	Texture texture;
 	Sprite sprite;

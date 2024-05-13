@@ -5,7 +5,7 @@ Zombie::Zombie(int x, int y, string file_name, int frame_number, int zombie_widt
 zombie_width(zombie_width), zombie_height(zombie_height), frame_number(frame_number) {
     row = x;
     column = y;
-    current_speed = speed;
+    gameover = false;
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * zombie_width;
     }
@@ -23,22 +23,30 @@ zombie_width(zombie_width), zombie_height(zombie_height), frame_number(frame_num
 
 void Zombie::hit(int destroy_value) {
     health -= destroy_value;
+    if(health < 0) health = 0;
 }
 
 void Zombie::eat(Plant* eating_plant) {
-    
+    eating_plant -> hit(damage);
 }
 
 bool Zombie::isAlive() {
-    if(health <= 0) return false;
+    if(!health) return false;
     return true;
+}
+
+bool Zombie::getGameOverStatus() {
+    return gameover;
 }
 
 void Zombie::update() {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 50 and row > 220 && mode == "walking") {
-        row -= speed;
+    if(elapsed.asMilliseconds() >= 50 and row > 220) {
+        row -= 2;
         sprite.setPosition(row, column);
+    }
+    if(row <= 220) {
+        gameover = true;
     }
 
     if(elapsed.asMilliseconds() >= 100){
@@ -56,24 +64,4 @@ void Zombie::update() {
 
 void Zombie::render(RenderWindow &window) {
     window.draw(sprite);
-}
-
-FloatRect Zombie::getRect(){
-    return sprite.getGlobalBounds();
-}
-
-bool Zombie::compare(Zombie* x, Zombie* y){
-    return x->get_row() < y->get_row();
-}
-
-int Zombie::getDamageValue(){
-    return damage;
-}
-bool Zombie::isReadytoHit(){
-    Time elapse = eating_clock.getElapsedTime();
-    if( elapse.asSeconds() >= hit_rate ){
-        eating_clock.restart();
-        return 1;
-    }
-    return 0;
 }

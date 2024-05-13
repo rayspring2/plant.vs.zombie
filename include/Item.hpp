@@ -15,19 +15,26 @@ public:
     void update(int money);
     void render(RenderWindow &window);
     PlantType getPlantType() {return plant_type;}
-    Clock clock;
+    void makeBorder(RenderWindow& window);
+    void fixTexture(string path);
     //
+    Clock clock;
+    Texture texture;
+    Sprite sprite;
     void increase_current_time();
+    void setShowBorder(bool show_value) {show_border = show_value;}
+    bool getShowBorder() {return show_border;}
+
+    RectangleShape border_rec;
     //
 protected:
 
 private:
+    bool show_border;
     int price = 10;
     int cooldown;
     float current_time;
     ItemState item_state;
-    Texture texture;
-    Sprite sprite;
     IntRect rect;
     Font font;
     Text text;
