@@ -12,6 +12,18 @@ void Item :: fixTexture(string path) {
     sprite.setTextureRect(rect);
 }
 
+void Item :: makeBorder(RenderWindow &window) {
+    show_border = true;
+    sprite.setColor(sf::Color(255, 255, 255, 128)); // half transparent
+    // half transparent
+    // FloatRect border = sprite.getGlobalBounds();
+    // border_rec.setSize({90, 45});
+    // border_rec.setPosition(border.getPosition());
+    // border_rec.setOutlineThickness(10);
+    // border_rec.setOutlineColor(Color::Yellow);
+    // border_rec.setFillColor(Color::Transparent);
+}
+
 Item :: Item(int x, int y, PlantType plant_type, int cool_down, string path) : cooldown(cool_down), plant_type(plant_type) {
     sprite.setPosition(x, y);
     item_state = UNAVAILABLE;
@@ -34,7 +46,6 @@ void Item :: update(int money) {
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);
-      //  cout << long(&clock) << endl;
         int elapsed = clock.getElapsedTime().asSeconds();
         if(elapsed>= cooldown) {
             clock.restart();
@@ -68,6 +79,7 @@ void Item :: render(RenderWindow &window) {
     if(item_state == LOADING) {
         window.draw(text);
     }
+    if(show_border) window.draw(border_rec);
 }
 
 ItemState Item :: getStatus() {

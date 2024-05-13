@@ -19,6 +19,7 @@ public:
     void resetCooldown(PlantType plant_type);
     void backToNormalMode(PlantType plnat_type);
     bool checkAvailable(int index);
+	void turnOffBorder();
     vector<Item*> items;
 protected:
     int money = 100;

@@ -9,10 +9,6 @@ Icon :: Icon(int x, int y) {
     items.push_back(new Item(0, 180, WALNUT, 10, "files/pic/WalnutMenu.png"));
 }
 
-void Icon :: resetCooldown(PlantType plant_type) {
-
-}
-
 void Icon :: isValidRequset(int is_valid) {
     for(int i = 0; i < items.size(); i++) {
         if(items[i]->getPlantType() == last_changed and items[i]->getStatus() == AVAILABLE) {
@@ -20,6 +16,17 @@ void Icon :: isValidRequset(int is_valid) {
             cout << "hello" << endl;
             items[i]->clock.restart();
             last_changed = INVALID;
+        }
+    }
+}
+
+
+void Icon :: turnOffBorder() {
+    for(int i = 0; i < items.size(); i++) {
+        if(items[i]->getPlantType() == last_changed and items[i]->getStatus() == AVAILABLE) {
+            items[i]->border_rec.setOutlineColor(Color::Transparent);
+            items[i]->sprite.setColor(sf::Color(255, 255, 255, 255));
+            items[i]->setShowBorder(false);
         }
     }
 }
@@ -56,28 +63,11 @@ PlantType Icon :: checkMouse(RenderWindow &window) {
     }
     else last_changed = INVALID;
     if(checkAvailable(last_changed)) {
+        items[last_changed]->makeBorder(window);
         return last_changed;
     }
     else {
         return INVALID;
-    }
-}
-
-void Icon :: backToNormalMode(PlantType plnat_type) {
-    if(plnat_type == PEASHOOTER) {
-        items[0]->fixTexture("files/pic/PeashooterMenu.png");
-    }
-    else if(plnat_type == SNOWPEA) {
-cout << 1;
-    }
-    else if(plnat_type == SUNFLOWER) {
-cout << 1;
-    }
-    else if(plnat_type == WALNUT) {
-cout << 1;
-    }
-    else {
-        cout << 1;
     }
 }
 

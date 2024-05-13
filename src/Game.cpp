@@ -94,11 +94,15 @@ void Game::render(RenderWindow &window){
     icon->render(window);
 }
 
+
+
 void Game :: plantRequest(RenderWindow &window) {
     moved_plant->handleMousePress();
+    icon->turnOffBorder();
     Vector2i mouse_pos = Mouse::getPosition(window);
     Vector2f target(static_cast<float>(mouse_pos.x) - moved_plant->getWidth() / 2, static_cast<float>(mouse_pos.y) - moved_plant->getHeight() /2);
     moved_plant->setPos(target);
+    is_dragging = false;
     pair<int, int> new_position = findPlayGroundBlock(target);
     if(new_position != pair<int, int>(-1, -1)) {
         play_ground[new_position.first][new_position.second] = moved_plant;
@@ -106,7 +110,10 @@ void Game :: plantRequest(RenderWindow &window) {
         (float)play_ground_position[new_position.first][new_position.second].y));
         moved_plant = nullptr;
     }
-    is_dragging = false;
+    else {
+        moved_plant = nullptr;
+        return;
+    }
     icon->isValidRequset(is_valid);
 }
 

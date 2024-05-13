@@ -29,9 +29,9 @@ public:
 	void createRequest(RenderWindow &window);
 	bool is_dragging;
 	PlantType selected_plant;
+	Icon* icon;
 protected:
 	int money;
-	Icon* icon;
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
