@@ -1,10 +1,10 @@
 #include "Zombie.hpp"
 #include "Plant.hpp"
 
-Zombie::Zombie(int x, int y, string file_name, int frame_number, int zombie_width,  int zombie_height) :
-x(x), y(y), zombie_width(zombie_width), 
+Zombie::Zombie(int x, int y, int row, string file_name, int frame_number, int zombie_width,  int zombie_height) :
+x(x), y(y), row(row), zombie_width(zombie_width), 
 zombie_height(zombie_height), frame_number(frame_number) {
-    row = (y - GROUND_UP_OFFSET) / CELLHIGHT + 1 ;
+    //row = (y - GROUND_UP_OFFSET) / CELLHIGHT + 1 ;
     current_speed = speed;
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * zombie_width;

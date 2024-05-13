@@ -21,7 +21,7 @@ protected:
 	Sprite sprite;
 public:
 	ZombieState mode = WALKING;
-	Zombie(int x, int y, string file_name, int frame_number, int zombie_width, int zombie_height);
+	Zombie(int x, int y, int row, string file_name, int frame_number, int zombie_width, int zombie_height);
 	~Zombie(){};
 	void update();
 	void render(RenderWindow &window);

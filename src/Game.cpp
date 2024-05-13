@@ -36,17 +36,17 @@ Game::Game() {
 
 void Game::genZombie(){
 	Time elapsed = clock.getElapsedTime();
-	if(elapsed.asMilliseconds() >= ZOMBIE_GENERATE_PERIOD) {
+	if(elapsed.asMilliseconds() >= ZOMBIE_GENERATE_PERIOD ) {
 		clock.restart();
 		int x = rng() % GROUNDROWS;
 		int zombie_row_position = play_ground_position[x + 1][1].up;
 		int type_of_zombie = rng() % ZMOBIETYPESCNT;
 		if(type_of_zombie) {
-			HairMetal* zm = new HairMetal(ZOMBIE_START_X - 20 , zombie_row_position);
+			HairMetal* zm = new HairMetal(ZOMBIE_START_X , zombie_row_position - HAIRMETAL_OFFSET_Y_POSITION, x + 1);
 			zombies.push_back(zm);
 		}
 		else {
-			NormalZombie* zm = new NormalZombie(ZOMBIE_START_X , zombie_row_position);
+			NormalZombie* zm = new NormalZombie(ZOMBIE_START_X , zombie_row_position, x + 1);
 			zombies.push_back(zm);
 		}
 	}

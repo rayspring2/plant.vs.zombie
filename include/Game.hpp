@@ -16,6 +16,7 @@
 #include "Sun.hpp"
 #include "LawnCleaner.hpp"
 const int ZMOBIETYPESCNT = 2;
+const int HAIRMETAL_OFFSET_Y_POSITION = 40;
 /////
 const int ZOMBIE_START_X = 1000;
 const int ZOMBIE_GENERATE_PERIOD = 10000;
