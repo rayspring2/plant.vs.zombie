@@ -11,7 +11,7 @@ Game::Game() {
         play_ground_position[i][1].left = 216;
         play_ground_position[i][1].right = 298;
         play_ground_position[i][1].x = 257;
-
+        
         play_ground_position[i][1].down = 147 + (i - 1) * 94;
         play_ground_position[i][1].up = 53 + (i - 1) * 94;
         play_ground_position[i][1].y = 100 + (i - 1) * 94;
@@ -26,8 +26,8 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
-    play_ground[3][1] = new SunFlower(500, 300);  /////////////added just for examine
-    play_ground[1][1] = new PeaShooter(250, 100);
+    play_ground[1][1] = new SnowPea(298, 53);  /////////////added just for examine
+    //play_ground[1][1] = new PeaShooter(250, 100);
 }
 
 void Game::genZombie(){
@@ -59,6 +59,7 @@ void Game::update(){
     for(Sun* s:suns){
         s->update();
     }
+    genSun();
     genZombie();
     updatePlayGround();
     checkEating();
@@ -113,9 +114,12 @@ void Game::deleteUnvalidBalls(){
 void Game::handleCollision(){
     for(auto b : balls){
         for(auto z : zombies){
-            if( b -> getRect().intersects(z->getRect())){
+            if( b -> getRect().intersects(z->getRect()) && z->getRow() ==1 /* b->getRow() */){
                 z->hit(b->getDamageValue());
                 b->collide();
+                if(auto icy_ball = dynamic_cast<BallIcy*> (b)){
+                    z->reduceSpeed();
+                }
             }
         }
     }
@@ -216,5 +220,15 @@ void Game::addSunflowerSun(SunFlower* sun_flower){
         suns.push_back(new_sun);
     }
 }
+
+void Game::genSun(){
+    Time shooter_time_elapsed = sun_clock.getElapsedTime();
+    if(shooter_time_elapsed.asSeconds() >= 10 ){
+        sun_clock.restart();
+        Sun* new_sun = new Sun(100 + rng() % 1000 , 0 , -10 );
+        suns.push_back(new_sun);
+    }
+}
+
 
 

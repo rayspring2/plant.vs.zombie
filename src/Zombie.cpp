@@ -13,6 +13,7 @@ zombie_height(zombie_height), frame_number(frame_number) {
         cerr << "picture not found!\n";
 		exit(-1);
     }
+    reduced_speed_clock.restart();
     sprite.setTexture(texture);
     IntRect rect;
     rect.width = zombie_width;
@@ -36,12 +37,12 @@ bool Zombie::isAlive() {
 
 void Zombie::update() {
     Time elapsed = clock.getElapsedTime();
-    if(elapsed.asMilliseconds() >= 50 and x > 220 && mode == WALKING) {
+    if(elapsed.asMilliseconds() >= 50 * speed_scale and x > 220 && mode == WALKING) {
         x -= speed;
         sprite.setPosition(x, y);
     }
 
-    if(elapsed.asMilliseconds() >= 100){
+    if(elapsed.asMilliseconds() >= 100 * speed_scale){
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
         IntRect rect;
@@ -52,8 +53,13 @@ void Zombie::update() {
         if(mode == EATING)
             rect.top = zombie_height;
         sprite.setTextureRect(rect);
-
     }
+    if(reduced_speed_clock.getElapsedTime().asMilliseconds() >= 3000 && speed_scale == 2){
+        speed_scale = 1;
+        sprite.setColor({255 , 255 , 255});
+    }
+    
+    
 }
 
 
@@ -71,9 +77,15 @@ int Zombie::getDamageValue(){
 }
 bool Zombie::isReadytoHit(){
     Time elapse = eating_clock.getElapsedTime();
-    if( elapse.asSeconds() >= hit_rate ){
+    if( elapse.asSeconds() >= hit_rate * speed_scale ){
         eating_clock.restart();
         return 1;
     }
     return 0;
+}
+
+void Zombie::reduceSpeed(){
+    speed_scale = 2;
+    reduced_speed_clock.restart();
+    sprite.setColor({100 , 100 , 200});
 }

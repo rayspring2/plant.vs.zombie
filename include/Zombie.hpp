@@ -8,11 +8,13 @@ enum ZombieState{
 
 class Zombie{
 protected:
+	int speed_scale = 1;
 	int x, y, row, health, damage, hit_rate, frame_number;
 	int frames_position[70], cur_rect = 0, zombie_width, zombie_height;
 	float current_speed, speed;
 	Clock clock;
 	Clock eating_clock;
+	Clock reduced_speed_clock;
 	Texture texture;
 	Sprite sprite;
 public:
@@ -31,6 +33,7 @@ public:
 	int getDamageValue();
 	FloatRect getRect();
 	bool isReadytoHit();
+	void reduceSpeed();
 };
 
 #endif

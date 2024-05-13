@@ -6,12 +6,14 @@
 #include "PeaShooter.hpp"
 #include "SnowPea.hpp"
 #include "Ball.hpp"
+#include "BallIcy.hpp"
+#include "BallGreen.hpp"
+#include "SunFlower.hpp"
 #include "Zombie.hpp"
 #include "HairMetal.hpp"
 #include "NormalZombie.hpp"
 #include "Walnut.hpp"
 #include "Sun.hpp"
-#include "SunFlower.hpp"
 
 class Game{
 public:
@@ -26,6 +28,7 @@ protected:
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
+	Clock sun_clock;
 	vector<Zombie*> zombies;
 	vector<Ball*> balls;
 	vector<Sun*> suns;
@@ -40,6 +43,7 @@ private:
 	void deleteDeadPlants();
 	void deleteDeadSuns();
 	void addSunflowerSun(SunFlower* sun_flower);
+	void genSun();
 };
 
 

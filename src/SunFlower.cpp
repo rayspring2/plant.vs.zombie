@@ -15,7 +15,7 @@ SunFlower::SunFlower(int x, int y) : Plant(x, y, "files/pic/sunflower2.png", 25)
 
 Sun* SunFlower::makeSun() {
     sun_clock.restart();
-    return new Sun(row, column , 0);
+    return new Sun(x, y , 0);
 }
 
 Time SunFlower::getShootTimeElapsed(){
