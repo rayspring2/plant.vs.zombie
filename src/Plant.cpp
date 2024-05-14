@@ -1,6 +1,6 @@
 #include "Plant.hpp"
 
-Plant::Plant(int x, int y, string file_name, int frame_number) :x(x) , y(y) , frame_number(frame_number) {
+Plant::Plant(int x, int y, string file_name, int frame_number, int animation_speed) : animation_speed(animation_speed), x(x) , y(y) , frame_number(frame_number) {
     row = (y - GROUND_UP_OFFSET) / CELLHIGHT + 1 ;
     sprite.setPosition(x,y);
     for(int i = 0; i < frame_number; i++) {
@@ -37,6 +37,10 @@ void Plant::update(/* Vector2i mouse_pos */) {
         sprite.setTextureRect(rect);
     }
 
+    if(in_drag_mode == DRAGING){
+        in_drag_mode = DRAGED;
+    }
+
     /* if(in_drag_mode){
         Vector2f target(static_cast<float>(mouse_pos.x) - sprite.getTextureRect().width/2, static_cast<float>(mouse_pos.y) - sprite.getTextureRect().height/2);
         sprite.setPosition(target);
@@ -44,29 +48,19 @@ void Plant::update(/* Vector2i mouse_pos */) {
 	//sprite.setScale(1.5, 1.5);
 }
 
-void Plant::handleMousePress(Vector2i mouse_pos){
-    Vector2f sprite_pos = sprite.getPosition();
-    Vector2f sprite_size = { (float)sprite.getTextureRect().width, (float)sprite.getTextureRect().height };
-
-    if (mouse_pos.x >= sprite_pos.x && mouse_pos.x <= sprite_pos.x + sprite_size.x &&
-        mouse_pos.y >= sprite_pos.y && mouse_pos.y <= sprite_pos.y + sprite_size.y)
-    {
-        in_drag_mode = true;
-    }
-
+void Plant::handleMousePress(){
+    if (in_drag_mode == NOTDRAG) in_drag_mode = DRAGING;
 }
 
-void Plant::handleMouseRelease(){
-    in_drag_mode = false;
-}
+
 void Plant::render(RenderWindow &window) {
     sf::RectangleShape outlineShape(sf::Vector2f(sprite.getGlobalBounds().width, sprite.getGlobalBounds().height));
     outlineShape.setPosition(sprite.getPosition());
-    outlineShape.setOutlineThickness(2); // Set the thickness of the outline
-    outlineShape.setOutlineColor(sf::Color::Red); // Set the color of the outline
-    outlineShape.setFillColor(sf::Color::Transparent);
+    // outlineShape.setOutlineThickness(2); // Set the thickness of the outline
+    // outlineShape.setOutlineColor(sf::Color::Red); // Set the color of the outline
+    // outlineShape.setFillColor(sf::Color::Transparent);
     window.draw(sprite);
-    window.draw(outlineShape);
+    // window.draw(outlineShape);
 }
 
 PlantType Plant::getPlantType(){
@@ -83,4 +77,8 @@ FloatRect Plant::getRect(){
 
 int Plant::getRow(){
     return row;
+}
+
+void Plant::setPos(Vector2f position){
+	sprite.setPosition(position);
 }

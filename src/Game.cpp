@@ -11,7 +11,7 @@ Game::Game() {
         play_ground_position[i][1].left = GROUND_LEFT_OFFSET;
         play_ground_position[i][1].right = GROUND_LEFT_OFFSET + CELLWITDH;
         play_ground_position[i][1].x = GROUND_LEFT_OFFSET + CELLWITDH / 2;
-        
+
         play_ground_position[i][1].down = GROUND_UP_OFFSET + i  * CELLHIGHT;
         play_ground_position[i][1].up = GROUND_UP_OFFSET + (i - 1) * CELLHIGHT;
         play_ground_position[i][1].y = GROUND_UP_OFFSET + CELLHIGHT / 2 + (i - 1) * CELLHIGHT;
@@ -26,12 +26,32 @@ Game::Game() {
             play_ground_position[i][j].down = play_ground_position[i][j - 1].down;
         }
     }
-    
+
     for( int i = 1 ; i <= GROUNDROWS ; i++){
         lawncleaners[i] = new LawnCleaner(GROUND_LEFT_OFFSET , play_ground_position[i][1].y);
     }
-    
-    play_ground[1][1] = new Walnut(216 , 53);
+
+    icon = new Icon(0, 0);
+    selected_plant = INVALID;
+}
+
+bool Game :: inBackGround(Vector2i position) {
+    int x = position.x;
+    int y = position.y;
+    if(216 <= x and x <= 954 and 53 <= y and y <= 523) return true;
+    return false;
+}
+
+pair<int, int> Game ::findPlayGroundBlock(Vector2f plant_position) {
+    for(int i = 1; i <= 5; i++) {
+        for(int j = 1; j <= 9; j++) {
+            if(play_ground_position[i][j].up <= plant_position.y and plant_position.y <= play_ground_position[i][j].down and
+            play_ground_position[i][j].left <= plant_position.x and plant_position.x <= play_ground_position[i][j].right and play_ground[i][j] == nullptr) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1};
 }
 
 void Game::genZombie(){
@@ -51,8 +71,10 @@ void Game::genZombie(){
 		}
 	}
 }
-void Game::update(){
+void Game::update(RenderWindow &window){
+    icon->update();
     handleCollision();
+    handleSunCollect(window);
     removeDeadZombies();
     deleteUnvalidBalls();
     deleteDeadSuns();
@@ -96,16 +118,66 @@ void Game::render(RenderWindow &window){
             continue;
         lawncleaners[i]->render(window);
     }
-    
+
     for(Ball* b : balls){
         b->render(window);
     }
-    for(Zombie* z : zombies) 
+    for(Zombie* z : zombies)
         z->render(window);
-    
+
     for(Sun* s : suns){
         s->render(window);
     }
+
+    icon->render(window);
+}
+
+bool Game :: isGameOver() {
+    for(int i = 0; i < zombies.size(); i++) {
+        if(zombies[i]->getGameover()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Game :: plantRequest(RenderWindow &window) {
+    moved_plant->handleMousePress();
+    icon->turnOffBorder();
+    Vector2i mouse_pos = Mouse::getPosition(window);
+    Vector2f target(static_cast<float>(mouse_pos.x) - moved_plant->getWidth() / 2, static_cast<float>(mouse_pos.y) - moved_plant->getHeight() /2);
+    moved_plant->setPos(target);
+    is_dragging = false;
+    pair<int, int> new_position = findPlayGroundBlock(target);
+    if(new_position != pair<int, int>(-1, -1)) {
+        play_ground[new_position.first][new_position.second] = moved_plant;
+        play_ground[new_position.first][new_position.second]->setPos(Vector2f((float)play_ground_position[new_position.first][new_position.second].x,
+        (float)play_ground_position[new_position.first][new_position.second].y));
+        moved_plant = nullptr;
+    }
+    else {
+        moved_plant = nullptr;
+        return;
+    }
+    icon->isValidRequset();
+}
+
+void Game :: createRequest(RenderWindow &window) {
+    PlantType plant_type = icon->checkMouse(window);
+    if(plant_type == PEASHOOTER) {
+        moved_plant = new PeaShooter(200, 200);
+    }
+    else if(plant_type == SNOWPEA) {
+        moved_plant = new SnowPea(200, 200);
+    }
+    else if(plant_type == SUNFLOWER) {
+        moved_plant = new SunFlower(200, 200);
+    }
+    else if(plant_type == WALNUT) {
+        moved_plant = new Walnut(200, 200);
+    }
+    else return;
+    is_dragging = true;
 }
 
 void Game::deleteUnvalidBalls(){
@@ -115,7 +187,7 @@ void Game::deleteUnvalidBalls(){
             trash.push_back(b);
         }
     }
-    balls.erase(remove_if(balls.begin(), balls.end(), 
+    balls.erase(remove_if(balls.begin(), balls.end(),
         [](auto p){ return p->isOut() || p->isCollided(); }), balls.end());
     for (auto p : trash){
         delete p;
@@ -146,7 +218,6 @@ void Game::handleCollision(){
                 lc->move();
                 z->die();
             }
-            
         }
     }
 }
@@ -251,6 +322,23 @@ void Game::genSun(){
         Sun* new_sun = new Sun(GROUND_LEFT_OFFSET + rng() % CELLWITDH * GROUNDCOLUMNS , 0 , SUN_FALLDOWN_SPEED );
         suns.push_back(new_sun);
     }
+}
+
+void Game::handleSunCollect(RenderWindow &window) {
+    vector<Sun*> trash;
+    Vector2i mouse_pos = sf::Mouse::getPosition(window);
+    int suns_collected = 0;
+    for (auto s : suns) {
+        if (s->can_collect(Vector2f(mouse_pos.x,mouse_pos.y))) {
+            suns_collected++;
+            trash.push_back(s);
+        }
+    }
+    for (auto s : trash) {
+        suns.erase(remove(suns.begin(), suns.end(), s), suns.end());
+        delete s;
+    }
+    icon->increase_money(suns_collected * 25);
 }
 
 

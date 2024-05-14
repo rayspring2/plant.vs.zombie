@@ -16,7 +16,8 @@ private:
 	Clock clock;
 	Clock life_clock;
 public:
-	Sun(int x = 0 , int y = 0 , int yspeed = 0);	
+	bool can_collect(Vector2f mouse_pos) {return sprite.getGlobalBounds().contains(mouse_pos);}
+	Sun(int x = 0 , int y = 0 , int yspeed = 0);
 	bool isAlive();
 	~Sun();
 	void update();

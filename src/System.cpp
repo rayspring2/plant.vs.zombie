@@ -16,17 +16,30 @@ System::System(){
 }
 
 void System::run(){
-	while(window.isOpen()){
+	while(window.isOpen() and game_state == IN_GAME){
 		update();
 		handleEvent();
 		render();
 	}
+	while(game_state == GAMEOVER_SCREEN) {
+		window.draw(bg_sprite);
+	}
 }
 
-
+void System :: updateOverGame() {
+	IntRect rect;
+	bg_sprite.setColor(sf::Color(255, 255, 255, 128));
+	window.draw(bg_sprite);
+}
 
 void System::update(){
-	game->update();
+	if(game->isGameOver()) {
+		updateOverGame();
+		game_state = GAMEOVER_SCREEN;
+	}
+	else {
+		game->update(window);
+	}
 }
 
 void System::handleEvent(){
@@ -34,7 +47,7 @@ void System::handleEvent(){
 	while (window.pollEvent(event)){
 		switch (event.type) {
 			case (Event::Closed):
-				window.close();
+			//	window.close();
 				game_state = EXIT;
 				break;
 			case (Event::MouseButtonPressed):
@@ -62,8 +75,15 @@ void System::handleMousePress(Event ev){
 	}
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
-	case (IN_GAME):
+	case (IN_GAME): {
+		if(game->is_dragging) {
+			game->plantRequest(window);
+		}
+		else {
+			game->createRequest(window);
+		}
 		break;
+	}
 	case (PAUSE_MENU):
 		break;
 	case (MAIN_MENU):

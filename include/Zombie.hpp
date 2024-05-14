@@ -10,6 +10,7 @@ enum ZombieState{
 
 class Zombie{
 protected:
+	bool gameover = false;
 	int speed_scale = 1;
 	int x, y, row, health, damage, hit_rate, frame_number;
 	int frames_position[70], cur_rect = 0, zombie_width, zombie_height;
@@ -20,6 +21,7 @@ protected:
 	Texture texture;
 	Sprite sprite;
 public:
+	bool getGameover() {return gameover;}
 	ZombieState mode = WALKING;
 	Zombie(int x, int y, string file_name, int frame_number, int zombie_width, int zombie_height);
 	~Zombie(){};

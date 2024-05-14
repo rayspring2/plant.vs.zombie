@@ -1,11 +1,10 @@
 #include "SunFlower.hpp"
 
-SunFlower::SunFlower(int x, int y) : Plant(x, y, "files/pic/sunflower2.png", 25) {
+SunFlower::SunFlower(int x, int y) : Plant(x, y, "files/pic/sunflower2.png", 25, 60) {
     plant_type = SUNFLOWER;
     health = 30;
     cooldown = 40;
     hit_rate = 12;
-    price = 2;
 }
 
 Sun* SunFlower::makeSun() {

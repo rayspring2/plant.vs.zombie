@@ -33,6 +33,20 @@ const int CELLHIGHT = 94;
 struct Position {
     int up, down, left, right, x, y;
 };
+enum PlantType{
+	PEASHOOTER,
+	SNOWPEA,
+	SUNFLOWER,
+	WALNUT,
+	KERNELPULT,
+	INVALID
+};
+
+enum ItemState {
+    LOADING ,
+	AVAILABLE ,
+	UNAVAILABLE
+};
 
 
 #endif

@@ -1,12 +1,11 @@
 #include "Walnut.hpp"
 
-Walnut::Walnut(int x, int y) : Plant(x, y, "files/pic/walnut_all.png", 3) {
+Walnut::Walnut(int x, int y) : Plant(x, y, "files/pic/walnut_all.png", 3, 100) {
     plant_type = WALNUT;
     health = 200;
     default_health = health;
     cooldown = 10;
     hit_rate = 0;
-    price = 2;
 }
 
 void Walnut::update(){

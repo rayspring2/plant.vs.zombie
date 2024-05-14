@@ -39,7 +39,9 @@ void Zombie::update() {
             x -= speed;
             sprite.setPosition(x, y);
         }
-        
+        if(x <= GROUND_LEFT_OFFSET) {
+            gameover = true;
+        }
         clock.restart();
         cur_rect = (cur_rect + 1) % frame_number;
         IntRect rect;

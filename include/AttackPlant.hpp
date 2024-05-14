@@ -10,7 +10,7 @@ protected:
 	Clock shooter_clock;
 	void resetShootTime();
 public:
-	AttackPlant(int x, int y, string file_name, int frames_number);
+	AttackPlant(int x, int y, string file_name, int frames_number, int animation_speed);
 	~AttackPlant() {};
 	Time getShootTimeElapsed();
 	virtual Ball* addBall();

@@ -30,10 +30,12 @@ private:
 	Texture bg_texture;
 	Sprite bg_sprite;
 	void update();
+	void pdateOverGame();
 	void render();
 	void handleEvent();
 	void handleMousePress(Event ev);
 	void handleMouseRelease(Event ev);
+	void updateOverGame();
 public:
 	RenderWindow window;
 	Game* game;
