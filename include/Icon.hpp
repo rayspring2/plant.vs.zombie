@@ -20,10 +20,14 @@ public:
     void backToNormalMode(PlantType plnat_type);
     bool checkAvailable(int index);
 	void turnOffBorder();
+    void addItem(PlantType plant_type, int cool_down, string path, int price);
+
     vector<Item*> items;
     void increase_money(int money_collected){money += money_collected;}
 protected:
 	Texture texture;
+    Font font;
+    Text text;
 	Sprite sprite;
     PlantType last_changed;
 private:

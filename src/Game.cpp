@@ -32,6 +32,11 @@ Game::Game() {
     }
 
     icon = new Icon(0, 0);
+    //with setting
+    icon->addItem(PEASHOOTER, 10, "files/pic/PeashooterMenu.png", 100);
+    icon->addItem(SNOWPEA, 10, "files/pic/SnowpeaMenu.png", 175);
+    icon->addItem(SUNFLOWER, 10, "files/pic/SunflowerMenu.png", 50);
+    icon->addItem(WALNUT, 10, "files/pic/WalnutMenu.png", 50);
     selected_plant = INVALID;
 }
 

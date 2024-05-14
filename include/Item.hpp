@@ -5,7 +5,7 @@
 
 class Item {
 public:
-	Item(int x, int y, PlantType plant_type, int cooldown, string path, int price);
+	Item(int up, int down, PlantType plant_type, int cooldown, string path, int price);
 	~Item(){};
     ItemState getStatus();
     void setStatus(ItemState new_item_state) {item_state = new_item_state;}
@@ -22,12 +22,14 @@ public:
     void increase_current_time();
     void setShowBorder(bool show_value) {show_border = show_value;}
     bool getShowBorder() {return show_border;}
-
+    int getUp() {return up;}
+    int getDown() {return down;}
     RectangleShape border_rec;
     //
 protected:
 
 private:
+    int up, down;
     bool show_border;
     int price;
     int cooldown;

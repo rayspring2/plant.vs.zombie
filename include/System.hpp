@@ -29,6 +29,8 @@ private:
 //	PeaShooter* ps[6][11];
 	Texture bg_texture;
 	Sprite bg_sprite;
+	Texture zombie_texture;
+	Sprite zombie_sprite;
 	void update();
 	void pdateOverGame();
 	void render();
@@ -39,6 +41,8 @@ private:
 public:
 	RenderWindow window;
 	Game* game;
+	Text text;
+	Font font;
 	void run();
 	System();
 };

@@ -17,8 +17,10 @@ void Item :: makeBorder(RenderWindow &window) {
     sprite.setColor(sf::Color(255, 255, 255, 128));
 }
 
-Item :: Item(int x, int y, PlantType plant_type, int cool_down, string path, int price) : cooldown(cool_down), plant_type(plant_type), price(price) {
-    sprite.setPosition(x, y);
+Item :: Item(int up, int down, PlantType plant_type, int cool_down, string path, int price) : up(up), down(down), cooldown(cool_down), plant_type(plant_type), price(price) {
+    sprite.setPosition(0, up);
+
+    cout << plant_type << " " << up << " " << down << endl;
     item_state = UNAVAILABLE;
     if(!font.loadFromFile("files/font/HouseofTerrorRegular.otf")) {
         cout << "font can not load";
