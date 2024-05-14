@@ -2,15 +2,17 @@
 #define LAWNCLEANER_INCLUDE
 
 #include "Global.hpp"
-const int CLEANER_UPDATE_TIME = 100;
+const string LAWNCLEANER_SETTING_KEYWORD = "LAWNCLEANER";
 class LawnCleaner{
 private:
+	int CLEANER_UPDATE_TIME;
 	Clock clock;
 	int speed = 0;
 	int x , y;
-	int default_speed = 20;
+	int default_speed;
 	Texture texture;
 	Sprite sprite;
+	void readSettingFile();
 	
 public:
 	LawnCleaner(int x = 0, int y = 0);

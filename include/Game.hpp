@@ -17,12 +17,14 @@
 #include "LawnCleaner.hpp"
 const int ZMOBIETYPESCNT = 2;
 const int HAIRMETAL_OFFSET_Y_POSITION = 40;
+const string GAME_SETTING_KEYWORD = "GAME";
 /////
-const int ZOMBIE_START_X = 1000;
-const int ZOMBIE_GENERATE_PERIOD = 10000;
-const int SUN_FALLDOWN_SPEED = 10; 
-const int SUN_GENERATE_PERIOD = 7000;
 class Game{
+private:
+	int ZOMBIE_START_X;
+	int ZOMBIE_GENERATE_PERIOD;
+	int SUN_FALLDOWN_SPEED; 
+	int SUN_GENERATE_PERIOD;
 public:
 	Game();
 	~Game(){};
@@ -41,6 +43,7 @@ private:
 	vector<Sun*> suns;
 	LawnCleaner* lawncleaners[GROUNDROWS+1];
 	Clock clock;
+	void readSettingFile();
 	void genZombie();
 	void deleteUnvalidBalls();
 	void handleCollision(); //after you added zombies:))

@@ -1,6 +1,7 @@
 #include "Game.hpp"
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 Game::Game() {
+    readSettingFile();
     for(int i = 1; i <= GROUNDROWS; i++) {
         for(int j = 1; j <= GROUNDCOLUMNS; j++) {
             play_ground[i][j] = nullptr;
@@ -32,6 +33,44 @@ Game::Game() {
     }
     
     play_ground[1][1] = new Walnut(216 , 53);
+}
+
+void Game::readSettingFile(){
+    ifstream setting_file(SETTING_PATH);
+    
+    string input;
+    while(setting_file >> input){
+        if(input == SETTING_DELIMITER){
+            setting_file >> input;
+            if(input == GAME_SETTING_KEYWORD){
+                break;
+            }
+        }
+    }
+    int value;
+    setting_file >> input >> value;
+    if(input == "ZOMBIE_START_X:")
+        ZOMBIE_START_X = value;
+    else
+        cerr << "file currupted! ZOMBIE_START_X not found\n";
+    
+    setting_file >> input >> value;
+    if( input == "ZOMBIE_GENERATE_PERIOD:")
+        ZOMBIE_GENERATE_PERIOD = value;
+    else    cerr << "file currupted! ZOMBIE_GENERATE_PERIOD not found\n";
+    
+    setting_file >> input >> value;
+    if( input == "SUN_FALLDOWN_SPEED:")
+        SUN_FALLDOWN_SPEED = value;
+    else    
+        cerr << "file currupted! SUN_FALLDOWN_SPEED not found\n";
+    
+    setting_file >> input >> value;
+    if( input == "SUN_GENERATE_PERIOD:")
+        SUN_GENERATE_PERIOD = value;
+    else    
+        cerr << "file currupted! SUN_GENERATE_PERIOD not found\n";
+    
 }
 
 void Game::genZombie(){

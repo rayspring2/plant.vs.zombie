@@ -10,9 +10,11 @@ private:
 	Texture texture;
 	Sprite sprite;
 	Vector2f pos;
+protected:
 	int damage_value;
+	void readSettingFile(string type);
 public:
-	Ball(Vector2f shooter_pos , string pic_path , int damage_value);
+	Ball(Vector2f shooter_pos , string pic_path);
 	~Ball(){};
 	void update();
 	void render(RenderWindow &window);

@@ -10,7 +10,6 @@
 #include "AttackPlant.hpp"
 #include "Zombie.hpp"
 #include "NormalZombie.hpp"
-#include "KernelPult.hpp"
 #include "HairMetal.hpp"
 #include "Game.hpp"
 
