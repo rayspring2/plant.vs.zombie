@@ -10,7 +10,7 @@ private:
 	Clock sun_clock;
 public:
 	SunFlower(int x, int y);
-	Sun* makeSun();
+	Sun* makeSun(Vector2f plant_position);
 	Time getShootTimeElapsed();
 	int getCoolDownTime();
 };

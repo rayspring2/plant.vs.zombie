@@ -25,6 +25,7 @@ protected:
 public:
 	PlantType getPlantType();
 	void setPos(Vector2f new_pos);
+	Vector2f getPs(){return sprite.getPosition();}
 	Plant(int x, int y, string file_name, int frames_number, int animation_speed);
 	virtual ~Plant(){};
 	void handleMousePress();

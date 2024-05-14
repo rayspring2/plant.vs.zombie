@@ -41,7 +41,6 @@ void Icon :: isValidRequset() {
             items[i]->clock.restart();
             last_changed = INVALID;
             money -= items[i]->getPrice();
-            cout << money << endl;
         }
     }
 }

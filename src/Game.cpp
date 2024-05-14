@@ -315,7 +315,7 @@ void Game::deleteDeadPlants(){
 void Game::addSunflowerSun(SunFlower* sun_flower){
     Time shooter_time_elapsed = sun_flower -> getShootTimeElapsed();
     if(shooter_time_elapsed.asMilliseconds() >= sun_flower-> getCoolDownTime() *100){
-        Sun* new_sun = sun_flower->makeSun();
+        Sun* new_sun = sun_flower->makeSun(sun_flower->getPos());
         suns.push_back(new_sun);
     }
 }
