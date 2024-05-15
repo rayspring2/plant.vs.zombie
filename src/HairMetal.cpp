@@ -1,7 +1,7 @@
 
 #include "HairMetal.hpp"
 
-HairMetal::HairMetal(int x, int y , int row) : Zombie(x, y, row, "files/pic/hairmetal_walking_eating.png", 46 , 124, 101) {
+HairMetal::HairMetal(int x, int y , int row) : Zombie(x, y, row, HAIRMETAL_ZOMBIE_TEXTURE_PATH, HAIRMETAL_ZOMBIE_FRAMES_CNT , HAIRMETAL_ZOMBIE_TEXTURE_WIDTH, HAIRMETAL_ZOMBIE_TEXTURE_HEIGHT) {
     readSettingFile(HAIRMETAL_SETTING_KEYWORD);
-    sprite.setScale(1.7,1.7);
+    sprite.setScale(HAIRMETAL_ZOMBIE_SCALE, HAIRMETAL_ZOMBIE_SCALE);
 }

@@ -6,7 +6,7 @@ Sun::Sun(int x, int y , int yspeed):x(x) , y(y) , yspeed(yspeed) {
         frames_position[i] = i * SUN_FRANE_WIDTH;
     }
     if (!texture.loadFromFile(file_name)) {
-        cerr << "picture not found!\n";
+        cerr << FILE_ERROR;
 		exit(-1);
     }
     sprite.setTexture(texture);
@@ -29,16 +29,16 @@ void Sun::readSettingFile(){
     }
     int value;
     setting_file >> input >> value;
-    if(input == "SUN_UPDATE_PERIOD:")
+    if(input == _SUN_UPDATE_PERIOD)
         SUN_UPDATE_PERIOD = value;
     else
-        cerr << "file currupted! SUN_UPDATE_PERIOD not found\n";
+        cerr << FILE_ERROR;
 
     setting_file >> input >> value;
-    if(input == "lifespan:")
+    if(input == LIFESPAN)
         lifespan = value;
     else
-        cerr << "file currupted! lifespan not found\n";
+        cerr << FILE_ERROR;
     setting_file.close();
 }
 

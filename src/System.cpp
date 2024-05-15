@@ -2,36 +2,42 @@
 #include "Primary.hpp"
 
 System::System(){
-	window.create(VideoMode(WIDTH,HEIGHT),"Plants VS Zombies");
+	window.create(VideoMode(WIDTH,HEIGHT), TITLE);
 	window.setFramerateLimit(FRAME_RATE);
 	if(!bg_texture.loadFromFile(BG_PATH)){
-		cerr << "back ground not found!\n";
+		cerr << PIC_NOT_FOUND;
 		exit(-1);
 	}
 	if(!zombie_texture.loadFromFile(ZM_PATH)){
-		cerr << "back ground not found!\n";
+		cerr << PIC_NOT_FOUND;
 		exit(-1);
 	}
 	game = new Game();
 	zombie_sprite.setTexture(zombie_texture);
-	zombie_sprite.setScale(0.1, 0.1);
+	zombie_sprite.setScale(ZOMBIE_SCALE, ZOMBIE_SCALE);
 
 	bg_sprite.setTexture(bg_texture);
 	bg_sprite.setScale(WIDTH / bg_sprite.getLocalBounds().width,
     HEIGHT / bg_sprite.getLocalBounds().height);
-	if(!font.loadFromFile("files/font/HouseofTerrorRegular.otf")) {
-        cout << "font can not load";
+	if(!font.loadFromFile(FONT_PATH)) {
+        cout << FONT_NOT_FOUND;
         exit(0);
     }
 	text.setFont(font);
     text.setColor(Color :: Red);
-    text.setCharacterSize(100);
+    text.setCharacterSize(FONT_SIZE_TEXT);
 
-	Vector2f zom_pos = {bg_sprite.getPosition().x + 550, bg_sprite.getPosition().y + 140};
+	Vector2f zom_pos = {bg_sprite.getPosition().x + ZOM_POS_X, bg_sprite.getPosition().y + ZOM_POS_Y};
     zombie_sprite.setPosition(zom_pos);
-    Vector2f text_pos = {bg_sprite.getPosition().x + 100, bg_sprite.getPosition().y + 50};
+    Vector2f text_pos = {bg_sprite.getPosition().x + SYSTEM_TEXT_POS_X, bg_sprite.getPosition().y + SYSTEM_TEXT_POS_Y};
     text.setPosition(text_pos);
-	text.setString("THE ZOMBIES ATE YOUR BRAINS!");
+	text.setString(GAME_OVER_TEXT);
+	if(!music.openFromFile(MUSIC_PATH)){
+		cerr << FILE_ERROR;
+		exit(-1);
+	}
+	music.setLoop(true);
+	music.play();
 }
 
 void System::run(){
@@ -51,7 +57,7 @@ void System::update(){
 	case (IN_GAME): {
 		if(game->isGameOver()) {
 			updateOverGame();
-			bg_sprite.setColor(sf::Color(255, 255, 255, 128));
+			bg_sprite.setColor(TRANS_BACK);
 			game_state = GAMEOVER_SCREEN;
 		}
 		else {

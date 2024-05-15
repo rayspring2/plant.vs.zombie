@@ -1,6 +1,6 @@
 #include "SnowPea.hpp"
 
-SnowPea::SnowPea(int x, int y) : Pea(x, y, "files/pic/snowpea.png") {
+SnowPea::SnowPea(int x, int y) : Pea(x, y, SNOWPEA_PATH) {
     readSettingFile(SNOWPEA_SETTING_KEYWORD);
     plant_type = SNOWPEA;
 }

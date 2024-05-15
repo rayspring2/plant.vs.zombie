@@ -10,7 +10,7 @@ zombie_height(zombie_height), frame_number(frame_number) {
         frames_position[i] = i * zombie_width;
     }
     if (!texture.loadFromFile(file_name)) {
-        cerr << "picture not found!\n";
+        cerr << PIC_NOT_FOUND;
 		exit(-1);
     }
     reduced_speed_clock.restart();
@@ -35,10 +35,10 @@ void Zombie::readSettingFile(){
     }
     int value;
     setting_file >> input >> value;
-    if(input == "ZOMBIE_UPDATE_TIME:")
+    if(input == _ZOMBIE_UPDATE_TIME)
         ZOMBIE_UPDATE_TIME = value;
     else
-        cerr << "file currupted! ZOMBIE_UPDATE_TIME not found\n";
+        cerr << PIC_NOT_FOUND;
     setting_file.close();
 }
 void Zombie::readSettingFile( string type){
@@ -54,28 +54,28 @@ void Zombie::readSettingFile( string type){
     }
     int value;
     setting_file >> input >> value;
-    if(input == "health:")
+    if(input == ZOMBIE_HEALTH)
         health = value;
     else
-        cerr << "file currupted! health not found\n";
+        cerr << PIC_NOT_FOUND;
 
     setting_file >> input >> value;
-    if(input == "hit_rate:")
+    if(input == ZOMBIE_HIT_RATE)
         hit_rate = value;
     else
-        cerr << "file currupted! hit_rate not found\n";
+        cerr << PIC_NOT_FOUND;
     
     setting_file >> input >> value;
-    if(input == "damage:")
+    if(input == ZOMBIE_DAMAGE)
         damage = value;
     else
-        cerr << "file currupted! damage not found\n";
+        cerr << PIC_NOT_FOUND;
     
     setting_file >> input >> value;
-    if(input == "speed:")
+    if(input == ZOMBIE_SPEED)
         speed = value;
     else
-        cerr << "file currupted! speed not found\n";
+        cerr << PIC_NOT_FOUND;
 
     setting_file.close();
 }
@@ -111,8 +111,8 @@ void Zombie::update() {
             rect.top = zombie_height;
         sprite.setTextureRect(rect);
     }
-    if(reduced_speed_clock.getElapsedTime().asMilliseconds() >= 3000 && speed_scale == 2){
-        speed_scale = 1;
+    if(reduced_speed_clock.getElapsedTime().asMilliseconds() >= ZOMBIE_REDUCED && speed_scale == TWO){
+        speed_scale = ONE;
         sprite.setColor(Color::White);
     }
     
@@ -142,9 +142,9 @@ bool Zombie::isReadytoHit(){
 }
 
 void Zombie::reduceSpeed(){
-    speed_scale = 2;
+    speed_scale = TWO;
     reduced_speed_clock.restart();
-    sprite.setColor({100 , 100 , 200});
+    sprite.setColor(ZOMBIE_COLOR);
 }
 void Zombie::die(){
     health = 0;

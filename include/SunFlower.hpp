@@ -4,6 +4,10 @@
 #include "Global.hpp"
 #include "Plant.hpp"
 #include "Sun.hpp"
+
+const string COOLDOWN = "cooldown:";
+const string HEALTH = "health:";
+const string SUNFLOWER_PATH = "files/pic/sunflower2.png";
 const string SUNFLOWER_SETTING_KEYWORD = "SUNFLOWER";
 class SunFlower : public Plant{
 private:

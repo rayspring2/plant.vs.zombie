@@ -4,6 +4,14 @@
 #include "Global.hpp"
 #include "Plant.hpp"
 const string WALNUT_SETTING_KEYWORD = "WALNUT";
+const string WALNUT_PATH = "files/pic/walnut_all.png";
+const int WALNUT_FRAME = 3;
+const int WALNUT_ANIMATION= 100;
+const string WALNUT_HEALTH = "health:";
+const string WALNUT_COOLDOWN = "cooldown:";
+const int THREE = 3;
+
+
 class Walnut : public Plant{
 private:
 	void readSettingFile();

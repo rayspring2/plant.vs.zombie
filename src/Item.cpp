@@ -2,7 +2,7 @@
 
 void Item :: fixTexture(string path) {
     if (!texture.loadFromFile(path)) {
-        cerr << "picture not found!\n";
+        cerr << FILE_ERROR;
         exit(0);
     }
     sprite.setTexture(texture);
@@ -22,7 +22,7 @@ Item :: Item(int up, int down, PlantType plant_type, int cool_down, string path,
 
     item_state = UNAVAILABLE;
     if(!font.loadFromFile(FONT_PATH)) {
-        cout << DID_NOT_LOAD;
+        cout << FONT_NOT_FOUND;
         exit(0);
     }
     fixTexture(path);

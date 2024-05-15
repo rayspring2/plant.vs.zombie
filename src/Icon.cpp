@@ -5,7 +5,7 @@ Icon :: Icon(int x, int y) {
     column = y;
     money = PRIMARY_MONEY;
     if(!texture.loadFromFile(MONEY_PATH)){
-		cerr << DID_NOT_LOAD;
+		cerr << PIC_NOT_FOUND;
 		exit(0);
 	}
 	sprite.setTexture(texture);
@@ -13,7 +13,7 @@ Icon :: Icon(int x, int y) {
 
 
 	if(!font.loadFromFile(FONT_PATH)) {
-        cout << DID_NOT_LOAD;
+        cout << FONT_NOT_FOUND;
         exit(0);
     }
 	text.setFont(font);

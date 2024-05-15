@@ -39,29 +39,29 @@ Game::Game() {
 }
 
 void Game :: hasPlant() {
-    if(hasPeashooter) icon->addItem(PEASHOOTER, peashooterCooldown, "files/pic/PeashooterMenu.png", 100);
-    if(hasSnowpea) icon->addItem(SNOWPEA, snowpeaCooldown, "files/pic/SnowpeaMenu.png", 175);
-    if(hasSunflower) icon->addItem(SUNFLOWER, sunflowerCooldown, "files/pic/SunflowerMenu.png", 50);
-    if(hasWalnut) icon->addItem(WALNUT, walnutCooldown, "files/pic/WalnutMenu.png", 50);
+    if(hasPeashooter) icon->addItem(PEASHOOTER, peashooterCooldown, PEASHOOTER_MENU_PATH, peashooterPrice);
+    if(hasSnowpea) icon->addItem(SNOWPEA, snowpeaCooldown, SNOWPEA_MENU_PATH, snowpeaPrice);
+    if(hasSunflower) icon->addItem(SUNFLOWER, sunflowerCooldown, SUNFLOWER_MENU_PATH, sunflowerPrice);
+    if(hasWalnut) icon->addItem(WALNUT, walnutCooldown, WALNUT_MENU_PATH, walnutPrice);
 }
 
 bool Game :: inBackGround(Vector2i position) {
     int x = position.x;
     int y = position.y;
-    if(216 <= x and x <= 954 and 53 <= y and y <= 523) return true;
+    if(LEFT_OF_PLAYGROUND <= x and x <= RIGHT_OF_PLAYGROUND and UP_OF_PLAYGROUND <= y and y <= DOWN_OF_PLAYGROUND) return true;
     return false;
 }
 
 pair<int, int> Game ::findPlayGroundBlock(Vector2f plant_position) {
-    for(int i = 1; i <= 5; i++) {
-        for(int j = 1; j <= 9; j++) {
+    for(int i = ONE; i <= GROUNDROWS; i++) {
+        for(int j = ONE; j <= GROUNDCOLUMNS; j++) {
             if(play_ground_position[i][j].up <= plant_position.y and plant_position.y <= play_ground_position[i][j].down and
             play_ground_position[i][j].left <= plant_position.x and plant_position.x <= play_ground_position[i][j].right and play_ground[i][j] == nullptr) {
                 return {i, j};
             }
         }
     }
-    return {-1, -1};
+    INVALID_POSITION;
 }
 
 void Game::readSettingFile(){
@@ -146,6 +146,30 @@ void Game::readSettingFile(){
     setting_file >> input >> value;
     if( input == GAME_SUNFLOWER_COOLDOWN)
         walnutCooldown = value;
+    else
+        cerr << LOADING_ERROR;
+//
+    setting_file >> input >> value;
+    if( input == PRICE_PEASHOOTER)
+        peashooterPrice = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == PRICE_SNOWPEA)
+        snowpeaPrice = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == PRICE_SUNFLOWER)
+        sunflowerPrice = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == PRICE_WALNUT)
+        walnutPrice = value;
     else
         cerr << LOADING_ERROR;
 
@@ -242,7 +266,7 @@ void Game :: plantRequest(RenderWindow &window) {
     moved_plant->handleMousePress();
     icon->turnOffBorder();
     Vector2i mouse_pos = Mouse::getPosition(window);
-    Vector2f target(static_cast<float>(mouse_pos.x) - moved_plant->getWidth() / 2, static_cast<float>(mouse_pos.y) - moved_plant->getHeight() /2);
+    Vector2f target(static_cast<float>(mouse_pos.x) - moved_plant->getWidth() / HALF, static_cast<float>(mouse_pos.y) - moved_plant->getHeight() /HALF);
     moved_plant->setPos(target);
     is_dragging = false;
     pair<int, int> new_position = findPlayGroundBlock(target);
@@ -351,9 +375,8 @@ void Game::removeDeadZombies(){
             trash.push_back(z);
         }
     }
-    zombies.erase(remove_if(zombies.begin(), zombies.end(), 
+    zombies.erase(remove_if(zombies.begin(), zombies.end(),
         [](auto p){ return !p->isAlive() ; }), zombies.end());
-    
     for (auto p : trash){
         delete p;
     }
@@ -367,9 +390,8 @@ void Game::deleteDeadSuns(){
 
         }
     }
-    suns.erase(remove_if(suns.begin(), suns.end(), 
+    suns.erase(remove_if(suns.begin(), suns.end(),
         [](Sun* p){ return !p->isAlive() ; }), suns.end());
-    
     for (auto p : trash){
         delete p;
     }
@@ -398,7 +420,7 @@ void Game::deleteDeadPlants(){
                 continue;
             if(!play_ground[i][j]->isAlive()){
                 delete play_ground[i][j];
-                play_ground[i][j] = nullptr; 
+                play_ground[i][j] = nullptr;
             }
         }
     }
@@ -406,7 +428,7 @@ void Game::deleteDeadPlants(){
 
 void Game::addSunflowerSun(SunFlower* sun_flower){
     Time shooter_time_elapsed = sun_flower -> getShootTimeElapsed();
-    if(shooter_time_elapsed.asMilliseconds() >= sun_flower-> getCoolDownTime() *100){
+    if(shooter_time_elapsed.asMilliseconds() >= sun_flower-> getCoolDownTime() * SPEED_COOLDOWN){
         Sun* new_sun = sun_flower->makeSun(sun_flower->getPos());
         suns.push_back(new_sun);
     }
@@ -416,7 +438,7 @@ void Game::genSun(){
     Time shooter_time_elapsed = sun_clock.getElapsedTime();
     if(shooter_time_elapsed.asMilliseconds() >= SUN_GENERATE_PERIOD ){
         sun_clock.restart();
-        Sun* new_sun = new Sun(GROUND_LEFT_OFFSET + rng() % CELLWITDH * GROUNDCOLUMNS , 0 , SUN_FALLDOWN_SPEED );
+        Sun* new_sun = new Sun(GROUND_LEFT_OFFSET + rng() % CELLWITDH * GROUNDCOLUMNS , ZERO , SUN_FALLDOWN_SPEED );
         suns.push_back(new_sun);
     }
 }

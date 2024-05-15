@@ -7,7 +7,7 @@ SFML_LIBRARY_DIR = /opt/homebrew/Cellar/sfml/2.6.1/lib
 #SFML_LIBRARY_DIR = /usr/lib
 
 LDFLAGS = -L$(SFML_LIBRARY_DIR)
-LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
+LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 LFLAGS = -L./files $(LDFLAGS) $(LDLIBS)
 SRCDIR = src
 OBJDIR = obj

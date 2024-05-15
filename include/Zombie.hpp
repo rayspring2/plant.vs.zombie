@@ -3,8 +3,17 @@
 #include "Global.hpp"
 
 const string ZOMBIE_SETTING_KEYWORD = "ZOMBIE";
+const int FRAME_POSITION = 70;
+const string _ZOMBIE_UPDATE_TIME = "ZOMBIE_UPDATE_TIME:";
+const string ZOMBIE_HIT_RATE = "hit_rate:";
+const string ZOMBIE_HEALTH = "health:";
+const string ZOMBIE_DAMAGE = "damage:";
+const string ZOMBIE_SPEED = "speed:";
+const int ZOMBIE_REDUCED = 3000;
+const sf::Color ZOMBIE_COLOR = sf::Color({100 , 100 , 200});
+
 enum ZombieState{
-	WALKING, EATING	
+	WALKING, EATING
 };
 
 class Zombie{
@@ -15,7 +24,7 @@ protected:
 	bool gameover = false;
 	int speed_scale = 1;
 	int x, y, row, health, damage, hit_rate, frame_number;
-	int frames_position[70], cur_rect = 0, zombie_width, zombie_height;
+	int frames_position[FRAME_POSITION], cur_rect = ZERO, zombie_width, zombie_height;
 	float current_speed, speed;
 	Clock clock;
 	Clock eating_clock;

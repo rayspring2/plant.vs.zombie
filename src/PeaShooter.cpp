@@ -1,6 +1,6 @@
 #include "PeaShooter.hpp"
 
-PeaShooter::PeaShooter(int x, int y) : Pea(x, y, "files/pic/peashooter.png") {
+PeaShooter::PeaShooter(int x, int y) : Pea(x, y, PEASHOOTER_PATH) {
     readSettingFile(PEASHOOTER_SETTING_KEYWORD);
     plant_type = PEASHOOTER;
     

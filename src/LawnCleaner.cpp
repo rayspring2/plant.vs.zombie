@@ -2,8 +2,8 @@
 
 LawnCleaner::LawnCleaner(int x, int y) : x(x) , y(y) {
 	readSettingFile();
-	if (!texture.loadFromFile("files/pic/LawnCleaner.png")) {
-        cerr << "picture not found!\n";
+	if (!texture.loadFromFile(LAWNCLEANER_PATH)) {
+        cerr << FILE_ERROR;
 		exit(-1);
     }
     sprite.setTexture(texture);
@@ -22,16 +22,16 @@ void LawnCleaner::readSettingFile(){
     }
     int value;
 	setting_file >> input >> value;
-    if(input == "CLEANER_UPDATE_TIME:")
+    if(input == _CLEANER_UPDATE_TIME)
         CLEANER_UPDATE_TIME = value;
     else
-        cerr << "file currupted! CLEANER_UPDATE_TIME not found\n";
+        cerr << FILE_ERROR;
 
     setting_file >> input >> value;
-    if(input == "default_speed:")
+    if(input == DEFAULT_SPEED)
         default_speed = value;
     else
-        cerr << "file currupted! default_speed not found\n";
+        cerr << FILE_ERROR;
 
     setting_file.close();
 }

@@ -5,6 +5,7 @@
 #include "Global.hpp"
 #include "Pea.hpp"
 #include "BallGreen.hpp"
+const string PEASHOOTER_PATH = "files/pic/peashooter.png";
 const string PEASHOOTER_SETTING_KEYWORD = "PEASHOOTER";
 class PeaShooter : public Pea{
 public:

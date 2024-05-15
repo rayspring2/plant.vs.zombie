@@ -15,34 +15,34 @@ void Pea::readSettingFile( string type){
     }
     int value;
     setting_file >> input >> value;
-    if(input == "health:")
+    if(input == PEA_HEALTH)
         health = value;
     else
-        cerr << "file currupted! health not found\n";
+        cerr << FILE_ERROR;
 
     setting_file >> input >> value;
-    if(input == "damage:")
+    if(input == PEA_DAMAGE)
         damage = value;
     else
-        cerr << "file currupted! damage not found\n";
+        cerr << FILE_ERROR;
     
     setting_file >> input >> value;
-    if(input == "cooldown:")
+    if(input == PEA_COOLDOWN)
         cooldown = value;
     else
-        cerr << "file currupted! cooldown not found\n";
+        cerr << FILE_ERROR;
     
     setting_file >> input >> value;
-    if(input == "hit_rate:")
+    if(input == PEA_HIT_RATE)
         hit_rate = value;
     else
-        cerr << "file currupted! hit_rate not found\n";
+        cerr << FILE_ERROR;
 
     setting_file >> input >> value;
-    if(input == "speed:")
+    if(input == PEA_SPEED)
         speed = value;
     else
-        cerr << "file currupted! speed not found\n";
+        cerr << FILE_ERROR;
     setting_file.close();
 }
 

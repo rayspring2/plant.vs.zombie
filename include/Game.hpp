@@ -23,8 +23,6 @@ const string MENU_SETTING_KEYWORD = "MENU";
 const int TEMP_POSITION = 200;
 const pair<int, int> INVALID_POSITION = pair<int, int>(-1, -1);
 const int SPEED_COOLDOWN = 100;
-const int ONE = 1;
-const string LOADING_ERROR = "file currupted! not found\n";
 const string GAME_ZOMBIE_START_X = "ZOMBIE_START_X:";
 const string GAME_ZOMBIE_GENERATE_PERIOD = "ZOMBIE_GENERATE_PERIOD:";
 const string GAME_SUN_FALLDOWN_SPEED = "SUN_FALLDOWN_SPEED:";
@@ -37,6 +35,19 @@ const string GAME_PEASHOOTER_COOLDOWN = "PEASHOOTER_COOLDOWN:";
 const string GAME_SNOWPEA_COOLDOWN = "SNOWPEA_COOLDOWN:";
 const string GAME_WALNUT_COOLDOWN = "SUNFLOWER_COOLDOWN:";
 const string GAME_SUNFLOWER_COOLDOWN = "WALNUT_COOLDOWN:";
+const int LEFT_OF_PLAYGROUND = 216;
+const int RIGHT_OF_PLAYGROUND = 954;
+const int UP_OF_PLAYGROUND = 53;
+const int DOWN_OF_PLAYGROUND = 523;
+const string PEASHOOTER_MENU_PATH = "files/pic/PeashooterMenu.png";
+const string SNOWPEA_MENU_PATH = "files/pic/SnowpeaMenu.png";
+const string SUNFLOWER_MENU_PATH =  "files/pic/SunflowerMenu.png";
+const string WALNUT_MENU_PATH = "files/pic/WalnutMenu.png";
+const string PRICE_PEASHOOTER = "PRICE_PEASHOOTER:";
+const string PRICE_SNOWPEA = "PRICE_SNOWPEA:";
+const string PRICE_SUNFLOWER = "PRICE_SUNFLOWER:";
+const string PRICE_WALNUT = "PRICE_WALNUT:";
+const int HALF = 2;
 
 /////
 class Game{
@@ -47,6 +58,7 @@ private:
 	int SUN_GENERATE_PERIOD;
 	int hasPeashooter = 0, hasSnowpea = 0, hasWalnut = 0, hasSunflower = 0;
 	int peashooterCooldown, snowpeaCooldown, sunflowerCooldown, walnutCooldown;
+	int peashooterPrice, snowpeaPrice, sunflowerPrice, walnutPrice;
 public:
 	Game();
 	~Game(){};

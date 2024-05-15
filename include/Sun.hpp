@@ -5,6 +5,8 @@
 const int SUN_FRAME_NUMBER = 29;
 const int SUN_FRANE_WIDTH = 79;
 const int SUN_FRANE_HEIGHT = 79;
+const string LIFESPAN = "lifespan:";
+const string _SUN_UPDATE_PERIOD = "SUN_UPDATE_PERIOD:";
 const string SUN_SETTING_KEYWORD = "SUN";
 class Sun{
 private:

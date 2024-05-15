@@ -1,6 +1,6 @@
 
 #include "NormalZombie.hpp"
 
-NormalZombie::NormalZombie(int x, int y ,  int row) : Zombie(x, y, row, "files/pic/normal_zombie_walk_eat.png", 60, 100, 116) {
+NormalZombie::NormalZombie(int x, int y ,  int row) : Zombie(x, y, row, NORMAL_ZOMBIE_TEXTURE_PATH, NORMAL_ZOMBIE_FRAMES_CNT, NORMAL_ZOMBIE_TEXTURE_WIDTH, NORMAL_ZOMBIE_TEXTURE_HEIGHT) {
     readSettingFile(NORMALEZOMBIE_SETTING_KEYWORD);
 }

@@ -1,6 +1,6 @@
 #include "SunFlower.hpp"
 
-SunFlower::SunFlower(int x, int y) : Plant(x, y, "files/pic/sunflower2.png", 25, 60) {
+SunFlower::SunFlower(int x, int y) : Plant(x, y, SUNFLOWER_PATH, 25, 60) {
     readSettingFile();
     plant_type = SUNFLOWER;
 }
@@ -17,16 +17,16 @@ void SunFlower::readSettingFile(){
     }
     int value;
     setting_file >> input >> value;
-    if(input == "health:")
+    if(input == HEALTH)
         health = value;
     else
-        cerr << "file currupted! health not found\n";
+        cerr << FILE_ERROR;
 
     setting_file >> input >> value;
-    if(input == "cooldown:")
+    if(input == COOLDOWN)
         cooldown = value;
     else
-        cerr << "file currupted! cooldown not found\n";
+        cerr << FILE_ERROR;
     setting_file.close();
 }
 

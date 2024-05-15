@@ -7,7 +7,7 @@ Plant::Plant(int x, int y, string file_name, int frame_number, int animation_spe
         frames_position[i] = i * frame_width;
     }
     if (!texture.loadFromFile(file_name)) {
-        cerr << "picture not found!\n";
+        cerr << FILE_ERROR;
 		exit(-1);
     }
     sprite.setTexture(texture);
