@@ -15,8 +15,6 @@ const int PRICE_TEXT_X = 65;
 const int PRICE_TEXT_Y = 35;
 const int ITEM_SPRITE_X = 0;
 
-
-
 class Item {
 public:
 	Item(int up, int down, PlantType plant_type, int cooldown, string path, int price);
