@@ -1,4 +1,3 @@
-
 #include "System.hpp"
 #include "Primary.hpp"
 
@@ -9,46 +8,69 @@ System::System(){
 		cerr << "back ground not found!\n";
 		exit(-1);
 	}
+	if(!zombie_texture.loadFromFile(ZM_PATH)){
+		cerr << "back ground not found!\n";
+		exit(-1);
+	}
 	game = new Game();
+	zombie_sprite.setTexture(zombie_texture);
+	zombie_sprite.setScale(0.1, 0.1);
+
 	bg_sprite.setTexture(bg_texture);
 	bg_sprite.setScale(WIDTH / bg_sprite.getLocalBounds().width,
     HEIGHT / bg_sprite.getLocalBounds().height);
+	if(!font.loadFromFile("files/font/HouseofTerrorRegular.otf")) {
+        cout << "font can not load";
+        exit(0);
+    }
+	text.setFont(font);
+    text.setColor(Color :: Red);
+    text.setCharacterSize(100);
+
+	Vector2f zom_pos = {bg_sprite.getPosition().x + 550, bg_sprite.getPosition().y + 140};
+    zombie_sprite.setPosition(zom_pos);
+    Vector2f text_pos = {bg_sprite.getPosition().x + 100, bg_sprite.getPosition().y + 50};
+    text.setPosition(text_pos);
+	text.setString("THE ZOMBIES ATE YOUR BRAINS!");
 }
 
 void System::run(){
-	while(window.isOpen() && game_state != EXIT){
+	while(window.isOpen() and game_state != EXIT){
 		update();
 		handleEvent();
 		render();
 	}
 }
 
-void System::update_gameover() {
-	bg_sprite.setColor(sf::Color(255, 255, 255, 128));
+void System :: updateOverGame() {
+
 }
 
 void System::update(){
 	switch (game_state) {
 	case (IN_GAME): {
-		game->update();
-		if(game->checkGameOver()) game_state = GAMEOVER_SCREEN;
-		break;
+		if(game->isGameOver()) {
+			updateOverGame();
+			bg_sprite.setColor(sf::Color(255, 255, 255, 128));
+			game_state = GAMEOVER_SCREEN;
+		}
+		else {
+			game->update(window);
+		}
 	}
 	case (PAUSE_MENU):
 		break;
-	case (MAIN_MENU): {
+	case (MAIN_MENU):
 		break;
-	}
 	case (VICTORY_SCREEN):
 		break;
 	case (GAMEOVER_SCREEN): {
-		update_gameover();
-		cout << "game over" << endl;
+		updateOverGame();
 		break;
 	}
 	case(EXIT):
 		break;
-	}
+  	}
 }
 
 void System::handleEvent(){
@@ -56,7 +78,7 @@ void System::handleEvent(){
 	while (window.pollEvent(event)){
 		switch (event.type) {
 			case (Event::Closed):
-				// window.close();
+				window.close();
 				game_state = EXIT;
 				break;
 			case (Event::MouseButtonPressed):
@@ -73,9 +95,28 @@ void System::handleEvent(){
 
 void System::render(){
 	window.clear();
-	window.draw(bg_sprite);
-	game->render(window);
-	window.display();
+	switch (game_state) {
+	case (IN_GAME): {
+		window.draw(bg_sprite);
+		game->render(window);
+		break;
+	}
+	case (PAUSE_MENU):
+		break;
+	case (MAIN_MENU):
+		break;
+	case (VICTORY_SCREEN):
+		break;
+	case (GAMEOVER_SCREEN):{
+		window.draw(bg_sprite);
+		window.draw(text);
+		window.draw(zombie_sprite);
+		break;
+	}
+	case(EXIT):
+		break;
+  	}
+  window.display();
 }
 
 void System::handleMousePress(Event ev){
@@ -85,7 +126,7 @@ void System::handleMousePress(Event ev){
 	Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
 	switch (game_state) {
 	case (IN_GAME): {
-		if(game->is_dragging) {
+		if(game->getDragStatus()) {
 			game->plantRequest(window);
 		}
 		else {
@@ -95,9 +136,8 @@ void System::handleMousePress(Event ev){
 	}
 	case (PAUSE_MENU):
 		break;
-	case (MAIN_MENU): {
+	case (MAIN_MENU):
 		break;
-	}
 	case (VICTORY_SCREEN):
 		break;
 	case (GAMEOVER_SCREEN):
@@ -113,7 +153,6 @@ void System::handleMouseRelease(Event ev){
   Vector2i pos = {ev.mouseButton.x, ev.mouseButton.y};
   switch (game_state) {
 	case (IN_GAME):
-		//peashooter->handleMouseRelease(/*pos*/);
 		break;
 	case (PAUSE_MENU):
 		break;
@@ -127,5 +166,4 @@ void System::handleMouseRelease(Event ev){
 		break;
 
   }
-
 }

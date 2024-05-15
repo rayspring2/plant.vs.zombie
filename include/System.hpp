@@ -13,7 +13,6 @@
 #include "KernelPult.hpp"
 #include "HairMetal.hpp"
 #include "Game.hpp"
-#include "Icon.hpp"
 
 enum State {
   IN_GAME,
@@ -27,23 +26,25 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
+//	PeaShooter* ps[6][11];
 	Texture bg_texture;
 	Sprite bg_sprite;
-	Clock clock;
+	Texture zombie_texture;
+	Sprite zombie_sprite;
+	Text text;
+	Font font;
+	Game* game;
+	RenderWindow window;
 	void update();
+	void pdateOverGame();
 	void render();
 	void handleEvent();
-	void update_gameover();
 	void handleMousePress(Event ev);
 	void handleMouseRelease(Event ev);
-	void gen_zombie();
+	void updateOverGame();
 public:
-	RenderWindow window;
-	Game* game;
-	PeaShooter* peashooter;
 	void run();
 	System();
-	~System() {};
 };
 
 #endif

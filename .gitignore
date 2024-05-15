@@ -10,3 +10,9 @@ Makefile_mahdis
 Makefile_2
 Makefile_uglyone
 Makefile_windows
+PlantsVSZombie
+zombie/
+plant_unused/
+sunflower/
+walnut/
+*.gif
