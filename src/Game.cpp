@@ -31,6 +31,7 @@ Game::Game() {
         lawncleaners[i] = new LawnCleaner(GROUND_LEFT_OFFSET , play_ground_position[i][1].y);
     }
 
+    is_dragging = false;
     icon = new Icon(0, 0);
     //with setting
     icon->addItem(PEASHOOTER, 10, "files/pic/PeashooterMenu.png", 100);

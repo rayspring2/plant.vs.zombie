@@ -31,20 +31,20 @@ public:
 	void checkEating();
 	Position play_ground_position[6][10];
 	Plant* moved_plant = nullptr;
-	bool is_drag = false;
 	bool inBackGround(Vector2i position);
 	pair<int, int> findPlayGroundBlock(Vector2f plant_position);
 	void plantRequest(RenderWindow &window);
 	void createRequest(RenderWindow &window);
-	bool is_dragging;
 	PlantType selected_plant;
 	bool isGameOver();
+	bool getDragStatus() {return is_dragging;}
 	Icon* icon;
 protected:
 	Plant* play_ground[GROUNDROWS+1][GROUNDCOLUMNS+1];
 private:
 	Clock ball_clock;
 	Clock sun_clock;
+	bool is_dragging;
 	vector<Zombie*> zombies;
 	vector<Ball*> balls;
 	vector<Sun*> suns;

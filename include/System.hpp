@@ -31,6 +31,10 @@ private:
 	Sprite bg_sprite;
 	Texture zombie_texture;
 	Sprite zombie_sprite;
+	Text text;
+	Font font;
+	Game* game;
+	RenderWindow window;
 	void update();
 	void pdateOverGame();
 	void render();
@@ -39,10 +43,6 @@ private:
 	void handleMouseRelease(Event ev);
 	void updateOverGame();
 public:
-	RenderWindow window;
-	Game* game;
-	Text text;
-	Font font;
 	void run();
 	System();
 };

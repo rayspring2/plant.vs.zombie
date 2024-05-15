@@ -31,6 +31,7 @@ Item :: Item(int up, int down, PlantType plant_type, int cool_down, string path,
     text.setCharacterSize(24);
     Vector2f text_pos = {sprite.getPosition().x + 50, sprite.getPosition().y + 30};
     text.setPosition(text_pos);
+    show_border = false;
 }
 
 void Item :: update(int money) {
@@ -65,9 +66,9 @@ void Item :: update(int money) {
         rect.width = 100;
         rect.height = 60;
         sprite.setTextureRect(rect);
-    }
-    if (price > money && item_state == AVAILABLE) {
-        item_state = UNAVAILABLE;
+        if (price > money) {
+            item_state = UNAVAILABLE;
+        }
     }
 }
 
