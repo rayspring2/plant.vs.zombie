@@ -11,7 +11,7 @@
 #include <filesystem>
 #include <random>
 #include <chrono>
-
+#include <fstream> 
 using namespace std;
 using namespace sf;
 namespace fs = filesystem;
@@ -25,6 +25,8 @@ const string DID_NOT_LOAD = "font can not load";
 const string NORMAL_WALNUT_PATH = "files/pic/walnut/normal_walnut.png";
 const string CRACKED_WALNUT_PATH = "files/pic/walnut/cracked_walnut.png";
 const string VERY_CRACKED_WALNUT_PATH = "files/pic/walnut/very_cracked_walnut.png";
+const string SETTING_PATH = "setting.txt";
+const string SETTING_DELIMITER = "*";
 
 const float WIDTH = 1400.0f;
 const float HEIGHT = 600.0f;

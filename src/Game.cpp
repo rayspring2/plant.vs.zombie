@@ -1,6 +1,7 @@
 #include "Game.hpp"
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 Game::Game() {
+    readSettingFile();
     for(int i = 1; i <= GROUNDROWS; i++) {
         for(int j = 1; j <= GROUNDCOLUMNS; j++) {
             play_ground[i][j] = nullptr;
@@ -33,12 +34,15 @@ Game::Game() {
 
     is_dragging = false;
     icon = new Icon(0, 0);
-    //with setting
-    icon->addItem(PEASHOOTER, 10, "files/pic/PeashooterMenu.png", 100);
-    icon->addItem(SNOWPEA, 10, "files/pic/SnowpeaMenu.png", 175);
-    icon->addItem(SUNFLOWER, 10, "files/pic/SunflowerMenu.png", 50);
-    icon->addItem(WALNUT, 10, "files/pic/WalnutMenu.png", 50);
+    hasPlant();
     selected_plant = INVALID;
+}
+
+void Game :: hasPlant() {
+    if(hasPeashooter) icon->addItem(PEASHOOTER, peashooterCooldown, "files/pic/PeashooterMenu.png", 100);
+    if(hasSnowpea) icon->addItem(SNOWPEA, snowpeaCooldown, "files/pic/SnowpeaMenu.png", 175);
+    if(hasSunflower) icon->addItem(SUNFLOWER, sunflowerCooldown, "files/pic/SunflowerMenu.png", 50);
+    if(hasWalnut) icon->addItem(WALNUT, walnutCooldown, "files/pic/WalnutMenu.png", 50);
 }
 
 bool Game :: inBackGround(Vector2i position) {
@@ -60,19 +64,106 @@ pair<int, int> Game ::findPlayGroundBlock(Vector2f plant_position) {
     return {-1, -1};
 }
 
+void Game::readSettingFile(){
+    ifstream setting_file(SETTING_PATH);
+    string input;
+    while(setting_file >> input){
+        if(input == SETTING_DELIMITER){
+            setting_file >> input;
+            if(input == GAME_SETTING_KEYWORD){
+                break;
+            }
+        }
+    }
+    int value;
+    setting_file >> input >> value;
+    if(input == GAME_ZOMBIE_START_X)
+        ZOMBIE_START_X = value;
+    else
+        cerr << LOADING_ERROR;
+    
+    setting_file >> input >> value;
+    if( input == GAME_ZOMBIE_GENERATE_PERIOD)
+        ZOMBIE_GENERATE_PERIOD = value;
+    else    cerr << LOADING_ERROR;
+    
+    setting_file >> input >> value;
+    if( input == GAME_SUN_FALLDOWN_SPEED)
+        SUN_FALLDOWN_SPEED = value;
+    else    
+        cerr << LOADING_ERROR;
+    
+    setting_file >> input >> value;
+    if( input == GAME_SUN_GENERATE_PERIOD)
+        SUN_GENERATE_PERIOD = value;
+    else
+        cerr << LOADING_ERROR;
+    
+    setting_file >> input >> value;
+    if( input == GAME_HAS_PEASHOOTER)
+        hasPeashooter = value;
+    else    
+        cerr << LOADING_ERROR;
+    
+    setting_file >> input >> value;
+    if( input == GAME_HAS_SNOWPEA)
+        hasSnowpea = value;
+    else    
+        cerr << LOADING_ERROR;
+    
+
+    setting_file >> input >> value;
+    if( input == GAME_HAS_WALNUT)
+        hasWalnut = value;
+    else    
+        cerr << LOADING_ERROR;
+    
+
+    setting_file >> input >> value;
+    if( input == GAME_HAS_SUNFLOWER)
+        hasSunflower = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == GAME_PEASHOOTER_COOLDOWN)
+        peashooterCooldown = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == GAME_SNOWPEA_COOLDOWN)
+        snowpeaCooldown = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == GAME_WALNUT_COOLDOWN)
+        sunflowerCooldown = value;
+    else
+        cerr << LOADING_ERROR;
+
+    setting_file >> input >> value;
+    if( input == GAME_SUNFLOWER_COOLDOWN)
+        walnutCooldown = value;
+    else
+        cerr << LOADING_ERROR;
+
+}
+
 void Game::genZombie(){
 	Time elapsed = clock.getElapsedTime();
-	if(elapsed.asMilliseconds() >= ZOMBIE_GENERATE_PERIOD) {
+	if(elapsed.asMilliseconds() >= ZOMBIE_GENERATE_PERIOD ) {
 		clock.restart();
 		int x = rng() % GROUNDROWS;
-		int zombie_row_position = play_ground_position[x + 1][1].up;
+		int zombie_row_position = play_ground_position[x + ONE][ONE].up;
 		int type_of_zombie = rng() % ZMOBIETYPESCNT;
 		if(type_of_zombie) {
-			HairMetal* zm = new HairMetal(ZOMBIE_START_X - 20 , zombie_row_position);
+			HairMetal* zm = new HairMetal(ZOMBIE_START_X , zombie_row_position - HAIRMETAL_OFFSET_Y_POSITION, x + ONE);
 			zombies.push_back(zm);
 		}
 		else {
-			NormalZombie* zm = new NormalZombie(ZOMBIE_START_X , zombie_row_position);
+			NormalZombie* zm = new NormalZombie(ZOMBIE_START_X , zombie_row_position, x + ONE);
 			zombies.push_back(zm);
 		}
 	}
@@ -105,7 +196,7 @@ void Game::update(RenderWindow &window){
 
 void Game::addAttackPlantBall(AttackPlant* attack_plant){
     Time shooter_time_elapsed = attack_plant -> getShootTimeElapsed();
-    if(shooter_time_elapsed.asMilliseconds() >= attack_plant-> getCoolDownTime() *100){
+    if(shooter_time_elapsed.asMilliseconds() >= attack_plant-> getCoolDownTime() * SPEED_COOLDOWN){
         Ball* new_ball = attack_plant->addBall();
         balls.push_back(new_ball);
     }
@@ -155,7 +246,7 @@ void Game :: plantRequest(RenderWindow &window) {
     moved_plant->setPos(target);
     is_dragging = false;
     pair<int, int> new_position = findPlayGroundBlock(target);
-    if(new_position != pair<int, int>(-1, -1)) {
+    if(new_position != INVALID_POSITION) {
         play_ground[new_position.first][new_position.second] = moved_plant;
         play_ground[new_position.first][new_position.second]->setPos(Vector2f((float)play_ground_position[new_position.first][new_position.second].x,
         (float)play_ground_position[new_position.first][new_position.second].y));
@@ -171,16 +262,16 @@ void Game :: plantRequest(RenderWindow &window) {
 void Game :: createRequest(RenderWindow &window) {
     PlantType plant_type = icon->checkMouse(window);
     if(plant_type == PEASHOOTER) {
-        moved_plant = new PeaShooter(200, 200);
+        moved_plant = new PeaShooter(TEMP_POSITION, TEMP_POSITION);
     }
     else if(plant_type == SNOWPEA) {
-        moved_plant = new SnowPea(200, 200);
+        moved_plant = new SnowPea(TEMP_POSITION, TEMP_POSITION);
     }
     else if(plant_type == SUNFLOWER) {
-        moved_plant = new SunFlower(200, 200);
+        moved_plant = new SunFlower(TEMP_POSITION, TEMP_POSITION);
     }
     else if(plant_type == WALNUT) {
-        moved_plant = new Walnut(200, 200);
+        moved_plant = new Walnut(TEMP_POSITION, TEMP_POSITION);
     }
     else return;
     is_dragging = true;

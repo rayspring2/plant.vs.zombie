@@ -1,10 +1,10 @@
 #include "Zombie.hpp"
 #include "Plant.hpp"
 
-Zombie::Zombie(int x, int y, string file_name, int frame_number, int zombie_width,  int zombie_height) :
-x(x), y(y), zombie_width(zombie_width), 
+Zombie::Zombie(int x, int y, int row, string file_name, int frame_number, int zombie_width,  int zombie_height) :
+x(x), y(y), row(row), zombie_width(zombie_width), 
 zombie_height(zombie_height), frame_number(frame_number) {
-    row = (y - GROUND_UP_OFFSET) / CELLHIGHT + 1 ;
+    readSettingFile();
     current_speed = speed;
     for(int i = 0; i < frame_number; i++) {
         frames_position[i] = i * zombie_width;
@@ -20,6 +20,64 @@ zombie_height(zombie_height), frame_number(frame_number) {
     rect.height = zombie_height;
     sprite.setTextureRect(rect);
     sprite.setPosition(x, y);
+}
+
+void Zombie::readSettingFile(){
+    ifstream setting_file(SETTING_PATH);
+    string input;
+    while(setting_file >> input){
+        if(input == SETTING_DELIMITER){
+            setting_file >> input;
+            if(input == ZOMBIE_SETTING_KEYWORD){
+                break;
+            }
+        }
+    }
+    int value;
+    setting_file >> input >> value;
+    if(input == "ZOMBIE_UPDATE_TIME:")
+        ZOMBIE_UPDATE_TIME = value;
+    else
+        cerr << "file currupted! ZOMBIE_UPDATE_TIME not found\n";
+    setting_file.close();
+}
+void Zombie::readSettingFile( string type){
+    ifstream setting_file(SETTING_PATH);
+    string input;
+    while(setting_file >> input){
+        if(input == SETTING_DELIMITER){
+            setting_file >> input;
+            if(input == type){
+                break;
+            }
+        }
+    }
+    int value;
+    setting_file >> input >> value;
+    if(input == "health:")
+        health = value;
+    else
+        cerr << "file currupted! health not found\n";
+
+    setting_file >> input >> value;
+    if(input == "hit_rate:")
+        hit_rate = value;
+    else
+        cerr << "file currupted! hit_rate not found\n";
+    
+    setting_file >> input >> value;
+    if(input == "damage:")
+        damage = value;
+    else
+        cerr << "file currupted! damage not found\n";
+    
+    setting_file >> input >> value;
+    if(input == "speed:")
+        speed = value;
+    else
+        cerr << "file currupted! speed not found\n";
+
+    setting_file.close();
 }
 
 void Zombie::hit(int destroy_value) {

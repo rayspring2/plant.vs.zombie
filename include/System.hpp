@@ -10,7 +10,6 @@
 #include "AttackPlant.hpp"
 #include "Zombie.hpp"
 #include "NormalZombie.hpp"
-#include "KernelPult.hpp"
 #include "HairMetal.hpp"
 #include "Game.hpp"
 
@@ -26,7 +25,6 @@ enum State {
 class System{
 private:
 	State game_state = IN_GAME;
-//	PeaShooter* ps[6][11];
 	Texture bg_texture;
 	Sprite bg_sprite;
 	Texture zombie_texture;

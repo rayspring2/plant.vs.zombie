@@ -3,8 +3,10 @@
 
 #include "Global.hpp"
 #include "Plant.hpp"
-
+const string WALNUT_SETTING_KEYWORD = "WALNUT";
 class Walnut : public Plant{
+private:
+	void readSettingFile();
 public:
 	Walnut(int x, int y);
 	void update() override;

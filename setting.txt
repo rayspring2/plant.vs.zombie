@@ -1,0 +1,68 @@
+* GAME
+ZOMBIE_START_X: 1000
+ZOMBIE_GENERATE_PERIOD: 1000
+SUN_FALLDOWN_SPEED: 10
+SUN_GENERATE_PERIOD: 5500
+PEASHOOTER: 1
+SNOWPEA: 1
+WALNUT: 0
+SUNFLOWER: 0
+PEASHOOTER_COOLDOWN: 10
+SNOWPEA_COOLDOWN: 10
+SUNFLOWER_COOLDOWN: 10
+WALNUT_COOLDOWN: 10
+
+* ZOMBIE
+ZOMBIE_UPDATE_TIME: 100
+
+* NORMALEZOMBIE
+health: 80
+hit_rate: 6
+damage: 20
+speed: 5
+
+* HAIRMETAL
+health: 80
+hit_rate: 6
+damage: 20
+speed: 2
+
+* WALNUT
+health: 200
+cooldown: 10
+
+* SUNFLOWER
+health: 30
+cooldown: 40
+
+* SUN
+SUN_UPDATE_PERIOD: 100
+lifespan: 3000
+
+* SNOWPEA
+health: 30
+damage: 8
+cooldown: 9
+hit_rate: 5
+speed: 5
+
+* PEASHOOTER
+health: 40
+damage: 5
+cooldown: 5
+hit_rate: 5
+speed: 7
+
+* LAWNCLEANER
+CLEANER_UPDATE_TIME: 100
+default_speed: 20
+
+* BALLICY
+damage_value: 10
+speed: 4
+
+* BALLGREEN
+damage_value: 5
+speed: 4
+
+* MNEU

@@ -4,7 +4,7 @@
 #include "Global.hpp"
 #include "Pea.hpp"
 #include "BallIcy.hpp"
-
+const string SNOWPEA_SETTING_KEYWORD = "SNOWPEA";
 class SnowPea : public Pea{
 public:
 	SnowPea(int x, int y);

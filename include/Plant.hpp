@@ -4,6 +4,10 @@
 #include "Global.hpp"
 const int PLANT_UPDATE_PERIOD = 50;
 
+const int FRAME_NUMBER = 70;
+const int FRAME_HEIGHT = 47;
+const int FRAME_WIDTH = 50;
+
 enum MouseStatus {
 	NOTDRAG,
 	DRAGING,
@@ -14,8 +18,8 @@ class Plant{
 protected:
 	MouseStatus in_drag_mode = NOTDRAG;
 	int x,y;
-	int frame_width = 50 , frame_hight = 47;
-	int row, health, price, hit_rate, frame_number, cooldown, frames_position[70], cur_rect = 0, animation_speed;
+	int frame_width = FRAME_WIDTH , frame_hight = FRAME_HEIGHT;
+	int row, health, price, hit_rate, frame_number, cooldown, frames_position[FRAME_NUMBER], cur_rect = 0, animation_speed;
 	Clock clock;
 	Texture texture;
 	Sprite sprite;
@@ -29,7 +33,7 @@ public:
 	Plant(int x, int y, string file_name, int frames_number, int animation_speed);
 	virtual ~Plant(){};
 	void handleMousePress();
-	virtual void update(/* Vector2i mouse_pos= {0 , 0} */);
+	virtual void update();
 	void fixedBasedPosition() {};
 	int getCoolDownTime(){ return cooldown; };
 	int getWidth() {return sprite.getGlobalBounds().width;}
