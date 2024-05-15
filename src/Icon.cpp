@@ -8,7 +8,6 @@ Icon :: Icon(int x, int y) {
 		cerr << "back ground not found!\n";
 		exit(-1);
 	}
-	
 	sprite.setTexture(texture);
 	sprite.setScale(0.5, 0.5);
 
